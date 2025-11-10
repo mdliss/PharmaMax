@@ -1,9 +1,50 @@
 {
   "permissions": {
     "allow": [
-      "Bash(git init:*)"
+      "Bash(git init:*)",
+      "mcp__task-master-ai__initialize_project",
+      "mcp__task-master-ai__models",
+      "Bash(cp:*)",
+      "mcp__task-master-ai__parse_prd",
+      "mcp__task-master-ai__analyze_project_complexity",
+      "mcp__task-master-ai__expand_task",
+      "mcp__task-master-ai__get_tasks",
+      "mcp__task-master-ai__complexity_report",
+      "mcp__task-master-ai__scope_down_task",
+      "Bash(cat:*)",
+      "Bash(paste:*)",
+      "Bash(task-master complexity-report:*)",
+      "Bash(task-master list:*)",
+      "Bash(task-master show:*)",
+      "Bash(task-master set-status:*)",
+      "Bash(npm create:*)",
+      "Bash(npx sv create:*)",
+      "Bash(npm install:*)",
+      "Bash(npx tailwindcss:*)",
+      "Bash(npm run build:*)",
+      "Bash(task-master next:*)",
+      "Bash(curl:*)",
+      "Bash(npm run test:*)",
+      "Bash(npm run check:*)",
+      "Bash(npm run:*)",
+      "Bash(if [ -f .env ])",
+      "Bash(then echo \"✓ .env file exists\")",
+      "Bash(else echo \"⚠ .env file not found - creating template\")",
+      "Bash(.env)",
+      "Bash(fi)",
+      "mcp__task-master-ai__add_task",
+      "mcp__task-master-ai__next_task",
+      "mcp__task-master-ai__set_task_status",
+      "mcp__task-master-ai__update_subtask",
+      "Bash(npx prisma init)",
+      "Bash(psql:*)",
+      "Bash(gcloud auth:*)"
     ],
     "deny": [],
     "ask": []
-  }
+  },
+  "enableAllProjectMcpServers": true,
+  "enabledMcpjsonServers": [
+    "task-master-ai"
+  ]
 }

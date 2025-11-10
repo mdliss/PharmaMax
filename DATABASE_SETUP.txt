@@ -1,0 +1,137 @@
+=== PharmaMax Database Setup Guide ===
+
+This guide explains how to set up and configure the PostgreSQL database for PharmaMax.
+
+PREREQUISITES
+-------------
+- PostgreSQL 14+ installed (locally or cloud-hosted)
+- Node.js and npm installed
+- Database credentials and connection information
+
+SETUP STEPS
+-----------
+
+1. Create Database
+   - Using Google Cloud SQL:
+     * Go to Google Cloud Console
+     * Navigate to SQL > Create Instance
+     * Choose PostgreSQL
+     * Configure instance name, region, and machine type
+     * Set database password
+     * Create database named "pharmamax"
+   
+   - Using Local PostgreSQL:
+     * Install PostgreSQL if not already installed
+     * Create database: 
+       psql -U postgres -c "CREATE DATABASE pharmamax;"
+
+2. Configure Environment Variables
+   - Copy .env.example to .env
+   - Update DATABASE_URL with your database connection string
+   - Format: postgresql://USER:PASSWORD@HOST:PORT/DATABASE
+   - Example: postgresql://postgres:mypassword@localhost:5432/pharmamax
+
+3. Generate Prisma Client
+   Run: npm run db:generate
+   
+   This generates TypeScript types and the Prisma Client based on schema.prisma
+
+4. Run Database Migrations
+   Run: npm run db:migrate
+   
+   This creates the database tables based on the Prisma schema.
+   You will be prompted to name the migration (e.g., "init")
+
+5. Verify Setup
+   - Check that the prescriptions table was created
+   - You can use Prisma Studio to view the database:
+     npm run db:studio
+
+DATABASE SCHEMA
+---------------
+
+Table: prescriptions
+- id: UUID (Primary Key)
+- drugName: String (Required)
+- rxcui: String (Optional - RxNorm Concept Unique Identifier)
+- sig: String (Required - Prescription instructions)
+- daysSupply: Integer (Required)
+- totalQuantity: Integer (Required - Calculated total quantity)
+- calculationResult: JSON (Optional - Full calculation details)
+- createdAt: Timestamp (Auto-generated)
+- updatedAt: Timestamp (Auto-updated)
+
+Indexes:
+- createdAt (for chronological queries)
+- drugName (for drug-based lookups)
+
+NPM SCRIPTS
+-----------
+
+Database-related npm scripts available:
+
+- npm run db:generate      Generate Prisma Client
+- npm run db:migrate       Create and run migrations (development)
+- npm run db:migrate:deploy Deploy migrations (production)
+- npm run db:push          Push schema changes without migrations
+- npm run db:studio        Open Prisma Studio database GUI
+
+USAGE IN CODE
+-------------
+
+The database access layer is available at:
+- src/lib/server/db.ts (Prisma client instance)
+- src/lib/server/prescriptionRepository.ts (Prescription operations)
+
+Example usage:
+
+import { createPrescription } from '$lib/server/prescriptionRepository';
+
+const prescription = await createPrescription({
+  drugName: 'Lisinopril 10mg',
+  rxcui: '314076',
+  sig: 'Take 1 tablet by mouth once daily',
+  daysSupply: 30,
+  totalQuantity: 30,
+  calculationResult: { /* full calculation data */ }
+});
+
+CLOUD DEPLOYMENT
+----------------
+
+For Google Cloud Run deployment:
+
+1. Set DATABASE_URL in Cloud Run environment variables
+2. Run migrations during deployment or as a Cloud Run job:
+   npm run db:migrate:deploy
+
+CONNECTION POOLING
+------------------
+
+The Prisma client is configured with connection pooling in src/lib/server/db.ts.
+In development, the client is reused across hot reloads.
+In production, a new client is created on each server start.
+
+For serverless environments (Cloud Run), consider:
+- Using connection pooling (Prisma Data Proxy or PgBouncer)
+- Setting appropriate connection limits
+- Using DATABASE_URL with ?connection_limit=5 parameter
+
+TROUBLESHOOTING
+---------------
+
+Error: "Environment variable not found: DATABASE_URL"
+- Ensure .env file exists with DATABASE_URL configured
+- Check that the database URL format is correct
+
+Error: "Can't reach database server"
+- Verify database is running
+- Check firewall rules (for cloud databases)
+- Verify connection credentials
+
+Migration errors:
+- Check database user has sufficient permissions
+- Ensure database exists before running migrations
+- Review prisma/migrations folder for applied migrations
+
+For more help: https://www.prisma.io/docs

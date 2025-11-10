@@ -1,0 +1,80 @@
+@import 'tailwindcss';
+
+/* Print-specific styles */
+@media print {
+	/* Hide non-essential UI elements */
+	header,
+	footer {
+		display: none !important;
+	}
+
+	/* Reset page margins for printing */
+	@page {
+		margin: 0.5in;
+	}
+
+	/* Ensure content fits on pages */
+	body {
+		print-color-adjust: exact;
+		-webkit-print-color-adjust: exact;
+		background: white !important;
+	}
+
+	/* Make tables break nicely */
+	table {
+		page-break-inside: auto;
+	}
+
+	tr {
+		page-break-inside: avoid;
+		page-break-after: auto;
+	}
+
+	/* Ensure backgrounds and colors print */
+	* {
+		print-color-adjust: exact;
+		-webkit-print-color-adjust: exact;
+	}
+
+	/* Remove shadows for cleaner printing */
+	* {
+		box-shadow: none !important;
+	}
+
+	/* Optimize text for printing */
+	body {
+		font-size: 11pt;
+		line-height: 1.4;
+	}
+
+	h1 {
+		font-size: 18pt;
+		page-break-after: avoid;
+	}
+
+	h2,
+	h3 {
+		font-size: 14pt;
+		page-break-after: avoid;
+		margin-top: 12pt;
+	}
+
+	/* Ensure borders are visible */
+	.border {
+		border-color: #333 !important;
+	}
+
+	/* Make content full width when printing */
+	.max-w-4xl {
+		max-width: 100%;
+	}
+
+	/* Reduce spacing for print */
+	.space-y-6 > * + * {
+		margin-top: 1rem;
+	}
+
+	.p-6 {
+		padding: 1rem;
+	}
+}

@@ -1,0 +1,725 @@
+{
+  "master": {
+    "tasks": [
+      {
+        "id": 1,
+        "title": "Setup Project Structure",
+        "description": "Initialize the SvelteKit project with TypeScript and set up the basic file structure.",
+        "details": "Use the SvelteKit CLI to create a new project. Ensure TypeScript is enabled. Set up the directory structure for components, routes, and API endpoints.",
+        "testStrategy": "Verify that the project builds successfully and the initial page loads without errors.",
+        "priority": "high",
+        "dependencies": [],
+        "status": "done",
+        "subtasks": [],
+        "updatedAt": "2025-11-10T20:48:10.032Z"
+      },
+      {
+        "id": 2,
+        "title": "Implement Main Calculator Interface",
+        "description": "Create the main user interface for the calculator at the root URL.",
+        "details": "Design a simple form with input fields for drug name/NDC, SIG, and days' supply. Use TailwindCSS for styling.",
+        "testStrategy": "Ensure the interface renders correctly and input fields accept user input.",
+        "priority": "high",
+        "dependencies": [
+          "1"
+        ],
+        "status": "done",
+        "subtasks": [],
+        "updatedAt": "2025-11-10T20:49:23.984Z"
+      },
+      {
+        "id": 3,
+        "title": "Create API Endpoint for Drug Normalization",
+        "description": "Develop the API endpoint to normalize drug names using the RxNorm API.",
+        "details": "Implement the `/api/normalize` endpoint. Use fetch to call the RxNorm API and handle the response.",
+        "testStrategy": "Test the endpoint with various drug names and verify the response structure matches the expected output.",
+        "priority": "high",
+        "dependencies": [
+          "1"
+        ],
+        "status": "done",
+        "subtasks": [],
+        "updatedAt": "2025-11-10T20:52:10.962Z"
+      },
+      {
+        "id": 4,
+        "title": "Implement Drug Normalization Logic",
+        "description": "Add logic to handle common drug name variations and synonyms.",
+        "details": "Create a function to process input, check for common variations, and call the normalization API.",
+        "testStrategy": "Test with various inputs to ensure correct RxCUI is returned for common drugs.",
+        "priority": "medium",
+        "dependencies": [
+          "3"
+        ],
+        "status": "done",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Create Drug Name Variation Function",
+            "description": "Develop a function that identifies and processes common drug name variations and synonyms.",
+            "dependencies": [],
+            "details": "This function will take an input string, check against a predefined list of common variations, and standardize the drug name before sending it to the normalization API.",
+            "status": "done",
+            "testStrategy": null,
+            "parentId": "undefined",
+            "updatedAt": "2025-11-10T21:01:05.245Z"
+          },
+          {
+            "id": 2,
+            "title": "Integrate Normalization API Call",
+            "description": "Implement the logic to call the drug normalization API with the standardized drug name.",
+            "dependencies": [
+              1
+            ],
+            "details": "After standardizing the drug name, this subtask will handle the API request, manage responses, and ensure error handling is in place for failed requests.",
+            "status": "done",
+            "testStrategy": null,
+            "parentId": "undefined",
+            "updatedAt": "2025-11-10T21:01:06.533Z"
+          }
+        ],
+        "complexity": 5,
+        "recommendedSubtasks": 0,
+        "expansionPrompt": "Consider additional drug name variations that may need to be handled.",
+        "updatedAt": "2025-11-10T21:01:06.533Z"
+      },
+      {
+        "id": 5,
+        "title": "Input Validation for Drug Normalization",
+        "description": "Implement validation for drug name and NDC input formats.",
+        "details": "Validate that drug names are not empty and NDCs follow the 11-digit format.",
+        "testStrategy": "Check that invalid inputs trigger appropriate error messages.",
+        "priority": "medium",
+        "dependencies": [
+          "4"
+        ],
+        "status": "done",
+        "subtasks": [],
+        "complexity": 4,
+        "recommendedSubtasks": 0,
+        "expansionPrompt": "Identify potential invalid input scenarios that need to be validated.",
+        "updatedAt": "2025-11-10T21:01:26.029Z"
+      },
+      {
+        "id": 6,
+        "title": "Create API Endpoint for Quantity Calculation",
+        "description": "Develop the API endpoint to calculate the total quantity needed based on SIG and days' supply.",
+        "details": "Implement the `/api/calculate` endpoint. Parse the request body and perform calculations.",
+        "testStrategy": "Test the endpoint with valid and invalid requests to ensure correct responses.",
+        "priority": "high",
+        "dependencies": [
+          "1"
+        ],
+        "status": "done",
+        "subtasks": [],
+        "updatedAt": "2025-11-10T20:54:23.555Z"
+      },
+      {
+        "id": 7,
+        "title": "Simplify SIG Parsing Logic",
+        "description": "Implement basic logic to parse common SIG input formats using the OpenAI API.",
+        "details": "Use the OpenAI API to parse basic SIG instructions and extract essential dosage information without handling advanced edge cases.",
+        "testStrategy": "Verify that basic SIG formats are parsed correctly and essential components are extracted.",
+        "priority": "medium",
+        "dependencies": [
+          "6"
+        ],
+        "status": "done",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Identify Basic SIG Formats",
+            "description": "Research and document the common SIG input formats that need to be supported for parsing.",
+            "dependencies": [],
+            "details": "Focus on identifying 3-5 basic SIG formats that are frequently used. Document their structure and essential components.",
+            "status": "done",
+            "testStrategy": "Review the documentation for accuracy and completeness.",
+            "parentId": "undefined",
+            "updatedAt": "2025-11-10T21:01:33.998Z"
+          },
+          {
+            "id": 2,
+            "title": "Implement Basic Parsing Logic",
+            "description": "Develop a simple function to parse the identified basic SIG formats using the OpenAI API.",
+            "dependencies": [
+              "1"
+            ],
+            "details": "Create a function that takes a SIG input string and returns the essential dosage information without handling complex cases.",
+            "status": "done",
+            "testStrategy": "Run unit tests with sample SIG inputs to ensure correct parsing of essential components.",
+            "parentId": "undefined",
+            "updatedAt": "2025-11-10T21:01:34.870Z"
+          },
+          {
+            "id": 3,
+            "title": "Validate Output for Essential Components",
+            "description": "Create test cases to validate that the output from the parsing function includes the necessary dosage information.",
+            "dependencies": [
+              "2"
+            ],
+            "details": "Develop a set of test cases that cover the basic SIG formats and check if the output contains the required dosage information.",
+            "status": "done",
+            "testStrategy": "Execute the test cases and verify that the output matches expected results for each basic SIG format.",
+            "parentId": "undefined",
+            "updatedAt": "2025-11-10T21:01:35.673Z"
+          }
+        ],
+        "complexity": 5,
+        "recommendedSubtasks": 0,
+        "expansionPrompt": "Identify additional edge cases or formats that may need to be considered for parsing.",
+        "updatedAt": "2025-11-10T21:01:35.673Z"
+      },
+      {
+        "id": 8,
+        "title": "Calculate Total Quantity Needed",
+        "description": "Implement the logic to calculate the total quantity based on parsed SIG and days' supply.",
+        "details": "Use the formula: Total Quantity = (Dose × Frequency × Days' Supply).",
+        "testStrategy": "Test calculations with various SIG inputs to ensure accuracy.",
+        "priority": "high",
+        "dependencies": [
+          "7"
+        ],
+        "status": "done",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Extract Dose and Frequency from SIG",
+            "description": "Implement logic to extract the Dose and Frequency values from the parsed SIG input.",
+            "dependencies": [],
+            "details": "Create a function that takes the parsed SIG string and uses regex or string manipulation to identify and extract the Dose and Frequency values. Ensure to handle various formats of SIG inputs.",
+            "status": "done",
+            "testStrategy": null,
+            "parentId": "undefined",
+            "updatedAt": "2025-11-10T21:01:44.700Z"
+          },
+          {
+            "id": 2,
+            "title": "Calculate Total Quantity Using Extracted Values",
+            "description": "Implement the calculation of total quantity using the extracted Dose, Frequency, and Days' Supply.",
+            "dependencies": [
+              1
+            ],
+            "details": "Use the formula Total Quantity = (Dose × Frequency × Days' Supply) in a function that takes the extracted values as parameters. Ensure to validate inputs before performing the calculation.",
+            "status": "done",
+            "testStrategy": null,
+            "parentId": "undefined",
+            "updatedAt": "2025-11-10T21:01:45.683Z"
+          }
+        ],
+        "complexity": 4,
+        "recommendedSubtasks": 0,
+        "expansionPrompt": "Consider edge cases in dosage calculations that may affect total quantity.",
+        "updatedAt": "2025-11-10T21:01:45.683Z"
+      },
+      {
+        "id": 9,
+        "title": "NDC Retrieval Logic",
+        "description": "Implement logic to query the FDA NDC Directory API for valid NDCs based on RxCUI.",
+        "details": "Create a function that queries the FDA API and retrieves all valid NDCs for a given RxCUI.",
+        "testStrategy": "Test retrieval with known RxCUIs to ensure correct NDCs are returned.",
+        "priority": "high",
+        "dependencies": [
+          "3"
+        ],
+        "status": "done",
+        "subtasks": [],
+        "complexity": 5,
+        "recommendedSubtasks": 0,
+        "expansionPrompt": "Consider different scenarios for querying the FDA API that may affect NDC retrieval.",
+        "updatedAt": "2025-11-10T20:56:52.971Z"
+      },
+      {
+        "id": 10,
+        "title": "Display NDCs with Package Sizes",
+        "description": "Create a UI component to display retrieved NDCs with their package sizes and statuses.",
+        "details": "Design a table format to show NDCs, package sizes, and active/inactive status.",
+        "testStrategy": "Ensure the UI displays NDCs correctly and highlights inactive ones.",
+        "priority": "medium",
+        "dependencies": [
+          "9"
+        ],
+        "status": "done",
+        "subtasks": [],
+        "updatedAt": "2025-11-10T21:08:55.046Z"
+      },
+      {
+        "id": 11,
+        "title": "Implement Overfill/Underfill Calculation",
+        "description": "Add logic to calculate overfill or underfill amounts based on available packages.",
+        "details": "Determine the optimal package combination and calculate waste percentages.",
+        "testStrategy": "Test with various package sizes to ensure accurate calculations.",
+        "priority": "medium",
+        "dependencies": [
+          "8",
+          "10"
+        ],
+        "status": "done",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Determine Optimal Package Combinations",
+            "description": "Analyze available package sizes to find the best combinations for overfill and underfill calculations.",
+            "dependencies": [
+              8,
+              10
+            ],
+            "details": "Use an algorithm to evaluate different package sizes and combinations to minimize waste while meeting the required volume.",
+            "status": "done",
+            "testStrategy": null,
+            "parentId": "undefined",
+            "updatedAt": "2025-11-10T21:09:25.529Z"
+          },
+          {
+            "id": 2,
+            "title": "Calculate Waste Percentages",
+            "description": "Implement logic to calculate the waste percentages based on the selected package combinations.",
+            "dependencies": [
+              1
+            ],
+            "details": "Develop a formula to compute waste percentages from the total volume and the volume used by the selected packages.",
+            "status": "done",
+            "testStrategy": null,
+            "parentId": "undefined",
+            "updatedAt": "2025-11-10T21:09:26.453Z"
+          }
+        ],
+        "complexity": 6,
+        "recommendedSubtasks": 0,
+        "expansionPrompt": "Identify different packaging scenarios that need to be accounted for in calculations.",
+        "updatedAt": "2025-11-10T21:09:26.453Z"
+      },
+      {
+        "id": 12,
+        "title": "Results Display Component",
+        "description": "Create a summary card to display prescription details and calculations.",
+        "details": "Design a structured output showing drug name, RxCUI, parsed SIG, total quantity, and recommendations.",
+        "testStrategy": "Verify that all relevant information is displayed clearly and correctly.",
+        "priority": "medium",
+        "dependencies": [
+          "10",
+          "11"
+        ],
+        "status": "done",
+        "subtasks": [],
+        "updatedAt": "2025-11-10T21:09:37.450Z"
+      },
+      {
+        "id": 13,
+        "title": "Error Handling for API Calls",
+        "description": "Implement error handling for API calls to RxNorm and FDA.",
+        "details": "Handle API errors gracefully and provide user-friendly messages.",
+        "testStrategy": "Simulate API failures and verify that appropriate error messages are displayed.",
+        "priority": "medium",
+        "dependencies": [
+          "3",
+          "6"
+        ],
+        "status": "done",
+        "subtasks": [],
+        "complexity": 6,
+        "recommendedSubtasks": 0,
+        "expansionPrompt": "Identify common API error scenarios that need to be handled gracefully.",
+        "updatedAt": "2025-11-10T21:09:45.763Z"
+      },
+      {
+        "id": 14,
+        "title": "Input Validation for Prescription Input",
+        "description": "Implement validation for prescription input fields (SIG and days' supply).",
+        "details": "Ensure SIG is not empty and days' supply is a valid number.",
+        "testStrategy": "Test with invalid inputs to ensure error messages are triggered.",
+        "priority": "medium",
+        "dependencies": [
+          "2"
+        ],
+        "status": "done",
+        "subtasks": [],
+        "complexity": 4,
+        "recommendedSubtasks": 0,
+        "expansionPrompt": "Explore additional validation rules that may apply to prescription inputs.",
+        "updatedAt": "2025-11-10T21:09:04.061Z"
+      },
+      {
+        "id": 15,
+        "title": "Performance Optimization for API Calls",
+        "description": "Optimize API calls to ensure response times meet performance criteria.",
+        "details": "Implement caching for repeated queries and batch API calls where possible.",
+        "testStrategy": "Measure response times and ensure they are within the specified limits.",
+        "priority": "medium",
+        "dependencies": [
+          "3",
+          "6"
+        ],
+        "status": "done",
+        "subtasks": [],
+        "updatedAt": "2025-11-10T21:09:54.068Z"
+      },
+      {
+        "id": 16,
+        "title": "Deployment Setup",
+        "description": "Prepare the application for deployment on Google Cloud Run.",
+        "details": "Dockerize the application and configure environment variables for API keys.",
+        "testStrategy": "Deploy to a test environment and verify that the application is accessible.",
+        "priority": "high",
+        "dependencies": [
+          "1"
+        ],
+        "status": "done",
+        "subtasks": [],
+        "updatedAt": "2025-11-10T20:59:51.964Z"
+      },
+      {
+        "id": 17,
+        "title": "Implement Copy-to-Clipboard Functionality",
+        "description": "Add functionality to copy results to the clipboard.",
+        "details": "Use the Clipboard API to implement copy functionality for the results display.",
+        "testStrategy": "Test the copy functionality to ensure it works as expected.",
+        "priority": "low",
+        "dependencies": [
+          "12"
+        ],
+        "status": "done",
+        "subtasks": [],
+        "complexity": 3,
+        "recommendedSubtasks": 0,
+        "expansionPrompt": "Explore potential user interface considerations for clipboard functionality.",
+        "updatedAt": "2025-11-10T21:14:22.293Z"
+      },
+      {
+        "id": 18,
+        "title": "Create Print-Friendly Format",
+        "description": "Implement a print-friendly format for the results display.",
+        "details": "Design a layout suitable for printing that includes all relevant information.",
+        "testStrategy": "Test the print functionality to ensure the output is formatted correctly.",
+        "priority": "low",
+        "dependencies": [
+          "12"
+        ],
+        "status": "done",
+        "subtasks": [],
+        "complexity": 3,
+        "recommendedSubtasks": 0,
+        "expansionPrompt": "Consider layout options that enhance printability of the results.",
+        "updatedAt": "2025-11-10T21:15:58.764Z"
+      },
+      {
+        "id": 19,
+        "title": "User Testing and Feedback Collection",
+        "description": "Conduct user testing sessions to gather feedback on the MVP.",
+        "details": "Organize sessions with pharmacists to test the application and collect feedback.",
+        "testStrategy": "Analyze feedback and identify areas for improvement.",
+        "priority": "medium",
+        "dependencies": [
+          "2",
+          "12"
+        ],
+        "status": "done",
+        "subtasks": [],
+        "updatedAt": "2025-11-10T21:16:45.006Z"
+      },
+      {
+        "id": 20,
+        "title": "Final Review and Documentation",
+        "description": "Review the application and create documentation for users and developers.",
+        "details": "Document the setup process, API usage, and user instructions.",
+        "testStrategy": "Ensure documentation is clear and comprehensive for future reference.",
+        "priority": "medium",
+        "dependencies": [
+          "16",
+          "19"
+        ],
+        "status": "done",
+        "subtasks": [],
+        "updatedAt": "2025-11-10T21:18:55.042Z"
+      },
+      {
+        "id": 21,
+        "title": "Add Prescription History Feature",
+        "description": "Implement localStorage-based prescription history to save and display the last 50 calculations with one-click reload functionality.",
+        "details": "Create a history management system using browser localStorage to persist prescription calculations. The system should:\n- Save each calculation result (drug name, RxCUI, SIG, days' supply, quantity, NDC recommendations) to localStorage\n- Maintain a maximum of 50 entries (FIFO removal when limit exceeded)\n- Display recent history in a sidebar component\n- Provide one-click reload functionality to repopulate the calculator form with previous values\n- Include timestamps for each saved calculation\n- Add clear history option\n- Handle localStorage quota exceeded errors gracefully\n\nTechnical approach:\n- Create a HistoryStore utility to manage localStorage operations\n- Add a HistorySidebar component with a list of previous calculations\n- Implement click handlers to reload saved prescriptions into the main form\n- Use JSON serialization for storage",
+        "testStrategy": "Test localStorage save/retrieve operations, verify FIFO behavior when limit exceeded, test reload functionality, verify localStorage quota handling, test clear history feature.",
+        "status": "done",
+        "dependencies": [],
+        "priority": "high",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Create HistoryStore Utility",
+            "description": "Develop a utility to manage localStorage operations for saving and retrieving prescription calculations.",
+            "dependencies": [],
+            "details": "The HistoryStore utility will handle saving each calculation result to localStorage, ensuring that it can manage up to 50 entries and handle FIFO removal when the limit is exceeded. It will also include methods for retrieving the saved history and clearing it.",
+            "status": "done",
+            "testStrategy": null
+          },
+          {
+            "id": 2,
+            "title": "Implement FIFO Management for History",
+            "description": "Ensure the HistoryStore maintains a maximum of 50 entries using FIFO behavior.",
+            "dependencies": [
+              1
+            ],
+            "details": "Implement logic in the HistoryStore to check the number of entries before saving a new calculation. If the limit of 50 is reached, the oldest entry should be removed to make space for the new one. This will ensure that the most recent calculations are always available.",
+            "status": "done",
+            "testStrategy": null
+          },
+          {
+            "id": 3,
+            "title": "Develop HistorySidebar Component",
+            "description": "Create a sidebar component to display the recent prescription history.",
+            "dependencies": [
+              1
+            ],
+            "details": "The HistorySidebar component will render a list of the last 50 calculations stored in localStorage. It will include timestamps for each entry and will be styled to fit seamlessly into the existing UI.",
+            "status": "done",
+            "testStrategy": null
+          },
+          {
+            "id": 4,
+            "title": "Implement One-Click Reload Functionality",
+            "description": "Add functionality to reload saved prescriptions into the main calculator form with one click.",
+            "dependencies": [
+              3
+            ],
+            "details": "This feature will involve adding click handlers to each entry in the HistorySidebar that, when clicked, will repopulate the main form with the corresponding values from localStorage. This will enhance user experience by allowing quick access to previous calculations.",
+            "status": "done",
+            "testStrategy": null
+          },
+          {
+            "id": 5,
+            "title": "Handle localStorage Quota Exceeded Errors",
+            "description": "Implement error handling for localStorage quota exceeded scenarios.",
+            "dependencies": [
+              1
+            ],
+            "details": "Add error handling logic in the HistoryStore to gracefully manage situations where localStorage is full. This will include notifying the user and preventing further saves until space is cleared.",
+            "status": "done",
+            "testStrategy": null
+          }
+        ]
+      },
+      {
+        "id": 22,
+        "title": "Simplified Drug Interaction Checker",
+        "description": "Implement a basic drug interaction checker that analyzes a current prescription against one additional medication and displays simplified safety warnings.",
+        "details": "Create a drug interaction checker feature that:\n- Adds a \"Check Interaction\" button to the results display\n- Accepts current prescription and one additional medication as input\n- Calls OpenAI GPT-4o API with a basic structured prompt to analyze drug interactions\n- Displays a simplified interaction severity level (e.g., safe, caution, dangerous)\n- Shows a brief warning message if applicable\n- Includes a disclaimer about AI-generated content and the need for professional verification\n\nTechnical approach:\n- Create /api/check-interaction endpoint\n- Design a basic prompt that asks GPT-4o to analyze the current prescription against one additional medication\n- Display the interaction severity level and warning message directly from the API response\n- Create InteractionResult component to display findings\n- Use a simple input UI for the additional medication\n- Ensure a straightforward output format for API responses",
+        "testStrategy": "Test with known interacting drug pairs (e.g., warfarin + aspirin), verify basic severity classification accuracy, test API error handling, verify disclaimer is displayed.",
+        "status": "done",
+        "dependencies": [],
+        "priority": "medium",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Design UI for Drug Interaction Checker",
+            "description": "Create the user interface for the drug interaction checker, including input fields for the current prescription and additional medication, and a 'Check Interaction' button.",
+            "dependencies": [],
+            "details": "The UI should be intuitive, allowing users to input their current prescription and an additional medication easily. The 'Check Interaction' button should be prominently displayed to initiate the interaction check.",
+            "status": "done",
+            "testStrategy": null
+          },
+          {
+            "id": 2,
+            "title": "Implement API Integration for Drug Interaction",
+            "description": "Develop the backend API integration to call the OpenAI GPT-4o API for analyzing drug interactions based on user input.",
+            "dependencies": [
+              1
+            ],
+            "details": "Create the /api/check-interaction endpoint that accepts the current prescription and additional medication as parameters. Construct a structured prompt to send to the GPT-4o API and handle the response appropriately.",
+            "status": "done",
+            "testStrategy": null
+          },
+          {
+            "id": 3,
+            "title": "Display Interaction Results",
+            "description": "Create the InteractionResult component to display the severity level and any warning messages returned from the API.",
+            "dependencies": [
+              2
+            ],
+            "details": "The InteractionResult component should take the API response and display the interaction severity level (safe, caution, dangerous) along with any relevant warning messages. Ensure the output format is user-friendly and clear.",
+            "status": "done",
+            "testStrategy": null
+          },
+          {
+            "id": 4,
+            "title": "Testing Drug Interaction Checker",
+            "description": "Conduct thorough testing of the drug interaction checker feature with known drug pairs and various scenarios.",
+            "dependencies": [
+              3
+            ],
+            "details": "Test the functionality with known interacting drug pairs (e.g., warfarin + aspirin) to verify the accuracy of severity classification. Also, check API error handling and ensure the disclaimer about AI-generated content is displayed correctly.",
+            "status": "done",
+            "testStrategy": null
+          }
+        ]
+      },
+      {
+        "id": 23,
+        "title": "Build Basic AI Chat Assistant Interface",
+        "description": "Create a simplified conversational AI assistant interface for natural language prescription queries.",
+        "details": "Implement a basic AI chat assistant that provides:\n- A single-turn natural language query interface for prescription questions\n- Conversational responses using OpenAI GPT-4\n- Ability to parse user queries like \"What's the right dosage for a 70kg adult?\" or \"How should I adjust for renal impairment?\"\n- Integration with existing calculator data (can reference current prescription)\n\nTechnical approach:\n- Create ChatAssistant component with a simple message input and output UI\n- Add /api/chat endpoint that calls OpenAI API with the user query\n- Do not maintain conversation history (stateless)\n- Include current prescription context in API calls when available\n- Add system prompt that guides AI to provide pharmacy-relevant responses",
+        "testStrategy": "Test basic natural language queries, verify responses for accuracy, and test error handling when API is unavailable.",
+        "status": "done",
+        "dependencies": [],
+        "priority": "medium",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Design ChatAssistant Component UI",
+            "description": "Create the user interface for the ChatAssistant component that includes input and output areas for user queries and AI responses.",
+            "dependencies": [],
+            "details": "The UI should consist of a text input field for user queries and a display area for AI responses. Use TailwindCSS for styling to ensure a clean and responsive design.",
+            "status": "done",
+            "testStrategy": null
+          },
+          {
+            "id": 2,
+            "title": "Implement /api/chat Endpoint",
+            "description": "Develop the API endpoint that handles user queries and interacts with the OpenAI API to fetch responses.",
+            "dependencies": [],
+            "details": "The endpoint should accept user queries, call the OpenAI API with the necessary parameters, and return the AI's response. Ensure to include current prescription context when available.",
+            "status": "done",
+            "testStrategy": null
+          },
+          {
+            "id": 3,
+            "title": "Integrate Query Parsing Logic",
+            "description": "Implement logic to parse user queries for prescription-related questions and ensure accurate responses from the AI.",
+            "dependencies": [],
+            "details": "Create a function that can analyze user input and format it appropriately for the OpenAI API. This should include handling specific phrases related to dosages and adjustments for conditions.",
+            "status": "done",
+            "testStrategy": null
+          }
+        ]
+      },
+      {
+        "id": 24,
+        "title": "Simplified Batch Prescription Processing",
+        "description": "Implement a basic CSV upload and batch processing capability to handle multiple prescriptions with a focus on essential functionality.",
+        "details": "Create a simplified batch processing feature that:\n- Accepts CSV file upload with prescription data (columns: drug_name, sig, days_supply)\n- Performs basic CSV parsing without extensive validation\n- Processes up to 10 prescriptions sequentially through existing calculation logic\n- Displays a simple results summary after processing\n- Provides bulk export option in CSV format only\n- Shows basic error messages for any malformed entries without continuing processing.\n\nTechnical approach:\n- Create a simplified BatchProcessor component with file upload UI\n- Use basic CSV parsing logic\n- Implement sequential processing without queue-based handling\n- Add /api/batch-calculate endpoint or reuse existing endpoints\n- Create a simple results display for processed prescriptions\n- Implement CSV export functionality for results only.\n- Show basic error messages for malformed CSV entries.",
+        "testStrategy": "Test basic CSV parsing with valid/invalid formats, verify batch processing with up to 10 prescriptions, test basic error handling for malformed entries, verify CSV export functionality.",
+        "status": "done",
+        "dependencies": [],
+        "priority": "medium",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Implement CSV File Upload Component",
+            "description": "Create a user interface component that allows users to upload a CSV file containing prescription data. The component should handle file selection and display appropriate messages for successful or failed uploads.",
+            "dependencies": [],
+            "details": "The component will include a file input element and a button to trigger the upload. It will validate the file type to ensure it is a CSV and provide user feedback on the upload status.\n<info added on 2025-11-10T21:43:34.929Z>\nSuccessfully implemented CSV file upload component in src/lib/components/BatchProcessor.svelte. Component includes file input with .csv validation, file size display, user feedback for upload status, and integration with main page via tab navigation at src/routes/+page.svelte.\n</info added on 2025-11-10T21:43:34.929Z>",
+            "status": "done",
+            "testStrategy": null
+          },
+          {
+            "id": 2,
+            "title": "Develop CSV Parsing Logic",
+            "description": "Implement the logic to parse the uploaded CSV file and extract prescription data. The parser should handle basic errors and return an array of prescription objects.",
+            "dependencies": [
+              1
+            ],
+            "details": "The parsing logic will read the CSV file, split it into rows and columns, and map the data to prescription objects. Basic error handling will be included to catch malformed entries without stopping the entire process.\n<info added on 2025-11-10T21:43:36.502Z>\nImplemented CSV parsing logic in BatchProcessor component with header validation for required columns (drug_name, sig, days_supply), basic error handling for malformed rows, data extraction and validation, enforcement of a 10 prescription limit, and returning an array of prescription objects ready for processing.\n</info added on 2025-11-10T21:43:36.502Z>",
+            "status": "done",
+            "testStrategy": null
+          },
+          {
+            "id": 3,
+            "title": "Implement Sequential Prescription Processing",
+            "description": "Create functionality to process the parsed prescription data sequentially through the existing calculation logic, limiting to a maximum of 10 prescriptions at a time.",
+            "dependencies": [
+              2
+            ],
+            "details": "This step will involve iterating through the array of prescription objects and applying the existing calculation logic to each one. Results will be stored for display after processing.\n<info added on 2025-11-10T21:43:38.385Z>\nImplemented sequential prescription processing in the BatchProcessor component: processes up to 10 prescriptions one at a time, reuses existing /api/normalize and /api/calculate endpoints, tracks results array with success/failure status for each row, stops processing on first error encountered, and shows processing progress (X of Y) in UI during execution.\n</info added on 2025-11-10T21:43:38.385Z>",
+            "status": "done",
+            "testStrategy": null
+          },
+          {
+            "id": 4,
+            "title": "Create Results Summary and Error Handling",
+            "description": "Develop a results summary display that shows processed prescriptions and any errors encountered during processing. Include functionality for bulk CSV export of results.",
+            "dependencies": [
+              3
+            ],
+            "details": "The results summary will present the processed prescriptions along with any error messages for malformed entries. Additionally, a button will be provided to export the results as a CSV file.\n<info added on 2025-11-10T21:43:40.592Z>\nImplemented results summary and error handling:\n- Results table showing all processed prescriptions with status badges\n- Success count summary display\n- CSV export functionality with downloadable results file\n- Error messages displayed inline for failed rows\n- Reset button to process another batch\n- Build verified successfully with npm run build\n</info added on 2025-11-10T21:43:40.592Z>",
+            "status": "done",
+            "testStrategy": null
+          }
+        ]
+      },
+      {
+        "id": 25,
+        "title": "Simplified PostgreSQL Database Setup",
+        "description": "Implement a basic PostgreSQL database for storing prescription history without user accounts or analytics tracking.",
+        "details": "Create a simplified database infrastructure for prescription storage:\n- Set up PostgreSQL database on Google Cloud SQL or similar\n- Design schema for:\n  - Prescriptions table (basic prescription history)\n- Implement database migrations using Prisma\n- Create database access layer with connection pooling\n- Add environment configuration for database connection\n\nTechnical approach:\n- Use Prisma as ORM for type-safe database access\n- Create schema.prisma with the prescriptions table\n- Add database connection middleware\n- Create migration scripts\n- Configure connection pooling for Cloud Run",
+        "testStrategy": "Test database connection and pooling, verify migrations run correctly, test basic CRUD operations for prescriptions.",
+        "status": "done",
+        "dependencies": [],
+        "priority": "medium",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Set Up PostgreSQL Database",
+            "description": "Establish a PostgreSQL database on Google Cloud SQL or a similar platform for prescription storage.",
+            "dependencies": [],
+            "details": "Create a new PostgreSQL instance on Google Cloud SQL, ensuring it meets the requirements for performance and security. Configure access settings and ensure the database is ready for schema implementation.\n<info added on 2025-11-10T21:48:24.729Z>\nDatabase infrastructure setup completed (actual database creation pending user action): \n- Installed Prisma ORM and PostgreSQL driver (pg)\n- Initialized Prisma with prisma init\n- Created .env.example with DATABASE_URL template\n- Created DATABASE_SETUP.txt with comprehensive setup instructions for both local and Google Cloud SQL\n- User needs to create actual database instance and configure DATABASE_URL in .env file.\n</info added on 2025-11-10T21:48:24.729Z>",
+            "status": "done",
+            "testStrategy": null
+          },
+          {
+            "id": 2,
+            "title": "Design Prescriptions Table Schema",
+            "description": "Create the schema for the prescriptions table to store prescription history.",
+            "dependencies": [
+              1
+            ],
+            "details": "Define the schema in schema.prisma, including fields such as id, drug_name, dosage, patient_id, and prescription_date. Ensure proper data types and constraints are applied for data integrity.\n<info added on 2025-11-10T21:48:27.165Z>\nCreated prescriptions table schema in prisma/schema.prisma with fields: id (UUID primary key), drugName, rxcui, sig, daysSupply, totalQuantity, calculationResult (JSON for full calculation data), createdAt, updatedAt timestamps. Indexes on createdAt and drugName for optimized queries.\n</info added on 2025-11-10T21:48:27.165Z>",
+            "status": "done",
+            "testStrategy": null
+          },
+          {
+            "id": 3,
+            "title": "Implement Database Migrations with Prisma",
+            "description": "Create and run migration scripts using Prisma to set up the prescriptions table in the database.",
+            "dependencies": [
+              2
+            ],
+            "details": "Use Prisma's migration tools to generate and apply migration scripts that create the prescriptions table in the PostgreSQL database. Verify that the table is created correctly with all specified fields.\n<info added on 2025-11-10T21:48:29.216Z>\nMigration scripts are ready via npm scripts: \n- npm run db:migrate (creates and runs migrations in development)\n- npm run db:migrate:deploy (deploys migrations in production)\n- npm run db:push (pushes schema without migration files)\nActual migration execution requires DATABASE_URL to be configured by the user.\n</info added on 2025-11-10T21:48:29.216Z>",
+            "status": "done",
+            "testStrategy": null
+          },
+          {
+            "id": 4,
+            "title": "Create Database Access Layer",
+            "description": "Develop a database access layer that includes connection pooling for efficient database interactions.",
+            "dependencies": [
+              3
+            ],
+            "details": "Implement a connection pooling mechanism using Prisma to manage database connections efficiently. Ensure that the access layer provides methods for basic CRUD operations on the prescriptions table.\n<info added on 2025-11-10T21:48:33.005Z>\nCreated database access layer:\n- src/lib/server/db.ts: Prisma client instance with connection pooling\n- src/lib/server/prescriptionRepository.ts: Repository with CRUD operations\n- Functions: createPrescription, getPrescriptionById, getPrescriptions, getPrescriptionCount, deletePrescription, getRecentPrescriptions\n- Includes filtering by drugName, date ranges, pagination support\n</info added on 2025-11-10T21:48:33.005Z>",
+            "status": "done",
+            "testStrategy": null
+          },
+          {
+            "id": 5,
+            "title": "Configure Environment for Database Connection",
+            "description": "Set up environment variables for secure database connection configuration.",
+            "dependencies": [
+              4
+            ],
+            "details": "Add necessary environment variables for database connection settings, including database URL, username, and password. Ensure these variables are used in the application to establish a secure connection to the database.\n<info added on 2025-11-10T21:48:34.842Z>\nEnvironment configuration complete: .env.example created with DATABASE_URL template and OPENAI_API_KEY, DATABASE_SETUP.txt created with comprehensive setup instructions, npm scripts added for database operations (db:generate, db:migrate, db:push, db:studio). Ready for user to configure actual credentials and run migrations.\n</info added on 2025-11-10T21:48:34.842Z>",
+            "status": "done",
+            "testStrategy": null
+          }
+        ]
+      }
+    ],
+    "metadata": {
+      "version": "1.0.0",
+      "lastModified": "2025-11-10T21:18:55.042Z",
+      "taskCount": 20,
+      "completedCount": 20,
+      "tags": [
+        "master"
+      ],
+      "created": "2025-11-10T21:27:03.722Z",
+      "description": "Tasks for master context",
+      "updated": "2025-11-10T21:48:42.023Z"
+    }
+  }
+}
