@@ -4,6 +4,18 @@ import { parseSIG, validateSIG } from '$lib/server/openai';
 import { calculateQuantity, recommendPackages, validateDaysSupply } from '$lib/server/calculations';
 import { getNDCsForDrug } from '$lib/server/fda';
 
+/**
+ * Quantity Calculation API Endpoint
+ *
+ * POST /api/calculate
+ * Calculates dispensed quantity based on prescription details
+ *
+ * Security:
+ * - Input validation on all fields
+ * - OpenAI API used for SIG parsing (API key required)
+ * - SIG patterns cached to reduce API calls
+ * - No PHI stored, prescription data is transactional
+ */
 export const POST: RequestHandler = async ({ request }) => {
 	try {
 		const { rxcui, sig, daysSupply, drugName } = await request.json();

@@ -28,3 +28,46 @@ model Prescription {
   @@index([drugName])
   @@map("prescriptions")
 }
+
+// Medication Normalization Tracking
+model NormalizationMetric {
+  id                String   @id @default(uuid())
+  drugInput         String   // Original drug input
+  rxcui             String?  // Resulting RxCUI (null if failed)
+  success           Boolean  // Whether normalization succeeded
+  responseTime      Int      // Response time in milliseconds
+  errorMessage      String?  // Error message if failed
+  createdAt         DateTime @default(now())
+
+  @@index([createdAt])
+  @@index([success])
+  @@map("normalization_metrics")
+}
+
+// Claim Rejection Tracking
+model ClaimRejectionMetric {
+  id                String   @id @default(uuid())
+  prescriptionId    String   // Reference to prescription
+  ndcCode           String?  // NDC code used
+  rejectionReason   String?  // Reason for rejection (if any)
+  rejected          Boolean  // Whether claim was rejected
+  createdAt         DateTime @default(now())
+
+  @@index([createdAt])
+  @@index([rejected])
+  @@map("claim_rejection_metrics")
+}
+
+// User Satisfaction Tracking
+model UserSatisfactionMetric {
+  id                String   @id @default(uuid())
+  rating            Int      // Rating 1-5
+  feature           String?  // Which feature was rated (optional)
+  feedback          String?  // Optional user feedback
+  sessionId         String?  // Optional session identifier
+  createdAt         DateTime @default(now())
+
+  @@index([createdAt])
+  @@index([rating])
+  @@map("user_satisfaction_metrics")
+}
