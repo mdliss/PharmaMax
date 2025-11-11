@@ -1,0 +1,142 @@
+================================
+SECURITY & COMPLIANCE NOTICE
+================================
+
+APPLICATION: PharmaMax - NDC Packaging & Quantity Calculator
+ORGANIZATION: Foundation Health
+LAST UPDATED: 2025-11-10
+
+INTENDED USE
+------------
+This application is designed for use by licensed pharmacists and pharmacy technicians
+to assist with prescription fulfillment calculations. It is NOT intended for:
+- Direct patient use
+- Storing protected health information (PHI)
+- Making clinical decisions without professional oversight
+- Replacing professional judgment
+
+DATA HANDLING
+-------------
+API Keys & Credentials:
+- All API keys stored in environment variables (.env file)
+- Never commit .env files to version control
+- Use separate keys for development/production
+
+Database:
+- PostgreSQL database for application data
+- Connection string stored securely in environment
+- No PHI stored directly (prescription history is operational data only)
+- Metrics are anonymized and aggregated
+
+External API Usage:
+- RxNorm API: Drug normalization (public, no authentication)
+- FDA NDC Directory API: NDC lookups (public, rate-limited)
+- OpenAI API: SIG parsing and drug interaction checks (key required)
+
+SECURITY PRACTICES
+------------------
+1. Input Validation
+   - All API endpoints validate input parameters
+   - Drug names sanitized before external API calls
+   - SQL injection protection via Prisma ORM
+
+2. Error Handling
+   - Errors logged without exposing sensitive details
+   - User-friendly error messages
+   - No stack traces in production responses
+
+3. API Rate Limiting
+   - Caching implemented for OpenAI calls
+   - Reduces costs and improves performance
+   - Prevents abuse of external APIs
+
+4. Environment Variables
+   Required:
+   - DATABASE_URL: PostgreSQL connection string
+   - OPENAI_API_KEY: For SIG parsing and interactions
+
+   Optional (for production monitoring):
+   - NODE_ENV: Set to 'production' for production deployment
+
+COMPLIANCE CONSIDERATIONS
+--------------------------
+HIPAA Compliance:
+- This application assists with prescription processing but does not
+  directly handle electronic PHI subject to HIPAA regulations
+- If deployed in a HIPAA-covered entity, additional safeguards required:
+  * Business Associate Agreement with cloud provider
+  * Audit logging of all data access
+  * Encryption at rest and in transit
+  * Access controls and authentication
+
+Recommendation:
+- Consult with legal/compliance team before production deployment
+- Implement additional authentication/authorization if handling PHI
+- Consider HIPAA-compliant hosting (e.g., GCP with BAA)
+- Add audit trail for all prescription calculations if required
+
+DEPLOYMENT SECURITY
+-------------------
+Production Checklist:
+□ Environment variables properly configured
+□ Database secured with strong passwords
+□ HTTPS/TLS enabled for all traffic
+□ API keys rotated regularly
+□ Monitoring and alerting configured
+□ Regular security updates applied
+□ Access logs enabled
+□ Rate limiting configured
+□ CORS properly configured for allowed origins
+
+Google Cloud Platform Deployment:
+- Use Secret Manager for sensitive configuration
+- Enable Cloud Armor for DDoS protection
+- Configure VPC for database access
+- Enable Cloud Logging and Monitoring
+- Use IAM for access control
+
+PRIVACY POLICY CONSIDERATIONS
+------------------------------
+If user-facing, application should include:
+- Clear statement of data collection
+- Purpose of OpenAI API usage for SIG parsing
+- Data retention policies
+- User rights regarding their data
+- Contact information for privacy concerns
+
+TERMS OF SERVICE
+----------------
+Application should include disclaimers:
+- Professional judgment required for all clinical decisions
+- System for informational purposes only
+- No liability for errors or omissions
+- Compliance with local pharmacy regulations required
+- Licensed pharmacist must verify all calculations
+
+SUPPORT & REPORTING
+-------------------
+Security Issues:
+- Report security vulnerabilities immediately to Foundation Health security team
+- Do not disclose security issues publicly until patched
+
+Questions:
+- Contact Foundation Health IT department for deployment assistance
+- Consult legal/compliance team for regulatory questions
+
+AUDIT & MONITORING
+------------------
+Metrics tracked (see /api/metrics):
+- Normalization accuracy rate (target: 95%+)
+- User satisfaction ratings (target: 4.5/5)
+- API response times (target: <2s)
+
+Logs should include:
+- Failed authentication attempts (if auth implemented)
+- API errors and failures
+- Database connection issues
+- External API failures
+- Rate limit violations
+
+================================
+END OF SECURITY & COMPLIANCE NOTICE
+================================

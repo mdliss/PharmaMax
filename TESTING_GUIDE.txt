@@ -1,0 +1,428 @@
+================================
+PHARMAMAX TESTING GUIDE
+================================
+
+This guide helps you verify all PRD requirements are met.
+
+================================
+PRE-TESTING CHECKLIST
+================================
+
+1. Start the development server:
+   npm run dev
+
+2. Open browser to: http://localhost:5173
+
+3. Open browser console (F12) to monitor errors
+
+================================
+P0 REQUIREMENTS TESTING
+================================
+
+TEST 1: Basic Drug Normalization & Calculation
+-----------------------------------------------
+Input:
+- Drug: "Lisinopril 10mg"
+- SIG: "Take 1 tablet by mouth daily"
+- Days Supply: 30
+
+Expected Results:
+✓ Drug normalizes successfully
+✓ Shows RxCUI (should be around 314076 or similar)
+✓ Calculates 30 tablets needed
+✓ Shows available NDCs with package sizes
+✓ Displays "Active" or "Inactive" status for each NDC
+✓ Recommends optimal package combination
+✓ Shows overfill if any packages exceed exact quantity
+
+TEST 2: Inactive NDC Highlighting
+----------------------------------
+Instructions:
+1. Complete any calculation
+2. Look at the "Available NDCs" table
+3. Find any NDCs marked "Inactive"
+
+Expected:
+✓ Inactive NDCs have red badge saying "Inactive"
+✓ Inactive NDC rows appear slightly dimmed (opacity: 0.5)
+✓ Active NDCs have green badge saying "Active"
+
+TEST 3: Complex SIG Parsing (Twice Daily)
+------------------------------------------
+Input:
+- Drug: "Metformin 500mg"
+- SIG: "Take 1 tablet by mouth twice daily with meals"
+- Days Supply: 30
+
+Expected:
+✓ Parses dose: 1 tablet
+✓ Parses frequency: 2x per day
+✓ Calculates total: 60 tablets (1 × 2 × 30)
+✓ Shows "Oral Solid" dosage form badge
+
+TEST 4: Overfill Calculation
+-----------------------------
+Input:
+- Drug: "Aspirin 81mg"
+- SIG: "Take 1 tablet daily"
+- Days Supply: 37
+
+Expected:
+✓ Calculates 37 tablets needed
+✓ If packages come in bottles of 30 or 100, shows overfill
+✓ Displays overfill amount and percentage
+✓ Example: "2 packages of 30 = 60 tablets, Overfill: 23 (62.2%)"
+
+================================
+P1 REQUIREMENTS TESTING
+================================
+
+TEST 5: Liquid Medications
+---------------------------
+Input:
+- Drug: "Amoxicillin 250mg/5ml"
+- SIG: "Take 10 ml by mouth three times daily"
+- Days Supply: 10
+
+Expected:
+✓ Shows "Liquid" badge in blue
+✓ Calculates 300 mL total (10 × 3 × 10)
+✓ Displays liquid-specific note about bottle sizes
+✓ Unit shows as "mL"
+
+TEST 6: Insulin
+---------------
+Input:
+- Drug: "Insulin Lispro"
+- SIG: "Inject 15 units subcutaneously before meals three times daily"
+- Days Supply: 30
+
+Expected:
+✓ Shows "Insulin" badge in purple
+✓ Calculates 1,350 units total (15 × 3 × 30)
+✓ Shows insulin-specific note about vial/pen sizes
+✓ Unit shows as "units"
+
+TEST 7: Inhalers
+----------------
+Input:
+- Drug: "Albuterol Inhaler"
+- SIG: "Inhale 2 puffs twice daily"
+- Days Supply: 30
+
+Expected:
+✓ Shows "Inhaler" badge in light blue
+✓ Calculates 120 puffs total (2 × 2 × 30)
+✓ Shows inhaler-specific note about dose counts
+✓ Unit shows as "puffs"
+
+================================
+ADDITIONAL FEATURES TESTING
+================================
+
+TEST 8: Drug Interaction Checker
+---------------------------------
+Instructions:
+1. Complete any prescription calculation
+2. Scroll to "Drug Interaction Checker" section
+3. Enter another medication (e.g., "Warfarin" if you used "Aspirin")
+4. Click "Check Interaction"
+
+Expected:
+✓ Shows severity level (Safe/Caution/Dangerous)
+✓ Displays warning text
+✓ Provides recommendation
+✓ Results appear quickly (<2 seconds, or instant if cached)
+
+TEST 9: AI Chat Assistant
+--------------------------
+Instructions:
+1. Complete any prescription calculation
+2. Scroll to "Ask PharmaMax Assistant" section
+3. Ask a question like: "What are common side effects?"
+4. Click "Ask"
+
+Expected:
+✓ Gets response from AI within seconds
+✓ Response is relevant to the medication
+✓ Can ask follow-up questions
+✓ Shows thinking indicator while processing
+
+TEST 10: Prescription History
+------------------------------
+Instructions:
+1. Complete 2-3 different calculations
+2. Click the history icon/button (should be in sidebar)
+3. View your history
+
+Expected:
+✓ Shows all recent calculations
+✓ Can click to reload a previous calculation
+✓ Shows drug name, SIG, and timestamp
+
+TEST 11: Batch Processing
+--------------------------
+Instructions:
+1. Click "Batch Processing" tab
+2. Upload or paste CSV with multiple prescriptions
+3. Process batch
+
+Expected:
+✓ Processes multiple prescriptions
+✓ Shows results for each
+✓ Can export results
+
+TEST 12: Copy to Clipboard
+---------------------------
+Instructions:
+1. Complete any calculation
+2. Click "Copy All Results" button
+3. Paste into a text editor
+
+Expected:
+✓ Copies formatted text with all details
+✓ Includes drug name, RxCUI, SIG, calculations
+✓ Includes NDC recommendations
+✓ Shows "Copied!" confirmation
+
+TEST 13: Print Functionality
+-----------------------------
+Instructions:
+1. Complete any calculation
+2. Click "Print" button
+3. Check print preview
+
+Expected:
+✓ Print-friendly layout
+✓ Removes interactive elements (buttons, widgets)
+✓ Maintains all important information
+✓ Readable formatting
+
+TEST 14: User Satisfaction Widget
+----------------------------------
+Instructions:
+1. Look for widget in bottom-right corner
+2. Click on star rating (1-5 stars)
+3. Optionally add feedback
+4. Click "Submit Rating"
+
+Expected:
+✓ Widget appears in bottom-right
+✓ Can select 1-5 stars (stars turn gold when selected)
+✓ Can add optional text feedback
+✓ Shows "Thank you!" message after submission
+✓ Widget disappears after 3 seconds
+✓ Can close widget with X button
+
+================================
+PERFORMANCE TESTING
+================================
+
+TEST 15: Response Time (<2 seconds)
+------------------------------------
+Instructions:
+1. Open browser DevTools Network tab
+2. Complete a calculation
+3. Check timing for API calls
+
+Expected:
+✓ /api/normalize completes in <2s (usually <1s)
+✓ /api/calculate completes in <2s
+✓ Second attempt is much faster (cached)
+✓ Total page response feels snappy
+
+Quick Test:
+npm run benchmark
+
+Expected Output:
+✓ All 7 tests pass
+✓ Average response time <500ms (with cache)
+✓ Max response time <2000ms
+
+================================
+METRICS TRACKING TESTING
+================================
+
+TEST 16: Verify Metrics Are Being Tracked
+------------------------------------------
+Instructions:
+1. Complete 5-10 calculations (mix of success/failures)
+2. Submit 2-3 satisfaction ratings
+3. Open: http://localhost:5173/api/metrics
+
+Expected JSON Response:
+{
+  "success": true,
+  "metrics": {
+    "normalizationAccuracy": {
+      "totalAttempts": 10,
+      "successfulAttempts": 9,
+      "accuracyRate": 90,    ← Should be >95% in production
+      "averageResponseTime": 500
+    },
+    "claimRejections": {
+      "totalClaims": 0,
+      "rejectedClaims": 0,
+      "rejectionRate": 0
+    },
+    "userSatisfaction": {
+      "totalRatings": 3,
+      "averageRating": 4.5,   ← Target: 4.5+
+      "ratingDistribution": {...}
+    }
+  }
+}
+
+================================
+ERROR HANDLING TESTING
+================================
+
+TEST 17: Invalid Drug Name
+---------------------------
+Input:
+- Drug: "XYZABC999" (nonsense)
+- SIG: "Take 1 tablet daily"
+- Days Supply: 30
+
+Expected:
+✓ Shows error message
+✓ Does NOT crash
+✓ Error is user-friendly
+
+TEST 18: Invalid SIG
+---------------------
+Input:
+- Drug: "Aspirin"
+- SIG: "xyz" (too short/invalid)
+- Days Supply: 30
+
+Expected:
+✓ Shows validation error
+✓ Prevents submission OR shows clear error
+
+TEST 19: Invalid Days Supply
+-----------------------------
+Input:
+- Drug: "Aspirin"
+- SIG: "Take 1 tablet daily"
+- Days Supply: 0 or -5
+
+Expected:
+✓ HTML5 validation prevents submission
+✓ Shows "must be at least 1" message
+
+================================
+EDGE CASES
+================================
+
+TEST 20: Very Long Days Supply
+-------------------------------
+Input:
+- Days Supply: 365
+
+Expected:
+✓ Calculates correctly (e.g., 365 tablets for once daily)
+✓ No errors or timeouts
+
+TEST 21: Fractional Doses
+--------------------------
+Input:
+- SIG: "Take 0.5 tablet twice daily"
+
+Expected:
+✓ Parses correctly as 0.5 per dose
+✓ Calculates total correctly (e.g., 0.5 × 2 × 30 = 30)
+
+TEST 22: Multiple Drug Search
+------------------------------
+Try these common drugs:
+- "Lisinopril"
+- "Metformin"
+- "Atorvastatin"
+- "Omeprazole"
+- "Levothyroxine"
+
+Expected:
+✓ All normalize successfully
+✓ Return valid RxCUIs
+✓ Show available NDCs
+
+================================
+COMPLIANCE & SECURITY
+================================
+
+TEST 23: Security Headers
+--------------------------
+Instructions:
+1. Open DevTools → Network
+2. Click on any API request
+3. Check Response Headers
+
+Expected:
+✓ No sensitive data in headers
+✓ No API keys exposed
+✓ Appropriate CORS headers (if needed)
+
+TEST 24: No PHI Storage
+------------------------
+Instructions:
+1. Complete a calculation
+2. Check browser localStorage/sessionStorage
+3. Check database (if accessible)
+
+Expected:
+✓ Only stores prescription data (not patient names/DOB/etc.)
+✓ History is optional and can be cleared
+✓ No PHI in metrics database
+
+================================
+SUCCESS CRITERIA SUMMARY
+================================
+
+Per PRD Section 3, verify:
+
+✓ Normalization Accuracy: 95%+ (check /api/metrics)
+✓ User Satisfaction: 4.5/5+ (check /api/metrics)
+✓ Claim Rejection Rate: Track in production (infrastructure ready)
+
+✓ Performance: <2 seconds per query (run npm run benchmark)
+✓ All P0 features working
+✓ All P1 features working
+
+================================
+QUICK SMOKE TEST
+================================
+
+If you only have 5 minutes, do this:
+
+1. Enter: "Aspirin" / "Take 1 tablet daily" / 30 days
+   → Should complete in <2 seconds
+   → Shows NDCs with Active/Inactive status
+   → Shows recommendation with overfill
+
+2. Click "Check Interaction" and test with "Warfarin"
+   → Shows severity and warning
+
+3. Check satisfaction widget in bottom-right
+   → Rate 5 stars and submit
+
+4. Run: curl http://localhost:5173/api/metrics | jq
+   → Shows metrics tracked
+
+5. Run: npm run benchmark
+   → All tests pass
+
+================================
+REPORTING ISSUES
+================================
+
+If any test fails:
+1. Note which test number
+2. Copy exact error message
+3. Check browser console for details
+4. Note steps to reproduce
+5. Report to development team
+
+================================
+END OF TESTING GUIDE
+================================
