@@ -20,7 +20,8 @@
 		output += `Days Supply: ${prescription.daysSupply} days\n\n`;
 
 		output += '💊 DOSING:\n';
-		output += `Dose: ${sigParsed.dosePerAdministration} per administration\n`;
+		output += `Dosage Form: ${sigParsed.dosageForm}\n`;
+		output += `Dose: ${sigParsed.dosePerAdministration} ${sigParsed.unit} per administration\n`;
 		output += `Frequency: ${sigParsed.frequencyPerDay}x daily\n`;
 		output += `Route: ${sigParsed.route}\n`;
 		output += `Total Daily: ${sigParsed.totalDailyDose} ${calculation.unit}/day\n\n`;
@@ -60,11 +61,49 @@
 	function printResults() {
 		window.print();
 	}
+
+	function exportJSON() {
+		const jsonOutput = {
+			prescription,
+			sigParsed,
+			calculation,
+			ndcs,
+			recommendation,
+			timestamp: new Date().toISOString()
+		};
+
+		const blob = new Blob([JSON.stringify(jsonOutput, null, 2)], { type: 'application/json' });
+		const url = URL.createObjectURL(blob);
+		const a = document.createElement('a');
+		a.href = url;
+		a.download = `prescription-${prescription.rxcui}-${Date.now()}.json`;
+		document.body.appendChild(a);
+		a.click();
+		document.body.removeChild(a);
+		URL.revokeObjectURL(url);
+	}
 </script>
 
 <div class="space-y-6">
 	<!-- Action Buttons -->
 	<div class="flex justify-end gap-3 print:hidden">
+		<button
+			on:click={exportJSON}
+			class="px-4 py-2 rounded-lg transition-colors flex items-center gap-2"
+			style="background-color: var(--border-color); color: var(--foreground);"
+			title="Export as JSON"
+		>
+			<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+				<path
+					stroke-linecap="round"
+					stroke-linejoin="round"
+					stroke-width="2"
+					d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+				/>
+			</svg>
+			Export JSON
+		</button>
+
 		<button
 			on:click={printResults}
 			class="px-4 py-2 rounded-lg transition-colors flex items-center gap-2"
@@ -108,6 +147,55 @@
 		</button>
 	</div>
 
+	<!-- Notification Banners -->
+	{#if ndcs.filter(ndc => !ndc.isActive).length > 0}
+		<div class="rounded-lg p-4 flex items-start gap-3 print:hidden" style="background-color: rgba(245, 158, 11, 0.15); border: 1px solid rgba(245, 158, 11, 0.4);">
+			<svg class="w-6 h-6 flex-shrink-0 mt-0.5" style="color: #f59e0b;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+			</svg>
+			<div class="flex-1">
+				<p class="font-semibold" style="color: #f59e0b;">
+					Inactive NDCs Found
+				</p>
+				<p class="text-sm mt-1" style="color: var(--text-secondary);">
+					{ndcs.filter(ndc => !ndc.isActive).length} inactive NDC{ndcs.filter(ndc => !ndc.isActive).length > 1 ? 's' : ''} detected and excluded from recommendations. These NDCs are no longer available from manufacturers and should not be dispensed.
+				</p>
+			</div>
+		</div>
+	{/if}
+
+	{#if recommendation.overfillPercentage > 50}
+		<div class="rounded-lg p-4 flex items-start gap-3 print:hidden" style="background-color: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.4);">
+			<svg class="w-6 h-6 flex-shrink-0 mt-0.5" style="color: #ef4444;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+			</svg>
+			<div class="flex-1">
+				<p class="font-semibold" style="color: #ef4444;">
+					High Overfill Warning
+				</p>
+				<p class="text-sm mt-1" style="color: var(--text-secondary);">
+					The recommended package combination results in {recommendation.overfillPercentage.toFixed(1)}% overfill ({recommendation.overfill} extra {calculation.unit}). Consider alternative package sizes or verify with prescriber if available.
+				</p>
+			</div>
+		</div>
+	{/if}
+
+	{#if recommendation.packages.length === 0}
+		<div class="rounded-lg p-4 flex items-start gap-3 print:hidden" style="background-color: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.4);">
+			<svg class="w-6 h-6 flex-shrink-0 mt-0.5" style="color: #ef4444;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+			</svg>
+			<div class="flex-1">
+				<p class="font-semibold" style="color: #ef4444;">
+					No Active Packages Available
+				</p>
+				<p class="text-sm mt-1" style="color: var(--text-secondary);">
+					No active NDCs are available to fulfill this prescription. All found NDCs are inactive. Please verify drug name or contact prescriber for alternative medication.
+				</p>
+			</div>
+		</div>
+	{/if}
+
 	<!-- Prescription Summary -->
 	<div class="card-hover rounded-lg p-6" style="background-color: var(--card-bg); border: 1px solid rgba(16, 185, 129, 0.3);">
 		<h3 class="text-xl font-semibold mb-4" style="color: var(--accent);">Prescription Summary</h3>
@@ -130,12 +218,23 @@
 
 	<!-- Parsed SIG Details -->
 	<div class="card-hover rounded-lg p-6" style="background-color: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3);">
-		<h3 class="text-xl font-semibold mb-4" style="color: var(--accent);">Parsed Instructions</h3>
+		<h3 class="text-xl font-semibold mb-4 flex items-center gap-2" style="color: var(--accent);">
+			Parsed Instructions
+			{#if sigParsed.dosageForm === 'liquid'}
+				<span class="text-sm px-2 py-1 rounded" style="background-color: rgba(59, 130, 246, 0.2); color: #3b82f6;">Liquid</span>
+			{:else if sigParsed.dosageForm === 'insulin'}
+				<span class="text-sm px-2 py-1 rounded" style="background-color: rgba(168, 85, 247, 0.2); color: #a855f7;">Insulin</span>
+			{:else if sigParsed.dosageForm === 'inhaler'}
+				<span class="text-sm px-2 py-1 rounded" style="background-color: rgba(14, 165, 233, 0.2); color: #0ea5e9;">Inhaler</span>
+			{:else if sigParsed.dosageForm === 'oral_solid'}
+				<span class="text-sm px-2 py-1 rounded" style="background-color: rgba(16, 185, 129, 0.2); color: #10b981;">Oral Solid</span>
+			{/if}
+		</h3>
 		<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
 			<div>
 				<p class="text-sm font-medium" style="color: var(--text-secondary);">Dose</p>
 				<p class="text-2xl font-bold" style="color: var(--accent);">{sigParsed.dosePerAdministration}</p>
-				<p class="text-sm" style="color: var(--text-muted);">per administration</p>
+				<p class="text-sm" style="color: var(--text-muted);">{sigParsed.unit} per administration</p>
 			</div>
 			<div>
 				<p class="text-sm font-medium" style="color: var(--text-secondary);">Frequency</p>
@@ -164,6 +263,24 @@
 		<p class="text-sm mt-2" style="color: var(--text-secondary);">
 			({sigParsed.totalDailyDose} {calculation.unit}/day × {prescription.daysSupply} days)
 		</p>
+
+		<!-- Special dosage form notes -->
+		{#if sigParsed.dosageForm === 'liquid'}
+			<div class="mt-4 p-3 rounded" style="background-color: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3);">
+				<p class="text-xs font-semibold" style="color: #3b82f6;">📋 Liquid Medication Note:</p>
+				<p class="text-xs mt-1" style="color: var(--text-secondary);">Verify bottle size matches total mL needed. Common sizes: 120mL, 240mL, 473mL (16oz).</p>
+			</div>
+		{:else if sigParsed.dosageForm === 'insulin'}
+			<div class="mt-4 p-3 rounded" style="background-color: rgba(168, 85, 247, 0.1); border: 1px solid rgba(168, 85, 247, 0.3);">
+				<p class="text-xs font-semibold" style="color: #a855f7;">💉 Insulin Note:</p>
+				<p class="text-xs mt-1" style="color: var(--text-secondary);">Standard vials contain 1000 units (10mL). Pens vary by type (typically 300 units per pen).</p>
+			</div>
+		{:else if sigParsed.dosageForm === 'inhaler'}
+			<div class="mt-4 p-3 rounded" style="background-color: rgba(14, 165, 233, 0.1); border: 1px solid rgba(14, 165, 233, 0.3);">
+				<p class="text-xs font-semibold" style="color: #0ea5e9;">🌬️ Inhaler Note:</p>
+				<p class="text-xs mt-1" style="color: var(--text-secondary);">Most inhalers contain 60, 90, 120, or 200 doses. Check product labeling for exact dose count.</p>
+			</div>
+		{/if}
 	</div>
 
 	<!-- Available NDCs -->
