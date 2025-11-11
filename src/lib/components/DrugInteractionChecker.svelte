@@ -42,20 +42,20 @@
 		}
 	}
 
-	function getSeverityColor(severity: string): string {
+	function getSeverityStyle(severity: string): string {
 		switch (severity.toLowerCase()) {
 			case 'safe':
 			case 'no interaction':
-				return 'bg-green-50 border-green-200 text-green-800';
+				return 'background-color: rgba(16, 185, 129, 0.1); border: 2px solid rgba(16, 185, 129, 0.3); color: #10b981;';
 			case 'caution':
 			case 'moderate':
-				return 'bg-yellow-50 border-yellow-200 text-yellow-800';
+				return 'background-color: rgba(245, 158, 11, 0.1); border: 2px solid rgba(245, 158, 11, 0.3); color: #f59e0b;';
 			case 'dangerous':
 			case 'severe':
 			case 'major':
-				return 'bg-red-50 border-red-200 text-red-800';
+				return 'background-color: rgba(239, 68, 68, 0.1); border: 2px solid rgba(239, 68, 68, 0.3); color: #ef4444;';
 			default:
-				return 'bg-gray-50 border-gray-200 text-gray-800';
+				return 'background-color: rgba(128, 128, 128, 0.1); border: 2px solid rgba(128, 128, 128, 0.3); color: var(--text-secondary);';
 		}
 	}
 
@@ -77,8 +77,8 @@
 	}
 </script>
 
-<div class="bg-white border border-indigo-200 rounded-lg p-6 mt-6">
-	<h3 class="text-xl font-semibold text-indigo-900 mb-4 flex items-center gap-2">
+<div class="card-hover rounded-lg p-6 mt-6" style="background-color: var(--card-bg); border: 1px solid var(--border-color);">
+	<h3 class="text-xl font-semibold mb-4 flex items-center gap-2" style="color: var(--accent);">
 		<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 			<path
 				stroke-linecap="round"
@@ -90,14 +90,14 @@
 		Check Drug Interaction
 	</h3>
 
-	<p class="text-sm text-gray-600 mb-4">
-		Verify if <strong>{currentDrug}</strong> interacts with another medication.
+	<p class="text-sm mb-4" style="color: var(--text-secondary);">
+		Verify if <strong style="color: var(--foreground);">{currentDrug}</strong> interacts with another medication.
 	</p>
 
 	<div class="space-y-4">
 		<!-- Input field -->
 		<div>
-			<label for="additionalMed" class="block text-sm font-medium text-gray-700 mb-2">
+			<label for="additionalMed" class="block text-sm font-medium mb-2" style="color: var(--text-secondary);">
 				Additional Medication
 			</label>
 			<div class="flex gap-2">
@@ -106,16 +106,16 @@
 					type="text"
 					bind:value={additionalMedication}
 					placeholder="e.g., Aspirin, Warfarin"
-					class="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition"
+					class="input-text flex-1 px-4 py-2 rounded-lg transition"
 					disabled={loading}
 				/>
 				<button
 					on:click={checkInteraction}
 					disabled={loading || !additionalMedication.trim()}
-					class="px-6 py-2 bg-indigo-600 hover:bg-indigo-700 disabled:bg-gray-400 text-white font-medium rounded-lg transition-colors flex items-center gap-2"
+					class="btn-primary px-6 py-2 font-medium rounded-lg transition flex items-center gap-2"
 				>
 					{#if loading}
-						<svg class="animate-spin h-5 w-5" fill="none" viewBox="0 0 24 24">
+						<svg class="animate-spin h-5 w-5" style="color: var(--background);" fill="none" viewBox="0 0 24 24">
 							<circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
 							<path
 								class="opacity-75"
@@ -133,15 +133,15 @@
 
 		<!-- Error display -->
 		{#if error}
-			<div class="bg-red-50 border border-red-200 rounded-lg p-3">
-				<p class="text-sm text-red-700">{error}</p>
+			<div class="rounded-lg p-3 state-error">
+				<p class="text-sm">{error}</p>
 			</div>
 		{/if}
 
 		<!-- Result display -->
 		{#if result}
-			<div class="border-t border-gray-200 pt-4">
-				<div class="p-4 rounded-lg border-2 {getSeverityColor(result.severity)}">
+			<div class="pt-4" style="border-top: 1px solid var(--border-color);">
+				<div class="p-4 rounded-lg" style={getSeverityStyle(result.severity)}>
 					<div class="flex items-start gap-3">
 						<svg class="w-6 h-6 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 							<path
@@ -155,7 +155,7 @@
 							<h4 class="font-semibold text-lg mb-2">
 								Interaction Severity: {result.severity}
 							</h4>
-							<p class="text-sm mb-3">{result.warning}</p>
+							<p class="text-sm mb-3 opacity-90">{result.warning}</p>
 							{#if result.recommendation}
 								<p class="text-sm font-medium">
 									<span class="font-semibold">Recommendation:</span>
@@ -167,9 +167,9 @@
 				</div>
 
 				<!-- Disclaimer -->
-				<div class="mt-4 bg-gray-50 border border-gray-200 rounded-lg p-3">
-					<p class="text-xs text-gray-600">
-						<strong>⚠️ AI-Generated Content Disclaimer:</strong> This interaction check is provided
+				<div class="mt-4 rounded-lg p-3" style="background-color: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.3);">
+					<p class="text-xs" style="color: var(--text-secondary);">
+						<strong style="color: #f59e0b;">⚠️ AI-Generated Content Disclaimer:</strong> This interaction check is provided
 						by AI and is for informational purposes only. Always consult with a healthcare professional
 						or pharmacist before making any decisions about medication combinations. This tool should
 						not replace professional medical advice.

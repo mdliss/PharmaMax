@@ -1,0 +1,42 @@
+steps:
+  # Build the container image with build args
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'build'
+      - '--build-arg'
+      - 'DATABASE_URL=${_DATABASE_URL}'
+      - '--build-arg'
+      - 'OPENAI_API_KEY=${_OPENAI_API_KEY}'
+      - '-t'
+      - 'gcr.io/$PROJECT_ID/pharmamax'
+      - '.'
+
+  # Push the container image to Container Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'push'
+      - 'gcr.io/$PROJECT_ID/pharmamax'
+
+  # Deploy container image to Cloud Run
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: gcloud
+    args:
+      - 'run'
+      - 'deploy'
+      - 'pharmamax'
+      - '--image'
+      - 'gcr.io/$PROJECT_ID/pharmamax'
+      - '--region'
+      - 'us-central1'
+      - '--platform'
+      - 'managed'
+      - '--allow-unauthenticated'
+      - '--set-env-vars'
+      - 'OPENAI_API_KEY=${_OPENAI_API_KEY},DATABASE_URL=${_DATABASE_URL}'
+
+images:
+  - 'gcr.io/$PROJECT_ID/pharmamax'
+
+substitutions:
+  _DATABASE_URL: ''
+  _OPENAI_API_KEY: ''

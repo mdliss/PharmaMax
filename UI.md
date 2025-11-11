@@ -1,16 +1,16 @@
 /**
  * ============================================================================
- * PULSEMAX UI DESIGN SYSTEM - PRODUCTION TEMPLATE
+ * PHARMAMAX UI DESIGN SYSTEM - PRODUCTION TEMPLATE
  * ============================================================================
  *
  * A Netflix-inspired dark theme design system featuring:
- * - Deep black backgrounds with teal accent color
+ * - Deep black backgrounds with professional indigo accent color
  * - Modern, clean aesthetic with subtle animations
  * - Monospace typography for technical/analytics feel
  * - Comprehensive animation library with staggered page loads
  *
  * Framework: Tailwind CSS v4 + PostCSS
- * Primary Use: Analytics dashboards, data visualization, SaaS platforms
+ * Primary Use: Medical/Pharmacy applications, Analytics dashboards, Professional SaaS platforms
  * ============================================================================
  */
 
@@ -28,25 +28,25 @@
   --border-color: #2a2a2a;         /* Subtle borders - barely visible separation */
 
   /* ===== Accent Colors ===== */
-  --accent: #14b8a6;               /* Teal - modern, calming, professional */
-  --accent-hover: #0d9488;         /* Darker teal on hover - subtle depth */
+  --accent: #4f46e5;               /* Indigo - professional, trustworthy, medical */
+  --accent-hover: #4338ca;         /* Darker indigo on hover - subtle depth */
 
   /* ===== Text Colors ===== */
   --text-secondary: #b3b3b3;       /* Netflix gray text - secondary information */
   --text-muted: #808080;           /* More muted gray - tertiary information */
 
   /* ===== Semantic Colors ===== */
-  /* NOTE: All semantic colors use teal for brand consistency */
-  --success: #14b8a6;              /* Teal for positive states */
-  --success-bg: #14b8a620;         /* Teal background with 20% opacity */
+  /* NOTE: All semantic colors use indigo for brand consistency */
+  --success: #4f46e5;              /* Indigo for positive states */
+  --success-bg: #4f46e520;         /* Indigo background with 20% opacity */
 
-  --error: #14b8a6;                /* Teal for error states (brand consistency) */
-  --error-bg: #14b8a620;           /* Teal error background */
-  --error-border: #14b8a680;       /* Teal border with 50% opacity */
+  --error: #4f46e5;                /* Indigo for error states (brand consistency) */
+  --error-bg: #4f46e520;           /* Indigo error background */
+  --error-border: #4f46e580;       /* Indigo border with 50% opacity */
 
-  --warning: #14b8a6;              /* Teal for warnings */
-  --info: #14b8a6;                 /* Teal for info states */
-  --live: #14b8a6;                 /* Teal for live indicators */
+  --warning: #4f46e5;              /* Indigo for warnings */
+  --info: #4f46e5;                 /* Indigo for info states */
+  --live: #4f46e5;                 /* Indigo for live indicators */
 
   /* ===== Badge Rarity Colors (Optional - for gamification) ===== */
   --rarity-common: #9CA3AF;        /* Gray */
@@ -147,8 +147,8 @@ input, textarea, select {
 
 input:focus, textarea:focus, select:focus {
   transform: translateY(-1px);
-  box-shadow: 0 4px 6px -1px rgba(20, 184, 166, 0.1),
-              0 2px 4px -1px rgba(20, 184, 166, 0.06);
+  box-shadow: 0 4px 6px -1px rgba(79, 70, 229, 0.1),
+              0 2px 4px -1px rgba(79, 70, 229, 0.06);
 }
 
 /* ===== Disabled State Transitions ===== */
@@ -489,10 +489,10 @@ svg, img {
 /* ===== Glow Effect ===== */
 @keyframes glow {
   0%, 100% {
-    box-shadow: 0 0 5px rgba(20, 184, 166, 0.5);
+    box-shadow: 0 0 5px rgba(79, 70, 229, 0.5);
   }
   50% {
-    box-shadow: 0 0 20px rgba(20, 184, 166, 0.8), 0 0 30px rgba(20, 184, 166, 0.6);
+    box-shadow: 0 0 20px rgba(79, 70, 229, 0.8), 0 0 30px rgba(79, 70, 229, 0.6);
   }
 }
 
@@ -603,8 +603,8 @@ svg, img {
 .input-text:focus {
   outline: none;
   border-color: var(--accent);
-  box-shadow: 0 4px 6px -1px rgba(20, 184, 166, 0.1),
-              0 2px 4px -1px rgba(20, 184, 166, 0.06);
+  box-shadow: 0 4px 6px -1px rgba(79, 70, 229, 0.1),
+              0 2px 4px -1px rgba(79, 70, 229, 0.06);
 }
 
 /* ===== Textarea ===== */
@@ -706,7 +706,7 @@ svg, img {
 }
 
 .dropdown-item:hover {
-  background-color: rgba(20, 184, 166, 0.1);
+  background-color: rgba(79, 70, 229, 0.1);
 }
 
 /* ============================================================================
@@ -807,9 +807,9 @@ svg, img {
 
 /* ===== Info Message (Highlighted) ===== */
 .message-info {
-  background-color: rgba(20, 184, 166, 0.1);
+  background-color: rgba(79, 70, 229, 0.1);
   color: var(--accent);
-  border: 2px solid rgba(20, 184, 166, 0.3);
+  border: 2px solid rgba(79, 70, 229, 0.3);
   max-width: 80%;
   border-radius: 0.5rem;
   padding: 0.75rem 1rem;
@@ -987,7 +987,7 @@ svg, img {
        backgroundColor: 'var(--card-bg)',
        borderColor: 'var(--border-color)',
        borderLeftWidth: '4px',
-       borderLeftColor: '#14b8a6'
+       borderLeftColor: '#4f46e5'
      }}>
   <h3 className="text-sm font-medium mb-2" style={{ color: 'var(--text-secondary)' }}>
     Metric Title
@@ -1012,12 +1012,12 @@ svg, img {
 <button
   className="px-4 py-2 rounded-lg font-medium transition-all"
   style={{
-    backgroundColor: '#14b8a6',
+    backgroundColor: '#4f46e5',
     color: '#ffffff',
     transition: 'background-color 0.2s ease'
   }}
-  onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#5eead4'}
-  onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#14b8a6'}>
+  onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#6366f1'}
+  onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#4f46e5'}>
   Button Text
 </button>
 */
@@ -1059,7 +1059,7 @@ svg, img {
 KEY COLORS:
 - Background: #141414 (Netflix black)
 - Card: #1f1f1f (slightly lighter)
-- Accent: #14b8a6 (teal)
+- Accent: #4f46e5 (professional indigo)
 - Text: #ffffff (white), #b3b3b3 (gray), #808080 (muted)
 
 COMMON PATTERNS:

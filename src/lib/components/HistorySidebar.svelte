@@ -66,23 +66,34 @@
 
 </script>
 
-<!-- Toggle Button (Mobile) -->
+<!-- Toggle Button -->
 <button
 	on:click={() => (isOpen = !isOpen)}
-	class="fixed top-4 right-4 z-50 lg:hidden bg-blue-600 text-white p-3 rounded-full shadow-lg hover:bg-blue-700 transition-colors"
+	class="fixed top-4 z-50 p-3 rounded-full shadow-lg transition-all duration-300 ease-in-out"
+	style="background-color: var(--accent); color: var(--background); right: {isOpen ? '336px' : '16px'};"
 	aria-label="Toggle history sidebar"
 >
 	<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-		<path
-			stroke-linecap="round"
-			stroke-linejoin="round"
-			stroke-width="2"
-			d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-		/>
+		{#if isOpen}
+			<path
+				stroke-linecap="round"
+				stroke-linejoin="round"
+				stroke-width="2"
+				d="M6 18L18 6M6 6l12 12"
+			/>
+		{:else}
+			<path
+				stroke-linecap="round"
+				stroke-linejoin="round"
+				stroke-width="2"
+				d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+			/>
+		{/if}
 	</svg>
-	{#if history.length > 0}
+	{#if history.length > 0 && !isOpen}
 		<span
-			class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center"
+			class="absolute -top-1 -right-1 text-xs rounded-full h-5 w-5 flex items-center justify-center"
+			style="background-color: #ef4444; color: white;"
 		>
 			{history.length}
 		</span>
@@ -91,40 +102,25 @@
 
 <!-- Sidebar -->
 <div
-	class="fixed top-0 right-0 h-screen w-80 bg-white shadow-2xl transform transition-transform duration-300 ease-in-out z-40 overflow-hidden flex flex-col {isOpen
-		? 'translate-x-0'
-		: 'translate-x-full'} lg:translate-x-0"
+	class="fixed top-0 right-0 h-screen w-80 shadow-2xl transform transition-all duration-300 ease-in-out z-40 overflow-hidden flex flex-col"
+	class:translate-x-0={isOpen}
+	class:translate-x-full={!isOpen}
+	style="background-color: var(--card-bg);"
 >
 	<!-- Header -->
-	<div class="bg-blue-600 text-white p-4 flex-shrink-0">
-		<div class="flex justify-between items-center mb-2">
-			<h2 class="text-lg font-semibold flex items-center gap-2">
-				<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-					<path
-						stroke-linecap="round"
-						stroke-linejoin="round"
-						stroke-width="2"
-						d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-					/>
-				</svg>
-				History
-			</h2>
-			<button
-				on:click={() => (isOpen = false)}
-				class="lg:hidden text-white hover:bg-blue-700 rounded p-1"
-				aria-label="Close sidebar"
-			>
-				<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-					<path
-						stroke-linecap="round"
-						stroke-linejoin="round"
-						stroke-width="2"
-						d="M6 18L18 6M6 6l12 12"
-					/>
-				</svg>
-			</button>
-		</div>
-		<p class="text-sm text-blue-100">
+	<div class="p-4 flex-shrink-0" style="background-color: var(--accent); color: var(--background);">
+		<h2 class="text-lg font-semibold flex items-center gap-2 mb-2">
+			<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+				<path
+					stroke-linecap="round"
+					stroke-linejoin="round"
+					stroke-width="2"
+					d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+				/>
+			</svg>
+			History
+		</h2>
+		<p class="text-sm" style="opacity: 0.9;">
 			{history.length} of {50} entries
 		</p>
 	</div>
@@ -132,7 +128,7 @@
 	<!-- History List -->
 	<div class="flex-1 overflow-y-auto p-4 space-y-3">
 		{#if history.length === 0}
-			<div class="text-center py-8 text-gray-500">
+			<div class="text-center py-8" style="color: var(--text-muted);">
 				<svg class="w-16 h-16 mx-auto mb-3 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 					<path
 						stroke-linecap="round"
@@ -147,8 +143,9 @@
 		{:else}
 			{#each history as entry (entry.id)}
 				<div
-					class="bg-gray-50 border border-gray-200 rounded-lg p-3 hover:border-blue-300 transition-all cursor-pointer relative group"
+					class="card-hover rounded-lg p-3 transition-all cursor-pointer relative group"
 					class:opacity-50={deletingId === entry.id}
+					style="background-color: var(--background); border: 1px solid var(--border-color);"
 					on:click={() => handleReload(entry)}
 					on:keydown={(e) => e.key === 'Enter' && handleReload(entry)}
 					role="button"
@@ -157,7 +154,8 @@
 					<!-- Delete button -->
 					<button
 						on:click|stopPropagation={() => handleDelete(entry.id)}
-						class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity bg-red-500 hover:bg-red-600 text-white rounded p-1"
+						class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity rounded p-1"
+						style="background-color: #ef4444; color: white;"
 						aria-label="Delete entry"
 					>
 						<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -171,16 +169,16 @@
 					</button>
 
 					<div class="pr-8">
-						<p class="font-semibold text-gray-900 text-sm mb-1">
+						<p class="font-semibold text-sm mb-1" style="color: var(--foreground);">
 							{truncate(entry.result?.prescription?.drugName || entry.drugInput, 30)}
 						</p>
-						<p class="text-xs text-gray-600 mb-1">{truncate(entry.sig, 40)}</p>
-						<div class="flex justify-between items-center text-xs text-gray-500">
+						<p class="text-xs mb-1" style="color: var(--text-secondary);">{truncate(entry.sig, 40)}</p>
+						<div class="flex justify-between items-center text-xs" style="color: var(--text-muted);">
 							<span>{entry.daysSupply} days</span>
-							<span class="text-blue-600 font-medium">{formatTimestamp(entry.timestamp)}</span>
+							<span class="font-medium" style="color: var(--accent);">{formatTimestamp(entry.timestamp)}</span>
 						</div>
 						{#if entry.result?.calculation}
-							<p class="text-xs text-green-600 font-medium mt-1">
+							<p class="text-xs font-medium mt-1" style="color: var(--accent);">
 								{entry.result.calculation.totalQuantityNeeded}
 								{entry.result.calculation.unit}
 							</p>
@@ -193,10 +191,11 @@
 
 	<!-- Footer Actions -->
 	{#if history.length > 0}
-		<div class="border-t border-gray-200 p-4 flex-shrink-0">
+		<div class="p-4 flex-shrink-0" style="border-top: 1px solid var(--border-color);">
 			<button
 				on:click={handleClearAll}
-				class="w-full bg-red-50 hover:bg-red-100 text-red-600 font-medium py-2 px-4 rounded-lg transition-colors text-sm flex items-center justify-center gap-2"
+				class="w-full font-medium py-2 px-4 rounded-lg transition-colors text-sm flex items-center justify-center gap-2"
+				style="background-color: rgba(239, 68, 68, 0.1); color: #ef4444;"
 			>
 				<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 					<path
@@ -211,15 +210,3 @@
 		</div>
 	{/if}
 </div>
-
-<!-- Overlay for mobile -->
-{#if isOpen}
-	<div
-		class="fixed inset-0 bg-black bg-opacity-50 z-30 lg:hidden"
-		on:click={() => (isOpen = false)}
-		on:keydown={(e) => e.key === 'Escape' && (isOpen = false)}
-		role="button"
-		tabindex="0"
-		aria-label="Close sidebar"
-	></div>
-{/if}

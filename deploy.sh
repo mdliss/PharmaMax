@@ -13,6 +13,14 @@ if [ -z "$OPENAI_API_KEY" ]; then
     exit 1
 fi
 
+# Check if DATABASE_URL is provided
+if [ -z "$DATABASE_URL" ]; then
+    echo "⚠️  DATABASE_URL not found in environment"
+    echo "Please run: export DATABASE_URL=your-database-url-here"
+    echo "Or pass it directly in the deploy command"
+    exit 1
+fi
+
 # Set project
 echo "📦 Setting project to flightmax-5b191..."
 gcloud config set project flightmax-5b191
@@ -21,14 +29,16 @@ gcloud config set project flightmax-5b191
 echo "🔧 Enabling required APIs..."
 gcloud services enable cloudbuild.googleapis.com run.googleapis.com
 
-# Deploy to Cloud Run
-echo "🚢 Deploying to Cloud Run..."
-gcloud run deploy pharmamax \
-  --source . \
-  --platform managed \
+# Deploy using Cloud Build
+echo "🚢 Building and deploying to Cloud Run..."
+gcloud builds submit \
+  --config cloudbuild.yaml \
+  --substitutions _OPENAI_API_KEY=$OPENAI_API_KEY,_DATABASE_URL=$DATABASE_URL
+
+# Update service configuration
+echo "⚙️  Updating service configuration..."
+gcloud run services update pharmamax \
   --region us-central1 \
-  --allow-unauthenticated \
-  --set-env-vars OPENAI_API_KEY=$OPENAI_API_KEY \
   --memory 512Mi \
   --timeout 300s \
   --max-instances 10

@@ -38,7 +38,14 @@
       "mcp__task-master-ai__update_subtask",
       "Bash(npx prisma init)",
       "Bash(psql:*)",
-      "Bash(gcloud auth:*)"
+      "Bash(gcloud auth:*)",
+      "Bash(gcloud run services describe:*)",
+      "Bash(set:*)",
+      "Bash(source .env)",
+      "Bash(set +a)",
+      "Bash(bash:*)",
+      "Bash(gcloud logging read:*)",
+      "Bash(gcloud run services add-iam-policy-binding:*)"
     ],
     "deny": [],
     "ask": []

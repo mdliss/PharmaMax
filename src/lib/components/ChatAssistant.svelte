@@ -57,8 +57,8 @@
 	}
 </script>
 
-<div class="bg-white border border-teal-200 rounded-lg p-6 mt-6">
-	<h3 class="text-xl font-semibold text-teal-900 mb-4 flex items-center gap-2">
+<div class="card-hover rounded-lg p-6 mt-6" style="background-color: var(--card-bg); border: 1px solid var(--border-color);">
+	<h3 class="text-xl font-semibold mb-4 flex items-center gap-2" style="color: var(--accent);">
 		<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 			<path
 				stroke-linecap="round"
@@ -70,15 +70,15 @@
 		AI Pharmacy Assistant
 	</h3>
 
-	<p class="text-sm text-gray-600 mb-4">
+	<p class="text-sm mb-4" style="color: var(--text-secondary);">
 		Ask questions about medications, dosing, or pharmacy practices. The assistant is aware of your current prescription.
 	</p>
 
 	<!-- Response Display (if available) -->
 	{#if response}
-		<div class="mb-4 bg-teal-50 border border-teal-200 rounded-lg p-4">
+		<div class="mb-4 rounded-lg p-4" style="background-color: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3);">
 			<div class="flex items-start gap-3">
-				<svg class="w-6 h-6 text-teal-600 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+				<svg class="w-6 h-6 flex-shrink-0 mt-1" style="color: var(--accent);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 					<path
 						stroke-linecap="round"
 						stroke-linejoin="round"
@@ -87,8 +87,8 @@
 					/>
 				</svg>
 				<div class="flex-1">
-					<h4 class="font-semibold text-teal-900 mb-2">AI Response:</h4>
-					<p class="text-sm text-gray-700 leading-relaxed whitespace-pre-wrap">{response}</p>
+					<h4 class="font-semibold mb-2" style="color: var(--accent);">AI Response:</h4>
+					<p class="text-sm leading-relaxed whitespace-pre-wrap" style="color: var(--text-secondary);">{response}</p>
 				</div>
 			</div>
 		</div>
@@ -97,7 +97,7 @@
 	<!-- Input Area -->
 	<div class="space-y-3">
 		<div>
-			<label for="chatQuery" class="block text-sm font-medium text-gray-700 mb-2">
+			<label for="chatQuery" class="block text-sm font-medium mb-2" style="color: var(--text-secondary);">
 				Your Question
 			</label>
 			<textarea
@@ -106,18 +106,18 @@
 				on:keydown={handleKeyPress}
 				placeholder="e.g., What's the typical dosage for adults? Are there any food interactions?"
 				rows="3"
-				class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent transition resize-none"
+				class="input-text w-full px-4 py-3 rounded-lg transition resize-none"
 				disabled={loading}
 			></textarea>
-			<p class="mt-1 text-xs text-gray-500">
+			<p class="mt-1 text-xs" style="color: var(--text-muted);">
 				Press Enter to send, Shift+Enter for new line
 			</p>
 		</div>
 
 		<!-- Error Display -->
 		{#if error}
-			<div class="bg-red-50 border border-red-200 rounded-lg p-3">
-				<p class="text-sm text-red-700">{error}</p>
+			<div class="rounded-lg p-3 state-error">
+				<p class="text-sm">{error}</p>
 			</div>
 		{/if}
 
@@ -126,10 +126,10 @@
 			<button
 				on:click={askQuestion}
 				disabled={loading || !query.trim()}
-				class="flex-1 px-6 py-3 bg-teal-600 hover:bg-teal-700 disabled:bg-gray-400 text-white font-medium rounded-lg transition-colors flex items-center justify-center gap-2"
+				class="btn-primary flex-1 px-6 py-3 font-medium rounded-lg transition flex items-center justify-center gap-2"
 			>
 				{#if loading}
-					<svg class="animate-spin h-5 w-5" fill="none" viewBox="0 0 24 24">
+					<svg class="animate-spin h-5 w-5" style="color: var(--background);" fill="none" viewBox="0 0 24 24">
 						<circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
 						<path
 							class="opacity-75"
@@ -155,7 +155,7 @@
 				<button
 					on:click={clearChat}
 					disabled={loading}
-					class="px-4 py-3 bg-gray-200 hover:bg-gray-300 disabled:bg-gray-100 text-gray-700 font-medium rounded-lg transition-colors"
+					class="btn-secondary px-4 py-3 font-medium rounded-lg transition"
 				>
 					Clear
 				</button>
@@ -164,9 +164,9 @@
 	</div>
 
 	<!-- Disclaimer -->
-	<div class="mt-4 bg-gray-50 border border-gray-200 rounded-lg p-3">
-		<p class="text-xs text-gray-600">
-			<strong>⚠️ AI-Generated Content:</strong> This assistant provides general information only
+	<div class="mt-4 rounded-lg p-3" style="background-color: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.3);">
+		<p class="text-xs" style="color: var(--text-secondary);">
+			<strong style="color: #f59e0b;">⚠️ AI-Generated Content:</strong> This assistant provides general information only
 			and should not replace professional medical or pharmaceutical advice. Always consult with a
 			healthcare provider or licensed pharmacist for medical decisions.
 		</p>

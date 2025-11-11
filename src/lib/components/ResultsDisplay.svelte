@@ -67,7 +67,8 @@
 	<div class="flex justify-end gap-3 print:hidden">
 		<button
 			on:click={printResults}
-			class="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors flex items-center gap-2"
+			class="px-4 py-2 rounded-lg transition-colors flex items-center gap-2"
+			style="background-color: var(--border-color); color: var(--foreground);"
 		>
 			<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 				<path
@@ -82,7 +83,7 @@
 
 		<button
 			on:click={copyFullResults}
-			class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
+			class="btn-primary px-4 py-2 rounded-lg transition-colors flex items-center gap-2"
 		>
 			{#if copySuccess}
 				<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
@@ -108,116 +109,119 @@
 	</div>
 
 	<!-- Prescription Summary -->
-	<div class="bg-white border border-blue-200 rounded-lg p-6">
-		<h3 class="text-xl font-semibold text-blue-900 mb-4">Prescription Summary</h3>
+	<div class="card-hover rounded-lg p-6" style="background-color: var(--card-bg); border: 1px solid rgba(16, 185, 129, 0.3);">
+		<h3 class="text-xl font-semibold mb-4" style="color: var(--accent);">Prescription Summary</h3>
 		<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
 			<div>
-				<p class="text-sm font-medium text-gray-600">Drug</p>
-				<p class="text-lg text-gray-900">{prescription.drugName}</p>
-				<p class="text-sm text-gray-500">RxCUI: {prescription.rxcui}</p>
+				<p class="text-sm font-medium" style="color: var(--text-secondary);">Drug</p>
+				<p class="text-lg" style="color: var(--foreground);">{prescription.drugName}</p>
+				<p class="text-sm" style="color: var(--text-muted);">RxCUI: {prescription.rxcui}</p>
 			</div>
 			<div>
-				<p class="text-sm font-medium text-gray-600">Days' Supply</p>
-				<p class="text-lg text-gray-900">{prescription.daysSupply} days</p>
+				<p class="text-sm font-medium" style="color: var(--text-secondary);">Days' Supply</p>
+				<p class="text-lg" style="color: var(--foreground);">{prescription.daysSupply} days</p>
 			</div>
 		</div>
 		<div class="mt-4">
-			<p class="text-sm font-medium text-gray-600">SIG</p>
-			<p class="text-gray-900">{prescription.sig}</p>
+			<p class="text-sm font-medium" style="color: var(--text-secondary);">SIG</p>
+			<p style="color: var(--foreground);">{prescription.sig}</p>
 		</div>
 	</div>
 
 	<!-- Parsed SIG Details -->
-	<div class="bg-blue-50 border border-blue-200 rounded-lg p-6">
-		<h3 class="text-xl font-semibold text-blue-900 mb-4">Parsed Instructions</h3>
+	<div class="card-hover rounded-lg p-6" style="background-color: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3);">
+		<h3 class="text-xl font-semibold mb-4" style="color: var(--accent);">Parsed Instructions</h3>
 		<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
 			<div>
-				<p class="text-sm font-medium text-gray-600">Dose</p>
-				<p class="text-2xl font-bold text-blue-600">{sigParsed.dosePerAdministration}</p>
-				<p class="text-sm text-gray-500">per administration</p>
+				<p class="text-sm font-medium" style="color: var(--text-secondary);">Dose</p>
+				<p class="text-2xl font-bold" style="color: var(--accent);">{sigParsed.dosePerAdministration}</p>
+				<p class="text-sm" style="color: var(--text-muted);">per administration</p>
 			</div>
 			<div>
-				<p class="text-sm font-medium text-gray-600">Frequency</p>
-				<p class="text-2xl font-bold text-blue-600">{sigParsed.frequencyPerDay}x</p>
-				<p class="text-sm text-gray-500">per day</p>
+				<p class="text-sm font-medium" style="color: var(--text-secondary);">Frequency</p>
+				<p class="text-2xl font-bold" style="color: var(--accent);">{sigParsed.frequencyPerDay}x</p>
+				<p class="text-sm" style="color: var(--text-muted);">per day</p>
 			</div>
 			<div>
-				<p class="text-sm font-medium text-gray-600">Route</p>
-				<p class="text-lg font-semibold text-gray-900">{sigParsed.route}</p>
+				<p class="text-sm font-medium" style="color: var(--text-secondary);">Route</p>
+				<p class="text-lg font-semibold" style="color: var(--foreground);">{sigParsed.route}</p>
 			</div>
 			<div>
-				<p class="text-sm font-medium text-gray-600">Daily Total</p>
-				<p class="text-2xl font-bold text-green-600">{sigParsed.totalDailyDose}</p>
-				<p class="text-sm text-gray-500">{calculation.unit}/day</p>
+				<p class="text-sm font-medium" style="color: var(--text-secondary);">Daily Total</p>
+				<p class="text-2xl font-bold" style="color: #10b981;">{sigParsed.totalDailyDose}</p>
+				<p class="text-sm" style="color: var(--text-muted);">{calculation.unit}/day</p>
 			</div>
 		</div>
 	</div>
 
 	<!-- Total Quantity Needed -->
-	<div class="bg-green-50 border border-green-200 rounded-lg p-6">
-		<h3 class="text-xl font-semibold text-green-900 mb-2">Total Quantity Needed</h3>
-		<p class="text-4xl font-bold text-green-600">
+	<div class="card-hover rounded-lg p-6" style="background-color: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3);">
+		<h3 class="text-xl font-semibold mb-2" style="color: #10b981;">Total Quantity Needed</h3>
+		<p class="text-4xl font-bold" style="color: #10b981;">
 			{calculation.totalQuantityNeeded}
-			<span class="text-2xl text-gray-600">{calculation.unit}</span>
+			<span class="text-2xl" style="color: var(--text-secondary);">{calculation.unit}</span>
 		</p>
-		<p class="text-sm text-gray-600 mt-2">
+		<p class="text-sm mt-2" style="color: var(--text-secondary);">
 			({sigParsed.totalDailyDose} {calculation.unit}/day × {prescription.daysSupply} days)
 		</p>
 	</div>
 
 	<!-- Available NDCs -->
-	<div class="bg-white border border-gray-200 rounded-lg p-6">
-		<h3 class="text-xl font-semibold text-gray-900 mb-4">Available NDCs</h3>
+	<div class="card-hover rounded-lg p-6" style="background-color: var(--card-bg); border: 1px solid var(--border-color);">
+		<h3 class="text-xl font-semibold mb-4" style="color: var(--foreground);">Available NDCs</h3>
 		<div class="overflow-x-auto">
-			<table class="min-w-full divide-y divide-gray-200">
-				<thead class="bg-gray-50">
+			<table class="min-w-full" style="border: 1px solid var(--border-color);">
+				<thead style="background-color: var(--background);">
 					<tr>
-						<th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+						<th class="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider" style="color: var(--text-muted);">
 							NDC
 						</th>
-						<th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+						<th class="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider" style="color: var(--text-muted);">
 							Package Size
 						</th>
-						<th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+						<th class="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider" style="color: var(--text-muted);">
 							Type
 						</th>
-						<th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+						<th class="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider" style="color: var(--text-muted);">
 							Status
 						</th>
-						<th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+						<th class="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider" style="color: var(--text-muted);">
 							Labeler
 						</th>
-						<th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider print:hidden">
+						<th class="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider print:hidden" style="color: var(--text-muted);">
 							Actions
 						</th>
 					</tr>
 				</thead>
-				<tbody class="bg-white divide-y divide-gray-200">
+				<tbody style="background-color: var(--card-bg);">
 					{#each ndcs as ndc}
-						<tr class:bg-gray-50={!ndc.isActive}>
-							<td class="px-4 py-3 text-sm font-mono text-gray-900">{ndc.ndc}</td>
-							<td class="px-4 py-3 text-sm text-gray-900 font-semibold">{ndc.packageSize}</td>
-							<td class="px-4 py-3 text-sm text-gray-600 capitalize">{ndc.packageType}</td>
+						<tr style="{ndc.isActive ? '' : 'opacity: 0.5;'} border-top: 1px solid var(--border-color);">
+							<td class="px-4 py-3 text-sm font-mono" style="color: var(--foreground);">{ndc.ndc}</td>
+							<td class="px-4 py-3 text-sm font-semibold" style="color: var(--foreground);">{ndc.packageSize}</td>
+							<td class="px-4 py-3 text-sm capitalize" style="color: var(--text-secondary);">{ndc.packageType}</td>
 							<td class="px-4 py-3 text-sm">
 								{#if ndc.isActive}
 									<span
-										class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800"
+										class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium"
+										style="background-color: rgba(16, 185, 129, 0.2); color: #10b981;"
 									>
 										Active
 									</span>
 								{:else}
 									<span
-										class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800"
+										class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium"
+										style="background-color: rgba(239, 68, 68, 0.2); color: #ef4444;"
 									>
 										Inactive
 									</span>
 								{/if}
 							</td>
-							<td class="px-4 py-3 text-sm text-gray-600">{ndc.labelerName}</td>
+							<td class="px-4 py-3 text-sm" style="color: var(--text-secondary);">{ndc.labelerName}</td>
 							<td class="px-4 py-3 text-sm print:hidden">
 								<button
 									on:click={() => copyNDC(ndc)}
-									class="text-blue-600 hover:text-blue-800 transition-colors flex items-center gap-1"
+									class="transition-colors flex items-center gap-1"
+									style="color: var(--accent);"
 									title="Copy NDC info"
 								>
 									{#if copyingNDC === ndc.ndc}
@@ -266,13 +270,13 @@
 	/>
 
 	<!-- Packaging Recommendation -->
-	<div class="bg-purple-50 border border-purple-200 rounded-lg p-6">
-		<h3 class="text-xl font-semibold text-purple-900 mb-4">Recommended Package Combination</h3>
+	<div class="card-hover rounded-lg p-6" style="background-color: rgba(168, 85, 247, 0.1); border: 1px solid rgba(168, 85, 247, 0.3);">
+		<h3 class="text-xl font-semibold mb-4" style="color: #a855f7;">Recommended Package Combination</h3>
 
 		{#if recommendation.warnings.length > 0}
-			<div class="mb-4 bg-yellow-50 border border-yellow-200 rounded p-3">
-				<p class="text-sm font-medium text-yellow-800">Warnings:</p>
-				<ul class="list-disc list-inside text-sm text-yellow-700 mt-1">
+			<div class="mb-4 rounded p-3" style="background-color: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.3);">
+				<p class="text-sm font-medium" style="color: #f59e0b;">Warnings:</p>
+				<ul class="list-disc list-inside text-sm mt-1" style="color: var(--text-secondary);">
 					{#each recommendation.warnings as warning}
 						<li>{warning}</li>
 					{/each}
@@ -283,38 +287,38 @@
 		{#if recommendation.packages.length > 0}
 			<div class="space-y-3">
 				{#each recommendation.packages as pkg}
-					<div class="bg-white rounded-lg p-4 border border-purple-200">
+					<div class="rounded-lg p-4" style="background-color: var(--card-bg); border: 1px solid rgba(168, 85, 247, 0.3);">
 						<div class="flex justify-between items-start">
 							<div>
-								<p class="font-mono text-sm text-gray-600">NDC: {pkg.ndc}</p>
-								<p class="text-lg font-semibold text-gray-900 mt-1">
+								<p class="font-mono text-sm" style="color: var(--text-secondary);">NDC: {pkg.ndc}</p>
+								<p class="text-lg font-semibold mt-1" style="color: var(--foreground);">
 									Quantity: {pkg.quantity} package{pkg.quantity > 1 ? 's' : ''}
 								</p>
 							</div>
 							<div class="text-right">
-								<p class="text-2xl font-bold text-purple-600">{pkg.totalUnits}</p>
-								<p class="text-sm text-gray-500">{calculation.unit} total</p>
+								<p class="text-2xl font-bold" style="color: #a855f7;">{pkg.totalUnits}</p>
+								<p class="text-sm" style="color: var(--text-muted);">{calculation.unit} total</p>
 							</div>
 						</div>
 					</div>
 				{/each}
 
-				<div class="border-t border-purple-200 pt-4 mt-4">
+				<div class="pt-4 mt-4" style="border-top: 1px solid rgba(168, 85, 247, 0.3);">
 					<div class="grid grid-cols-2 gap-4">
 						<div>
-							<p class="text-sm font-medium text-gray-600">Total Dispensed</p>
-							<p class="text-2xl font-bold text-purple-600">
+							<p class="text-sm font-medium" style="color: var(--text-secondary);">Total Dispensed</p>
+							<p class="text-2xl font-bold" style="color: #a855f7;">
 								{recommendation.totalDispensed}
 								{calculation.unit}
 							</p>
 						</div>
 						<div>
-							<p class="text-sm font-medium text-gray-600">Overfill</p>
-							<p class="text-2xl font-bold text-gray-600">
+							<p class="text-sm font-medium" style="color: var(--text-secondary);">Overfill</p>
+							<p class="text-2xl font-bold" style="color: var(--text-secondary);">
 								{recommendation.overfill}
 								{calculation.unit}
 							</p>
-							<p class="text-sm text-gray-500">
+							<p class="text-sm" style="color: var(--text-muted);">
 								({recommendation.overfillPercentage.toFixed(1)}%)
 							</p>
 						</div>
@@ -322,7 +326,7 @@
 				</div>
 			</div>
 		{:else}
-			<p class="text-gray-600">No package recommendations available.</p>
+			<p style="color: var(--text-secondary);">No package recommendations available.</p>
 		{/if}
 	</div>
 </div>
