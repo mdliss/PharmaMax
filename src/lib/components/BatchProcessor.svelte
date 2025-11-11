@@ -215,26 +215,25 @@
 	}
 </script>
 
-<div class="card-hover rounded-lg shadow-lg p-8 drop-in-3" style="background-color: var(--card-bg); border: 1px solid var(--border-color);">
+<div class="card-hover rounded-lg shadow-lg p-8 mb-8 drop-in-3" style="background-color: var(--card-bg); border: 1px solid var(--border-color);">
 	<h2 class="text-2xl font-semibold mb-6" style="color: var(--foreground);">Batch Prescription Processing</h2>
 
-	<div class="mb-6">
-		<p class="text-sm mb-4" style="color: var(--text-secondary);">
-			Upload a CSV file with prescription data to process multiple prescriptions at once (max 10).
-		</p>
-		<div class="rounded-lg p-4 mb-4" style="background-color: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.2);">
-			<p class="text-sm font-medium mb-2" style="color: var(--accent);">CSV Format Requirements:</p>
-			<ul class="text-sm space-y-1" style="color: var(--text-secondary);">
-				<li>• Required columns: <code class="px-1 rounded" style="background-color: rgba(16, 185, 129, 0.2);">drug_name</code>, <code class="px-1 rounded" style="background-color: rgba(16, 185, 129, 0.2);">sig</code>, <code class="px-1 rounded" style="background-color: rgba(16, 185, 129, 0.2);">days_supply</code></li>
-				<li>• Maximum 10 prescriptions per batch</li>
-				<li>• First row should contain column headers</li>
-			</ul>
-		</div>
+	<p class="text-sm mb-4" style="color: var(--text-secondary);">
+		Upload a CSV file with prescription data to process multiple prescriptions at once (max 10).
+	</p>
+
+	<div class="mt-2 p-3 rounded" style="background-color: rgba(16, 185, 129, 0.05); border: 1px solid rgba(16, 185, 129, 0.2);">
+		<p class="text-xs font-medium mb-1" style="color: var(--accent);">CSV Format Requirements:</p>
+		<ul class="text-xs space-y-1" style="color: var(--text-muted);">
+			<li>• Required columns: <code class="px-1 rounded" style="background-color: rgba(16, 185, 129, 0.2);">drug_name</code>, <code class="px-1 rounded" style="background-color: rgba(16, 185, 129, 0.2);">sig</code>, <code class="px-1 rounded" style="background-color: rgba(16, 185, 129, 0.2);">days_supply</code></li>
+			<li>• Maximum 10 prescriptions per batch</li>
+			<li>• First row should contain column headers</li>
+		</ul>
 	</div>
 
 	{#if results.length === 0}
 		<!-- Upload Form -->
-		<div class="space-y-4">
+		<div class="space-y-6 mt-6">
 			<div>
 				<label for="csvFile" class="block text-sm font-medium mb-2" style="color: var(--text-secondary);">
 					Select CSV File
