@@ -35,13 +35,16 @@ export interface PackageRecommendation {
 export function calculateQuantity(
 	parsedSIG: ParsedSIG,
 	daysSupply: number,
-	unit: string = 'tablets'
+	unit?: string
 ): QuantityCalculation {
 	const totalQuantityNeeded = parsedSIG.totalDailyDose * daysSupply;
 
+	// Use unit from parsedSIG if available, otherwise use provided unit or default
+	const finalUnit = parsedSIG.unit || unit || 'tablets';
+
 	return {
 		totalQuantityNeeded,
-		unit
+		unit: finalUnit
 	};
 }
 
