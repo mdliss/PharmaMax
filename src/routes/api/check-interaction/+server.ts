@@ -2,6 +2,25 @@ import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 import { getOpenAIClient } from '$lib/server/openai';
 
+// In-memory cache for interaction checks
+const interactionCache = new Map<string, any>();
+const INTERACTION_CACHE_MAX_SIZE = 500;
+
+/**
+ * Drug Interaction Check API Endpoint
+ *
+ * POST /api/check-interaction
+ * Checks potential drug interactions using OpenAI
+ *
+ * Security:
+ * - Results cached to minimize API calls and costs
+ * - Input sanitized before API request
+ * - For informational purposes only - not a substitute for clinical judgment
+ * - No patient data transmitted
+ *
+ * Disclaimer: This tool provides general information only. Always consult
+ * drug interaction databases and use professional judgment.
+ */
 export const POST: RequestHandler = async ({ request }) => {
 	try {
 		const { currentDrug, currentRxcui, additionalMedication } = await request.json();
@@ -15,6 +34,13 @@ export const POST: RequestHandler = async ({ request }) => {
 				},
 				{ status: 400 }
 			);
+		}
+
+		// Check cache first
+		const cacheKey = `${currentDrug.toLowerCase().trim()}|${additionalMedication.toLowerCase().trim()}`;
+		const cached = interactionCache.get(cacheKey);
+		if (cached) {
+			return json(cached);
 		}
 
 		const openai = getOpenAIClient();
@@ -92,14 +118,23 @@ Be concise and clear. If no significant interaction exists, indicate "Safe" seve
 			};
 		}
 
-		return json({
+		const response = {
 			success: true,
 			drug1: currentDrug,
 			drug2: additionalMedication,
 			severity: interactionData.severity,
 			warning: interactionData.warning,
 			recommendation: interactionData.recommendation
-		});
+		};
+
+		// Store in cache
+		if (interactionCache.size >= INTERACTION_CACHE_MAX_SIZE) {
+			const firstKey = interactionCache.keys().next().value;
+			interactionCache.delete(firstKey);
+		}
+		interactionCache.set(cacheKey, response);
+
+		return json(response);
 	} catch (error: any) {
 		console.error('Drug interaction check error:', error);
 
