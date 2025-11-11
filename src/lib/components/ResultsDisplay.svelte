@@ -2,6 +2,11 @@
 	import { copyToClipboard } from '$lib/utils/clipboard';
 	import DrugInteractionChecker from './DrugInteractionChecker.svelte';
 	import ChatAssistant from './ChatAssistant.svelte';
+	import CalculationBreakdown from './CalculationBreakdown.svelte';
+	import PackageVisualizer from './PackageVisualizer.svelte';
+	import RefillCalculator from './RefillCalculator.svelte';
+	import PrescriptionLabel from './PrescriptionLabel.svelte';
+	import StockWarning from './StockWarning.svelte';
 
 	export let result: any;
 
@@ -253,6 +258,15 @@
 		</div>
 	</div>
 
+	<!-- Calculation Breakdown -->
+	<CalculationBreakdown
+		{prescription}
+		{sigParsed}
+		{calculation}
+		{ndcs}
+		{recommendation}
+	/>
+
 	<!-- Total Quantity Needed -->
 	<div class="card-hover rounded-lg p-6" style="background-color: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3);">
 		<h3 class="text-xl font-semibold mb-2" style="color: #10b981;">Total Quantity Needed</h3>
@@ -368,6 +382,31 @@
 		</div>
 	</div>
 
+	<!-- Package Options Visualizer -->
+	<PackageVisualizer
+		totalNeeded={calculation.totalQuantityNeeded}
+		unit={calculation.unit}
+		{ndcs}
+		currentRecommendation={recommendation}
+	/>
+
+	<!-- Refill Date Calculator -->
+	<RefillCalculator
+		daysSupply={prescription.daysSupply}
+		drugName={prescription.drugName}
+	/>
+
+	<!-- Prescription Label -->
+	<PrescriptionLabel
+		prescription={{
+			drugName: prescription.drugName,
+			sig: prescription.sig,
+			daysSupply: prescription.daysSupply,
+			calculation,
+			recommendation
+		}}
+	/>
+
 	<!-- Drug Interaction Checker -->
 	<DrugInteractionChecker
 		currentDrug={prescription.drugName}
@@ -417,6 +456,8 @@
 								<p class="text-sm" style="color: var(--text-muted);">{calculation.unit} total</p>
 							</div>
 						</div>
+						<!-- Stock Warning Integration -->
+						<StockWarning ndc={pkg.ndc} drugName={prescription.drugName} />
 					</div>
 				{/each}
 

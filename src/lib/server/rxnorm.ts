@@ -186,3 +186,54 @@ export function validateDrugInput(input: string): { valid: boolean; error?: stri
 
 	return { valid: true };
 }
+
+export interface DrugSuggestion {
+	rxcui: string;
+	name: string;
+	synonym: string;
+	tty: string;
+}
+
+/**
+ * Search for drug suggestions for autocomplete
+ */
+export async function searchRxNormDrugs(query: string): Promise<DrugSuggestion[]> {
+	if (!query || query.trim().length < 2) {
+		return [];
+	}
+
+	const processedQuery = preprocessDrugName(query);
+
+	try {
+		// Use approximate term search for fuzzy matching
+		const response = await fetch(
+			`${RXNORM_BASE_URL}/approximateTerm.json?term=${encodeURIComponent(processedQuery)}&maxEntries=10`
+		);
+
+		const data = await response.json();
+
+		if (!data.approximateGroup?.candidate) {
+			return [];
+		}
+
+		// Filter and format suggestions
+		const suggestions: DrugSuggestion[] = data.approximateGroup.candidate
+			.filter((candidate: any) => {
+				// Filter out certain types we don't want (like ingredients, allergenic extracts, etc.)
+				const unwantedTypes = ['IN', 'PIN', 'MIN'];
+				return !unwantedTypes.includes(candidate.source);
+			})
+			.slice(0, 8) // Limit to 8 suggestions
+			.map((candidate: any) => ({
+				rxcui: candidate.rxcui,
+				name: candidate.name,
+				synonym: candidate.synonym || candidate.name,
+				tty: candidate.source || ''
+			}));
+
+		return suggestions;
+	} catch (error) {
+		console.error('Error searching RxNorm drugs:', error);
+		return [];
+	}
+}

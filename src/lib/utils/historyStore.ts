@@ -8,6 +8,7 @@ export interface HistoryEntry {
 	sig: string;
 	daysSupply: number;
 	result: any; // The full calculation result
+	isFavorite?: boolean;
 }
 
 const STORAGE_KEY = 'pharmamax_history';
@@ -133,5 +134,115 @@ export class HistoryStore {
 	 */
 	static getCount(): number {
 		return this.getAll().length;
+	}
+
+	/**
+	 * Toggle favorite status for an entry
+	 */
+	static toggleFavorite(id: string): boolean {
+		try {
+			const history = this.getAll();
+			const entry = history.find(e => e.id === id);
+
+			if (!entry) return false;
+
+			entry.isFavorite = !entry.isFavorite;
+			localStorage.setItem(STORAGE_KEY, JSON.stringify(history));
+			return true;
+		} catch (error) {
+			console.error('Failed to toggle favorite:', error);
+			return false;
+		}
+	}
+
+	/**
+	 * Get favorite entries
+	 */
+	static getFavorites(): HistoryEntry[] {
+		return this.getAll().filter(entry => entry.isFavorite);
+	}
+
+	/**
+	 * Update an existing entry
+	 */
+	static update(id: string, updates: Partial<HistoryEntry>): boolean {
+		try {
+			const history = this.getAll();
+			const index = history.findIndex(e => e.id === id);
+
+			if (index === -1) return false;
+
+			history[index] = { ...history[index], ...updates };
+			localStorage.setItem(STORAGE_KEY, JSON.stringify(history));
+			return true;
+		} catch (error) {
+			console.error('Failed to update entry:', error);
+			return false;
+		}
+	}
+
+	/**
+	 * Export history to CSV format
+	 */
+	static exportToCSV(columns: string[] = ['timestamp', 'drugInput', 'sig', 'daysSupply']): string {
+		const history = this.getAll();
+
+		if (history.length === 0) {
+			return '';
+		}
+
+		// Create header row
+		const headers = columns.map(col => {
+			switch (col) {
+				case 'timestamp': return 'Date';
+				case 'drugInput': return 'Drug';
+				case 'sig': return 'SIG';
+				case 'daysSupply': return 'Days Supply';
+				case 'isFavorite': return 'Favorite';
+				default: return col;
+			}
+		});
+
+		const csvRows = [headers.join(',')];
+
+		// Create data rows
+		history.forEach(entry => {
+			const row = columns.map(col => {
+				let value: any;
+				switch (col) {
+					case 'timestamp':
+						value = new Date(entry.timestamp).toLocaleString();
+						break;
+					case 'isFavorite':
+						value = entry.isFavorite ? 'Yes' : 'No';
+						break;
+					default:
+						value = entry[col as keyof HistoryEntry] || '';
+				}
+				// Escape commas and quotes
+				const stringValue = String(value);
+				return stringValue.includes(',') || stringValue.includes('"')
+					? `"${stringValue.replace(/"/g, '""')}"`
+					: stringValue;
+			});
+			csvRows.push(row.join(','));
+		});
+
+		return csvRows.join('\n');
+	}
+
+	/**
+	 * Delete multiple entries by IDs
+	 */
+	static bulkDelete(ids: string[]): boolean {
+		try {
+			const history = this.getAll();
+			const filtered = history.filter(entry => !ids.includes(entry.id));
+			localStorage.setItem(STORAGE_KEY, JSON.stringify(filtered));
+			return true;
+		} catch (error) {
+			console.error('Failed to bulk delete entries:', error);
+			return false;
+		}
 	}
 }

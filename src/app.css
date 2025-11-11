@@ -20,7 +20,8 @@
    1. COLOR SYSTEM & THEME VARIABLES
    ============================================================================ */
 
-:root {
+/* ===== Dark Theme (Default) ===== */
+:root, [data-theme="dark"] {
   /* ===== Core Colors - Netflix Inspired ===== */
   --background: #141414;           /* Netflix black - deep, pure black */
   --foreground: #ffffff;           /* Pure white text for maximum contrast */
@@ -55,6 +56,49 @@
   --rarity-legendary: #F59E0B;     /* Gold */
 
   /* ===== Progress/Gamification Colors (Optional) ===== */
+  --progress-daily: #10B981;       /* Green - daily goals */
+  --progress-weekly: #3B82F6;      /* Blue - weekly goals */
+  --progress-mastery: #8B5CF6;     /* Purple - mastery */
+  --progress-streak: #F59E0B;      /* Orange - streaks */
+  --progress-badges: #EC4899;      /* Pink - badges */
+  --progress-overall: #6366F1;     /* Indigo - overall progress */
+}
+
+/* ===== Light Theme ===== */
+[data-theme="light"] {
+  /* ===== Core Colors - Clean Light ===== */
+  --background: #ffffff;           /* Pure white background */
+  --foreground: #1f2937;           /* Dark gray text for readability */
+  --card-bg: #f9fafb;              /* Very light gray cards */
+  --border-color: #e5e7eb;         /* Light gray borders */
+
+  /* ===== Accent Colors ===== */
+  --accent: #10b981;               /* Emerald green - medical, trustworthy, wellness */
+  --accent-hover: #059669;         /* Darker emerald on hover */
+
+  /* ===== Text Colors ===== */
+  --text-secondary: #6b7280;       /* Medium gray - secondary information */
+  --text-muted: #9ca3af;           /* Light gray - tertiary information */
+
+  /* ===== Semantic Colors ===== */
+  --success: #10b981;              /* Emerald green for positive states */
+  --success-bg: #d1fae5;           /* Light green background */
+
+  --error: #ef4444;                /* Red for error states in light mode */
+  --error-bg: #fee2e2;             /* Light red background */
+  --error-border: #fca5a5;         /* Light red border */
+
+  --warning: #f59e0b;              /* Orange for warnings */
+  --info: #3b82f6;                 /* Blue for info states */
+  --live: #10b981;                 /* Emerald green for live indicators */
+
+  /* ===== Badge Rarity Colors ===== */
+  --rarity-common: #6b7280;        /* Gray */
+  --rarity-rare: #3B82F6;          /* Blue */
+  --rarity-epic: #A855F7;          /* Purple */
+  --rarity-legendary: #F59E0B;     /* Gold */
+
+  /* ===== Progress/Gamification Colors ===== */
   --progress-daily: #10B981;       /* Green - daily goals */
   --progress-weekly: #3B82F6;      /* Blue - weekly goals */
   --progress-mastery: #8B5CF6;     /* Purple - mastery */

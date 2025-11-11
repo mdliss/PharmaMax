@@ -1,13 +1,21 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
-	import { onMount } from 'svelte';
+	import { onMount, onDestroy } from 'svelte';
 	import ResultsDisplay from '$lib/components/ResultsDisplay.svelte';
 	import HistorySidebar from '$lib/components/HistorySidebar.svelte';
 	import BatchProcessor from '$lib/components/BatchProcessor.svelte';
 	import SatisfactionWidget from '$lib/components/SatisfactionWidget.svelte';
+	import DrugAutocomplete from '$lib/components/DrugAutocomplete.svelte';
+	import SIGTemplatePicker from '$lib/components/SIGTemplatePicker.svelte';
+	import KeyboardShortcutsHelp from '$lib/components/KeyboardShortcutsHelp.svelte';
+	import ThemeToggle from '$lib/components/ThemeToggle.svelte';
+	import MultiDrugManager from '$lib/components/MultiDrugManager.svelte';
+	import InventoryManager from '$lib/components/InventoryManager.svelte';
+	import InventoryAlerts from '$lib/components/InventoryAlerts.svelte';
 	import { HistoryStore } from '$lib/utils/historyStore';
+	import { getKeyboardManager } from '$lib/utils/keyboardShortcuts';
 
-	let activeTab: 'single' | 'batch' = 'single';
+	let activeTab: 'single' | 'batch' | 'multi' | 'inventory' = 'single';
 	let drugInput = '';
 	let sig = '';
 	let daysSupply = 30;
@@ -15,6 +23,9 @@
 	let error = '';
 	let result: any = null;
 	let historySaveError = '';
+	let showKeyboardHelp = false;
+	let formElement: HTMLFormElement;
+	let historySidebarToggle: HTMLElement;
 
 	async function handleSubmit(event: Event) {
 		event.preventDefault();
@@ -78,6 +89,53 @@
 		// Scroll to top to show the form
 		window.scrollTo({ top: 0, behavior: 'smooth' });
 	}
+
+	onMount(() => {
+		const manager = getKeyboardManager();
+
+		// Register shortcuts
+		manager.register('submit-form', {
+			key: 'Enter',
+			ctrl: true,
+			description: 'Submit prescription form',
+			category: 'Form Actions',
+			action: () => {
+				if (formElement) {
+					formElement.requestSubmit();
+				}
+			}
+		});
+
+		manager.register('toggle-history', {
+			key: 'h',
+			ctrl: true,
+			description: 'Toggle history sidebar',
+			category: 'Navigation',
+			action: () => {
+				// Trigger click on history toggle button
+				const historyBtn = document.querySelector('[data-history-toggle]') as HTMLElement;
+				if (historyBtn) {
+					historyBtn.click();
+				}
+			}
+		});
+
+		manager.register('show-help', {
+			key: '?',
+			description: 'Show keyboard shortcuts help',
+			category: 'Help',
+			action: () => {
+				showKeyboardHelp = true;
+			}
+		});
+
+		// Start listening
+		manager.start();
+
+		return () => {
+			manager.stop();
+		};
+	});
 </script>
 
 <div class="min-h-screen" style="background-color: var(--background);">
@@ -86,7 +144,10 @@
 
 	<div class="container mx-auto px-4 py-8 max-w-4xl">
 		<!-- Header -->
-		<div class="text-center mb-8 drop-in-1">
+		<div class="text-center mb-8 drop-in-1 relative">
+			<div class="absolute top-0 right-0">
+				<ThemeToggle />
+			</div>
 			<h1 class="text-4xl font-bold mb-2" style="color: var(--accent);">PharmaMax</h1>
 			<p class="text-lg" style="color: var(--text-secondary);">NDC Packaging & Quantity Calculator</p>
 			<p class="text-sm mt-1" style="color: var(--text-muted);">AI-Accelerated Prescription Fulfillment Tool</p>
@@ -113,36 +174,67 @@
 				>
 					Batch Processing
 				</button>
+				<button
+					on:click={() => activeTab = 'multi'}
+					class="flex-1 px-6 py-4 text-sm font-medium transition"
+					style="{activeTab === 'multi'
+						? `background-color: var(--card-bg); color: var(--accent); border-bottom: 2px solid var(--accent);`
+						: `background-color: var(--background); color: var(--text-secondary);`}"
+				>
+					Multi-Drug Rx
+				</button>
+				<button
+					on:click={() => activeTab = 'inventory'}
+					class="flex-1 px-6 py-4 text-sm font-medium transition"
+					style="{activeTab === 'inventory'
+						? `background-color: var(--card-bg); color: var(--accent); border-bottom: 2px solid var(--accent);`
+						: `background-color: var(--background); color: var(--text-secondary);`}"
+				>
+					Inventory
+				</button>
 			</div>
 		</div>
+
+		<!-- Inventory Alerts (show across all tabs) -->
+		<InventoryAlerts />
 
 		{#if activeTab === 'single'}
 		<!-- Main Calculator Card -->
 		<div class="card-hover rounded-lg shadow-lg p-8 mb-8 drop-in-3" style="background-color: var(--card-bg); border: 1px solid var(--border-color);">
-			<h2 class="text-2xl font-semibold mb-6" style="color: var(--foreground);">Calculate Prescription Quantity</h2>
+			<h2 class="text-2xl font-semibold mb-6" style="color: var(--foreground);">
+				Calculate Prescription Quantity
+				<button
+					type="button"
+					on:click={() => showKeyboardHelp = true}
+					class="ml-2 text-xs px-2 py-1 rounded"
+					style="background-color: var(--border-color); color: var(--text-secondary);"
+					title="Show keyboard shortcuts (Press ?)"
+				>
+					?
+				</button>
+			</h2>
 
-			<form on:submit={handleSubmit} class="space-y-6">
-				<!-- Drug Name/NDC Input -->
+			<form bind:this={formElement} on:submit={handleSubmit} class="space-y-6">
+				<!-- Drug Name/NDC Input with Autocomplete -->
 				<div>
 					<label for="drugInput" class="block text-sm font-medium mb-2" style="color: var(--text-secondary);">
 						Drug Name or NDC
 					</label>
-					<input
-						id="drugInput"
-						type="text"
-						bind:value={drugInput}
-						required
-						placeholder="e.g., Lisinopril 10mg or 00093-1234-01"
-						class="input-text w-full px-4 py-3 rounded-lg transition"
-					/>
-					<p class="mt-1 text-sm" style="color: var(--text-muted);">Enter a drug name or 11-digit NDC code</p>
+					<DrugAutocomplete bind:value={drugInput} required />
+					<p class="mt-1 text-sm" style="color: var(--text-muted);">
+						Enter a drug name or 11-digit NDC code. Start typing to see suggestions.
+					</p>
 				</div>
 
-				<!-- SIG Input -->
+				<!-- SIG Input with Templates -->
 				<div>
 					<label for="sig" class="block text-sm font-medium mb-2" style="color: var(--text-secondary);">
 						SIG (Prescription Instructions)
 					</label>
+
+					<!-- SIG Template Picker -->
+					<SIGTemplatePicker onSelect={(template) => (sig = template)} currentValue={sig} />
+
 					<input
 						id="sig"
 						type="text"
@@ -151,14 +243,12 @@
 						placeholder="e.g., Take 2 tablets by mouth twice daily"
 						class="input-text w-full px-4 py-3 rounded-lg transition"
 					/>
+
 					<div class="mt-2 p-3 rounded" style="background-color: rgba(16, 185, 129, 0.05); border: 1px solid rgba(16, 185, 129, 0.2);">
-						<p class="text-xs font-medium mb-1" style="color: var(--accent);">Examples for different dosage forms:</p>
-						<ul class="text-xs space-y-1" style="color: var(--text-muted);">
-							<li>• Tablets: "Take 2 tablets by mouth twice daily"</li>
-							<li>• Liquids: "Take 5 mL by mouth three times daily"</li>
-							<li>• Insulin: "Inject 10 units subcutaneously once daily"</li>
-							<li>• Inhalers: "Inhale 2 puffs twice daily"</li>
-						</ul>
+						<p class="text-xs font-medium mb-1" style="color: var(--accent);">Quick tip:</p>
+						<p class="text-xs" style="color: var(--text-muted);">
+							Use the quick-fill buttons above or click "Templates" to browse pre-built SIG templates
+						</p>
 					</div>
 				</div>
 
@@ -238,13 +328,28 @@
 				</div>
 			{/if}
 		</div>
-		{:else}
+		{:else if activeTab === 'batch'}
 		<!-- Batch Processing -->
 		<BatchProcessor />
+		{:else if activeTab === 'multi'}
+		<!-- Multi-Drug Prescription Manager -->
+		<div class="rounded-lg shadow-lg p-8 mb-8 drop-in-3" style="background-color: var(--card-bg); border: 1px solid var(--border-color);">
+			<MultiDrugManager />
+		</div>
+		{:else if activeTab === 'inventory'}
+		<!-- Inventory Manager -->
+		<div class="rounded-lg shadow-lg p-8 mb-8 drop-in-3" style="background-color: var(--card-bg); border: 1px solid var(--border-color);">
+			<InventoryManager />
+		</div>
 		{/if}
+	</div>
 
-		<!-- Info Section -->
-		<div class="rounded-lg p-6 drop-in-4" style="background-color: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.2);">
+	<!-- Satisfaction Widget -->
+	<SatisfactionWidget />
+
+	<!-- Info Section -->
+	<div class="container mx-auto px-4 py-8 max-w-4xl">
+		<div class="rounded-lg p-6" style="background-color: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.2);">
 			<h3 class="text-lg font-semibold mb-2" style="color: var(--accent);">How it works</h3>
 			<ul class="space-y-2 text-sm" style="color: var(--text-secondary);">
 				<li class="flex items-start">
@@ -267,6 +372,6 @@
 		</div>
 	</div>
 
-	<!-- Satisfaction Widget -->
-	<SatisfactionWidget />
+	<!-- Keyboard Shortcuts Help Modal -->
+	<KeyboardShortcutsHelp show={showKeyboardHelp} onClose={() => showKeyboardHelp = false} />
 </div>
