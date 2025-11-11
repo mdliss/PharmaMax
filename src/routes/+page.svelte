@@ -4,6 +4,7 @@
 	import ResultsDisplay from '$lib/components/ResultsDisplay.svelte';
 	import HistorySidebar from '$lib/components/HistorySidebar.svelte';
 	import BatchProcessor from '$lib/components/BatchProcessor.svelte';
+	import SatisfactionWidget from '$lib/components/SatisfactionWidget.svelte';
 	import { HistoryStore } from '$lib/utils/historyStore';
 
 	let activeTab: 'single' | 'batch' = 'single';
@@ -150,7 +151,15 @@
 						placeholder="e.g., Take 2 tablets by mouth twice daily"
 						class="input-text w-full px-4 py-3 rounded-lg transition"
 					/>
-					<p class="mt-1 text-sm" style="color: var(--text-muted);">Enter prescription directions (supports common abbreviations)</p>
+					<div class="mt-2 p-3 rounded" style="background-color: rgba(16, 185, 129, 0.05); border: 1px solid rgba(16, 185, 129, 0.2);">
+						<p class="text-xs font-medium mb-1" style="color: var(--accent);">Examples for different dosage forms:</p>
+						<ul class="text-xs space-y-1" style="color: var(--text-muted);">
+							<li>• Tablets: "Take 2 tablets by mouth twice daily"</li>
+							<li>• Liquids: "Take 5 mL by mouth three times daily"</li>
+							<li>• Insulin: "Inject 10 units subcutaneously once daily"</li>
+							<li>• Inhalers: "Inhale 2 puffs twice daily"</li>
+						</ul>
+					</div>
 				</div>
 
 				<!-- Days' Supply Input -->
@@ -257,4 +266,7 @@
 			</ul>
 		</div>
 	</div>
+
+	<!-- Satisfaction Widget -->
+	<SatisfactionWidget />
 </div>
