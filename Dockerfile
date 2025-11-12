@@ -7,7 +7,7 @@ WORKDIR /app
 RUN apt-get update -y && apt-get install -y openssl && rm -rf /var/lib/apt/lists/*
 
 # Accept build arguments
-ARG DATABASE_URL
+ARG DATABASE_URL="postgresql://placeholder:placeholder@placeholder:5432/placeholder"
 ARG OPENAI_API_KEY
 ARG PUBLIC_AUTO_LOAD_DEMO_DATA=true
 ENV DATABASE_URL=$DATABASE_URL
