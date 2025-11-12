@@ -1,0 +1,569 @@
+# Master Prompt: PharmaMax Synthetic Data Generation
+
+## Overview
+Generate comprehensive, realistic synthetic data for the PharmaMax NDC Packaging & Quantity Calculator application. This data should cover all features and create a realistic pharmacy environment for testing, demos, and development.
+
+## Core Requirements
+- All data must be COMPLETELY FICTIONAL - no real patient information
+- Data should be internally consistent (e.g., patient allergies match their medication history)
+- Include edge cases and realistic scenarios pharmacists encounter
+- Data should demonstrate all features and workflows
+- Follow pharmacy industry standards and conventions
+
+---
+
+## 1. PATIENT PROFILES (50-100 profiles)
+
+### Demographics
+Create diverse patient profiles including:
+- Patient IDs: Use format "PT-" + 6 digits (e.g., PT-123456)
+- Names: Mix of ages, genders, ethnicities (all fictional)
+- Date of Birth: Range from pediatric (0-17), adult (18-64), geriatric (65+)
+- Contact: Fictional phone numbers and addresses
+- Insurance: Mix of Medicare, Medicaid, Commercial, Cash-pay
+
+### Medical History Per Patient
+```typescript
+{
+  id: string,
+  name: string,
+  dateOfBirth: string,
+  age: number,
+  gender: "male" | "female" | "non-binary",
+  phone: string,
+  email: string,
+  address: string,
+  insurance: {
+    provider: string,
+    memberId: string,
+    groupNumber: string,
+    planType: string
+  },
+  allergies: [
+    {
+      allergen: string, // Drug name or class
+      reaction: string, // "rash", "anaphylaxis", "nausea", etc.
+      severity: "mild" | "moderate" | "severe",
+      dateReported: string
+    }
+  ],
+  conditions: [
+    "hypertension", "diabetes", "asthma", "COPD", "depression", etc.
+  ],
+  currentMedications: [
+    {
+      drugName: string,
+      sig: string,
+      prescriber: string,
+      startDate: string,
+      refillsRemaining: number
+    }
+  ],
+  notes: string // Optional pharmacy notes
+}
+```
+
+### Example Scenarios to Include:
+- Pediatric patient with asthma (albuterol, inhaled corticosteroids)
+- Elderly patient with polypharmacy (5+ medications)
+- Patient with opioid prescription and pain management history
+- Patient with severe drug allergy (penicillin allergy, etc.)
+- Pregnant patient (prenatal vitamins, safe medications)
+- Patient with diabetes (insulin, metformin, test strips)
+- Patient with multiple controlled substances (ADHD meds, anxiety meds)
+
+---
+
+## 2. PRESCRIPTION HISTORY (200-500 entries)
+
+Generate a realistic prescription history with:
+
+### Data Structure
+```typescript
+{
+  id: string,
+  timestamp: number,
+  patientId: string, // Links to patient profile
+  drugInput: string,
+  sig: string,
+  daysSupply: number,
+  refills: number,
+  prescriber: string,
+  prescribedDate: string,
+  isFavorite: boolean,
+  result: {
+    prescription: {
+      drugName: string,
+      rxcui: string,
+      sig: string,
+      daysSupply: number
+    },
+    calculation: {
+      totalQuantityNeeded: number,
+      unit: string,
+      perDose: number,
+      frequency: number,
+      dailyAmount: number
+    },
+    packages: [...],
+    recommendation: {...}
+  },
+  status: "filled" | "partial-fill" | "pending" | "cancelled",
+  fillDate: string,
+  pharmacist: string
+}
+```
+
+### Include Mix of:
+- Common maintenance medications (statins, blood pressure, diabetes)
+- Acute medications (antibiotics, pain relievers)
+- Controlled substances (Schedule II-V)
+- Specialty medications (biologics, expensive drugs)
+- OTC recommendations
+- Various dosage forms: tablets, capsules, liquids, inhalers, injections, creams
+- Various frequencies: QD, BID, TID, QID, Q12H, PRN, weekly, monthly
+- Complex SIGs: "Take 1 tablet by mouth twice daily with food"
+- Special instructions: "Inject 10 units subcutaneously at bedtime"
+- Inhaler instructions: "Inhale 2 puffs by mouth every 4-6 hours as needed"
+
+### Common Drugs to Include:
+**Cardiovascular:**
+- Lisinopril 10mg, 20mg, 40mg tablets
+- Atorvastatin 10mg, 20mg, 40mg, 80mg tablets
+- Metoprolol 25mg, 50mg, 100mg tablets
+- Amlodipine 5mg, 10mg tablets
+- Warfarin 1mg, 2mg, 5mg tablets
+
+**Diabetes:**
+- Metformin 500mg, 850mg, 1000mg tablets
+- Insulin glargine (Lantus) 100 units/mL vial, pen
+- Insulin lispro (Humalog) 100 units/mL vial, pen
+- Glucagon emergency kit
+
+**Mental Health:**
+- Sertraline 25mg, 50mg, 100mg tablets
+- Escitalopram 10mg, 20mg tablets
+- Alprazolam 0.25mg, 0.5mg, 1mg tablets (C-IV)
+- Amphetamine/Dextroamphetamine 10mg, 20mg, 30mg (C-II)
+
+**Pain Management:**
+- Ibuprofen 200mg, 400mg, 600mg, 800mg tablets
+- Acetaminophen 325mg, 500mg tablets
+- Tramadol 50mg tablets (C-IV)
+- Oxycodone 5mg, 10mg tablets (C-II)
+- Hydrocodone/Acetaminophen 5/325mg, 10/325mg (C-II)
+
+**Antibiotics:**
+- Amoxicillin 500mg capsules
+- Azithromycin 250mg tablets (Z-pak)
+- Cephalexin 500mg capsules
+- Doxycycline 100mg capsules
+
+**Respiratory:**
+- Albuterol 90mcg/actuation inhaler
+- Fluticasone 110mcg/actuation inhaler
+- Montelukast 10mg tablets
+- Prednisone 5mg, 10mg, 20mg tablets
+
+**Other Common:**
+- Omeprazole 20mg, 40mg capsules
+- Levothyroxine 25mcg, 50mcg, 75mcg, 100mcg tablets
+- Gabapentin 300mg, 600mg capsules
+- Vitamin D 1000 IU, 2000 IU tablets
+
+---
+
+## 3. INVENTORY DATA (100-200 NDCs)
+
+### Structure
+```typescript
+{
+  ndc: string, // Format: XXXXX-XXXX-XX
+  drugName: string,
+  strength: string,
+  dosageForm: string,
+  manufacturer: string,
+  packageSize: string,
+  currentStock: number,
+  reorderPoint: number,
+  reorderQuantity: number,
+  costPerPackage: number,
+  wholesalePrice: number,
+  lastOrderDate: string,
+  expirationDate: string,
+  lotNumber: string,
+  location: string, // Shelf location in pharmacy
+  isControlled: boolean,
+  deaSchedule?: string,
+  usage30days: number, // Average monthly usage
+  status: "in-stock" | "low-stock" | "out-of-stock" | "discontinued"
+}
+```
+
+### Include:
+- Fast-moving medications (high stock, high usage)
+- Slow-moving medications (low usage)
+- Out-of-stock items
+- Items approaching expiration (60 days, 30 days)
+- Items below reorder point
+- Multiple NDCs for same drug (different manufacturers)
+- Various package sizes (30ct, 90ct, 100ct, 500ct, 1000ct bottles)
+- Refrigerated items
+- Controlled substances with DEA numbers
+
+---
+
+## 4. CONTROLLED SUBSTANCE LOGS (100+ entries)
+
+### Structure
+```typescript
+{
+  id: string,
+  timestamp: number,
+  patientId: string,
+  prescriptionId: string,
+  drugName: string,
+  deaSchedule: "C-II" | "C-III" | "C-IV" | "C-V",
+  ndc: string,
+  quantity: number,
+  prescriber: {
+    name: string,
+    deaNumber: string, // Format: AB1234563
+    npi: string
+  },
+  dispensedBy: string,
+  verifiedBy: string,
+  notes: string,
+  pmpReported: boolean, // Prescription Monitoring Program
+  reportedDate?: string
+}
+```
+
+### Include Scenarios:
+- Schedule II opioids (requires hard copy in many states)
+- Schedule II stimulants (ADHD medications)
+- Schedule III/IV benzodiazepines
+- Early refill attempts (flag for review)
+- Multiple prescribers for same patient (doctor shopping flag)
+- Legitimate pain management patients
+- Post-surgical short-term opioid prescriptions
+
+---
+
+## 5. DRUG SAFETY ALERTS (Database of alerts)
+
+### Structure
+```typescript
+{
+  drugName: string,
+  rxcui: string,
+  alerts: [
+    {
+      type: "black-box-warning" | "pregnancy-warning" | "renal-adjustment" |
+            "hepatic-adjustment" | "age-restriction" | "monitoring-required",
+      severity: "critical" | "warning" | "info",
+      title: string,
+      description: string,
+      recommendation: string,
+      source: string, // "FDA", "Clinical Guidelines", etc.
+    }
+  ],
+  interactions: [
+    {
+      interactingDrug: string,
+      severity: "major" | "moderate" | "minor",
+      effect: string,
+      recommendation: string
+    }
+  ]
+}
+```
+
+### Include:
+- Black box warnings (e.g., opioids, anticoagulants)
+- Pregnancy categories/warnings
+- Pediatric/geriatric warnings
+- Renal dosing adjustments
+- Drug-drug interactions (common combinations)
+- Drug-disease contraindications
+- Monitoring requirements (INR for warfarin, kidney function for metformin)
+
+---
+
+## 6. GENERIC SUBSTITUTION DATA
+
+### Structure
+```typescript
+{
+  brandName: string,
+  genericName: string,
+  rxcui: string,
+  therapeuticEquivalent: boolean,
+  abRating: string, // "AB", "AB1", "AB2", "BX", etc.
+  averageCostBrand: number,
+  averageCostGeneric: number,
+  potentialSavings: number,
+  manufacturerOptions: [
+    {
+      manufacturer: string,
+      ndc: string,
+      price: number,
+      availability: "in-stock" | "special-order" | "unavailable"
+    }
+  ]
+}
+```
+
+### Include Common Substitutions:
+- Lipitor → Atorvastatin
+- Zocor → Simvastatin
+- Norvasc → Amlodipine
+- Synthroid → Levothyroxine
+- Zoloft → Sertraline
+- Lexapro → Escitalopram
+- Prozac → Fluoxetine
+- Glucophage → Metformin
+
+---
+
+## 7. INSURANCE FORMULARY DATA
+
+### Structure
+```typescript
+{
+  insuranceProvider: string,
+  planName: string,
+  formulary: [
+    {
+      drugName: string,
+      rxcui: string,
+      tier: 1 | 2 | 3 | 4 | 5, // 1=generic, 5=specialty
+      copay: number,
+      priorAuthRequired: boolean,
+      quantityLimits: {
+        quantity: number,
+        days: number
+      },
+      stepTherapyRequired: boolean,
+      stepTherapyAlternatives: string[],
+      covered: boolean,
+      restrictions: string[]
+    }
+  ]
+}
+```
+
+### Include:
+- Multiple insurance plans (Medicare, Medicaid, BCBS, Aetna, UHC)
+- Tiered copay structures
+- Prior authorization requirements
+- Quantity limits (especially for opioids, benzos)
+- Step therapy protocols
+- Non-covered medications with alternatives
+
+---
+
+## 8. BATCH PROCESSING DATA (20-50 batch jobs)
+
+### Structure
+```typescript
+{
+  batchId: string,
+  timestamp: number,
+  prescriptions: [
+    {
+      patientName: string,
+      drugName: string,
+      sig: string,
+      daysSupply: number,
+      priority: "routine" | "urgent" | "stat"
+    }
+  ],
+  status: "pending" | "processing" | "completed" | "errors",
+  totalCount: number,
+  completedCount: number,
+  errorCount: number,
+  processingTime: number,
+  pharmacist: string
+}
+```
+
+### Include:
+- Morning fill batch (routine refills)
+- Stat orders (urgent)
+- Nursing home batch orders
+- Mail-order prescriptions
+- Mixed batches with errors
+
+---
+
+## 9. BARCODE SCAN HISTORY
+
+### Structure
+```typescript
+{
+  id: string,
+  timestamp: number,
+  barcodeType: "NDC" | "UPC" | "GS1",
+  barcodeData: string,
+  ndc: string,
+  drugName: string,
+  scannedBy: string,
+  verificationStatus: "match" | "mismatch" | "warning",
+  linkedPrescriptionId?: string
+}
+```
+
+---
+
+## 10. PARTIAL FILL HISTORY
+
+### Structure
+```typescript
+{
+  originalPrescriptionId: string,
+  patientId: string,
+  drugName: string,
+  totalQuantityPrescribed: number,
+  fills: [
+    {
+      fillId: string,
+      fillDate: string,
+      quantityDispensed: number,
+      remainingQuantity: number,
+      pharmacist: string,
+      reason: "shortage" | "patient-request" | "controlled-substance",
+      mustCompleteBefore?: string // For C-II partial fills
+    }
+  ]
+}
+```
+
+---
+
+## 11. PRESCRIBER DATABASE
+
+### Structure
+```typescript
+{
+  npi: string, // 10 digits
+  name: string,
+  specialty: string,
+  deaNumber?: string,
+  phone: string,
+  fax: string,
+  address: string,
+  practiceName: string,
+  preferredContactMethod: "phone" | "fax" | "electronic",
+  electronicallyPrescribes: boolean
+}
+```
+
+### Include Specialties:
+- Primary Care / Family Medicine
+- Cardiology
+- Endocrinology
+- Psychiatry
+- Pain Management
+- Orthopedics
+- Pediatrics
+- OB/GYN
+
+---
+
+## 12. PHARMACY STAFF DATA
+
+### Structure
+```typescript
+{
+  employeeId: string,
+  name: string,
+  role: "pharmacist" | "pharmacy-technician" | "pharmacy-intern",
+  licenseNumber: string,
+  licenseState: string,
+  licenseExpiration: string,
+  canVerifyControlled: boolean,
+  shifts: [
+    {
+      day: string,
+      startTime: string,
+      endTime: string
+    }
+  ]
+}
+```
+
+---
+
+## 13. AUDIT LOG ENTRIES
+
+### Structure
+```typescript
+{
+  id: string,
+  timestamp: number,
+  userId: string,
+  action: string,
+  resource: string,
+  changes: object,
+  ipAddress: string,
+  success: boolean,
+  errorMessage?: string
+}
+```
+
+---
+
+## IMPLEMENTATION INSTRUCTIONS
+
+1. **Start with Patient Profiles**: Create 50-100 diverse, realistic patients first
+2. **Build Medication History**: Assign 2-10 medications per patient based on their conditions
+3. **Generate Prescription History**: Create 3-10 historical prescriptions per patient
+4. **Stock Inventory**: Add all medications from history to inventory with realistic stock levels
+5. **Add Controlled Substances**: Flag appropriate medications and create DEA logs
+6. **Create Interactions**: Define 20-30 common drug-drug interactions
+7. **Insurance Data**: Assign 3-5 insurance plans with realistic formularies
+8. **Generate Edge Cases**: Include scenarios that test validation, alerts, and error handling
+
+## DATA RELATIONSHIPS
+
+Ensure these relationships are maintained:
+- Patient allergies → Alert when prescribed contraindicated drug
+- Patient medications → Check for drug-drug interactions
+- Inventory stock → Trigger low stock alerts
+- Controlled substances → Require DEA tracking
+- Insurance formulary → Show coverage and copay info
+- Prescriber → Valid DEA number for controlled substances
+
+## EDGE CASES TO INCLUDE
+
+1. Patient allergic to prescribed medication
+2. Drug-drug interaction between current and new medication
+3. Controlled substance early refill attempt
+4. Out-of-stock medication requiring substitution
+5. Insurance requiring prior authorization
+6. Quantity limit exceeded
+7. Pediatric patient with adult-only medication
+8. Pregnant patient with pregnancy Category X drug
+9. Renal impairment patient with medication requiring dose adjustment
+10. Multiple controlled substances from different prescribers
+
+## OUTPUT FORMAT
+
+Generate data as TypeScript/JSON files that can be imported:
+- `src/lib/data/syntheticPatients.ts`
+- `src/lib/data/syntheticPrescriptions.ts`
+- `src/lib/data/syntheticInventory.ts`
+- `src/lib/data/syntheticControlledSubstances.ts`
+- etc.
+
+Each file should export a constant array with the data and include TypeScript types.
+
+---
+
+This synthetic data should create a realistic pharmacy environment that:
+- Demonstrates all features
+- Tests edge cases
+- Provides meaningful demos
+- Supports development and testing
+- Maintains HIPAA compliance (all fictional data)
