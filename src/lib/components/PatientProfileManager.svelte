@@ -197,7 +197,7 @@
 							</div>
 							{#if patient.allergies.length > 0}
 								<div class="text-sm mt-1 flex items-center gap-2">
-									<span style="color: var(--error);">⚠️ Allergies:</span>
+									<span style="color: var(--error);">Allergies:</span>
 									<span style="color: var(--text-secondary);">
 										{patient.allergies.join(', ')}
 									</span>
