@@ -17,7 +17,8 @@
     "db:migrate": "prisma migrate dev",
     "db:migrate:deploy": "prisma migrate deploy",
     "db:push": "prisma db push",
-    "db:studio": "prisma studio"
+    "db:studio": "prisma studio",
+    "data:generate": "npx esbuild scripts/generateSyntheticData.ts --bundle --format=esm --platform=node --outfile=scripts/dist/generateSyntheticData.mjs && node scripts/dist/generateSyntheticData.mjs"
   },
   "devDependencies": {
     "@sveltejs/adapter-auto": "^3.0.0",
@@ -45,6 +46,7 @@
     "@sveltejs/adapter-node": "^5.0.0",
     "dotenv": "^17.2.3",
     "html2canvas": "^1.4.1",
+    "html5-qrcode": "^2.3.8",
     "jsbarcode": "^3.12.1",
     "jspdf": "^3.0.3",
     "openai": "^6.8.1",

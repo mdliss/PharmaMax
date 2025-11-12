@@ -9,8 +9,10 @@ RUN apt-get update -y && apt-get install -y openssl && rm -rf /var/lib/apt/lists
 # Accept build arguments
 ARG DATABASE_URL
 ARG OPENAI_API_KEY
+ARG PUBLIC_AUTO_LOAD_DEMO_DATA=true
 ENV DATABASE_URL=$DATABASE_URL
 ENV OPENAI_API_KEY=$OPENAI_API_KEY
+ENV PUBLIC_AUTO_LOAD_DEMO_DATA=$PUBLIC_AUTO_LOAD_DEMO_DATA
 
 # Copy package files
 COPY package*.json ./

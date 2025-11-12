@@ -2,7 +2,7 @@
   "master": {
     "tasks": [
       {
-        "id": 1,
+        "id": "1",
         "title": "Setup Project Structure",
         "description": "Initialize the SvelteKit project with TypeScript and set up the basic file structure.",
         "details": "Use the SvelteKit CLI to create a new project. Ensure TypeScript is enabled. Set up the directory structure for components, routes, and API endpoints.",
@@ -14,7 +14,7 @@
         "updatedAt": "2025-11-10T20:48:10.032Z"
       },
       {
-        "id": 2,
+        "id": "2",
         "title": "Implement Main Calculator Interface",
         "description": "Create the main user interface for the calculator at the root URL.",
         "details": "Design a simple form with input fields for drug name/NDC, SIG, and days' supply. Use TailwindCSS for styling.",
@@ -28,7 +28,7 @@
         "updatedAt": "2025-11-10T20:49:23.984Z"
       },
       {
-        "id": 3,
+        "id": "3",
         "title": "Create API Endpoint for Drug Normalization",
         "description": "Develop the API endpoint to normalize drug names using the RxNorm API.",
         "details": "Implement the `/api/normalize` endpoint. Use fetch to call the RxNorm API and handle the response.",
@@ -42,7 +42,7 @@
         "updatedAt": "2025-11-10T20:52:10.962Z"
       },
       {
-        "id": 4,
+        "id": "4",
         "title": "Implement Drug Normalization Logic",
         "description": "Add logic to handle common drug name variations and synonyms.",
         "details": "Create a function to process input, check for common variations, and call the normalization API.",
@@ -84,7 +84,7 @@
         "updatedAt": "2025-11-10T21:01:06.533Z"
       },
       {
-        "id": 5,
+        "id": "5",
         "title": "Input Validation for Drug Normalization",
         "description": "Implement validation for drug name and NDC input formats.",
         "details": "Validate that drug names are not empty and NDCs follow the 11-digit format.",
@@ -101,7 +101,7 @@
         "updatedAt": "2025-11-10T21:01:26.029Z"
       },
       {
-        "id": 6,
+        "id": "6",
         "title": "Create API Endpoint for Quantity Calculation",
         "description": "Develop the API endpoint to calculate the total quantity needed based on SIG and days' supply.",
         "details": "Implement the `/api/calculate` endpoint. Parse the request body and perform calculations.",
@@ -115,7 +115,7 @@
         "updatedAt": "2025-11-10T20:54:23.555Z"
       },
       {
-        "id": 7,
+        "id": "7",
         "title": "Simplify SIG Parsing Logic",
         "description": "Implement basic logic to parse common SIG input formats using the OpenAI API.",
         "details": "Use the OpenAI API to parse basic SIG instructions and extract essential dosage information without handling advanced edge cases.",
@@ -170,7 +170,7 @@
         "updatedAt": "2025-11-10T21:01:35.673Z"
       },
       {
-        "id": 8,
+        "id": "8",
         "title": "Calculate Total Quantity Needed",
         "description": "Implement the logic to calculate the total quantity based on parsed SIG and days' supply.",
         "details": "Use the formula: Total Quantity = (Dose × Frequency × Days' Supply).",
@@ -212,7 +212,7 @@
         "updatedAt": "2025-11-10T21:01:45.683Z"
       },
       {
-        "id": 9,
+        "id": "9",
         "title": "NDC Retrieval Logic",
         "description": "Implement logic to query the FDA NDC Directory API for valid NDCs based on RxCUI.",
         "details": "Create a function that queries the FDA API and retrieves all valid NDCs for a given RxCUI.",
@@ -229,7 +229,7 @@
         "updatedAt": "2025-11-10T20:56:52.971Z"
       },
       {
-        "id": 10,
+        "id": "10",
         "title": "Display NDCs with Package Sizes",
         "description": "Create a UI component to display retrieved NDCs with their package sizes and statuses.",
         "details": "Design a table format to show NDCs, package sizes, and active/inactive status.",
@@ -243,7 +243,7 @@
         "updatedAt": "2025-11-10T21:08:55.046Z"
       },
       {
-        "id": 11,
+        "id": "11",
         "title": "Implement Overfill/Underfill Calculation",
         "description": "Add logic to calculate overfill or underfill amounts based on available packages.",
         "details": "Determine the optimal package combination and calculate waste percentages.",
@@ -289,7 +289,7 @@
         "updatedAt": "2025-11-10T21:09:26.453Z"
       },
       {
-        "id": 12,
+        "id": "12",
         "title": "Results Display Component",
         "description": "Create a summary card to display prescription details and calculations.",
         "details": "Design a structured output showing drug name, RxCUI, parsed SIG, total quantity, and recommendations.",
@@ -304,7 +304,7 @@
         "updatedAt": "2025-11-10T21:09:37.450Z"
       },
       {
-        "id": 13,
+        "id": "13",
         "title": "Error Handling for API Calls",
         "description": "Implement error handling for API calls to RxNorm and FDA.",
         "details": "Handle API errors gracefully and provide user-friendly messages.",
@@ -322,7 +322,7 @@
         "updatedAt": "2025-11-10T21:09:45.763Z"
       },
       {
-        "id": 14,
+        "id": "14",
         "title": "Input Validation for Prescription Input",
         "description": "Implement validation for prescription input fields (SIG and days' supply).",
         "details": "Ensure SIG is not empty and days' supply is a valid number.",
@@ -339,7 +339,7 @@
         "updatedAt": "2025-11-10T21:09:04.061Z"
       },
       {
-        "id": 15,
+        "id": "15",
         "title": "Performance Optimization for API Calls",
         "description": "Optimize API calls to ensure response times meet performance criteria.",
         "details": "Implement caching for repeated queries and batch API calls where possible.",
@@ -354,7 +354,7 @@
         "updatedAt": "2025-11-10T21:09:54.068Z"
       },
       {
-        "id": 16,
+        "id": "16",
         "title": "Deployment Setup",
         "description": "Prepare the application for deployment on Google Cloud Run.",
         "details": "Dockerize the application and configure environment variables for API keys.",
@@ -368,7 +368,7 @@
         "updatedAt": "2025-11-10T20:59:51.964Z"
       },
       {
-        "id": 17,
+        "id": "17",
         "title": "Implement Copy-to-Clipboard Functionality",
         "description": "Add functionality to copy results to the clipboard.",
         "details": "Use the Clipboard API to implement copy functionality for the results display.",
@@ -385,7 +385,7 @@
         "updatedAt": "2025-11-10T21:14:22.293Z"
       },
       {
-        "id": 18,
+        "id": "18",
         "title": "Create Print-Friendly Format",
         "description": "Implement a print-friendly format for the results display.",
         "details": "Design a layout suitable for printing that includes all relevant information.",
@@ -402,7 +402,7 @@
         "updatedAt": "2025-11-10T21:15:58.764Z"
       },
       {
-        "id": 19,
+        "id": "19",
         "title": "User Testing and Feedback Collection",
         "description": "Conduct user testing sessions to gather feedback on the MVP.",
         "details": "Organize sessions with pharmacists to test the application and collect feedback.",
@@ -417,7 +417,7 @@
         "updatedAt": "2025-11-10T21:16:45.006Z"
       },
       {
-        "id": 20,
+        "id": "20",
         "title": "Final Review and Documentation",
         "description": "Review the application and create documentation for users and developers.",
         "details": "Document the setup process, API usage, and user instructions.",
@@ -432,7 +432,7 @@
         "updatedAt": "2025-11-10T21:18:55.042Z"
       },
       {
-        "id": 21,
+        "id": "21",
         "title": "Add Prescription History Feature",
         "description": "Implement localStorage-based prescription history to save and display the last 50 calculations with one-click reload functionality.",
         "details": "Create a history management system using browser localStorage to persist prescription calculations. The system should:\n- Save each calculation result (drug name, RxCUI, SIG, days' supply, quantity, NDC recommendations) to localStorage\n- Maintain a maximum of 50 entries (FIFO removal when limit exceeded)\n- Display recent history in a sidebar component\n- Provide one-click reload functionality to repopulate the calculator form with previous values\n- Include timestamps for each saved calculation\n- Add clear history option\n- Handle localStorage quota exceeded errors gracefully\n\nTechnical approach:\n- Create a HistoryStore utility to manage localStorage operations\n- Add a HistorySidebar component with a list of previous calculations\n- Implement click handlers to reload saved prescriptions into the main form\n- Use JSON serialization for storage",
@@ -448,7 +448,8 @@
             "dependencies": [],
             "details": "The HistoryStore utility will handle saving each calculation result to localStorage, ensuring that it can manage up to 50 entries and handle FIFO removal when the limit is exceeded. It will also include methods for retrieving the saved history and clearing it.",
             "status": "done",
-            "testStrategy": null
+            "testStrategy": null,
+            "parentId": "undefined"
           },
           {
             "id": 2,
@@ -459,7 +460,8 @@
             ],
             "details": "Implement logic in the HistoryStore to check the number of entries before saving a new calculation. If the limit of 50 is reached, the oldest entry should be removed to make space for the new one. This will ensure that the most recent calculations are always available.",
             "status": "done",
-            "testStrategy": null
+            "testStrategy": null,
+            "parentId": "undefined"
           },
           {
             "id": 3,
@@ -470,7 +472,8 @@
             ],
             "details": "The HistorySidebar component will render a list of the last 50 calculations stored in localStorage. It will include timestamps for each entry and will be styled to fit seamlessly into the existing UI.",
             "status": "done",
-            "testStrategy": null
+            "testStrategy": null,
+            "parentId": "undefined"
           },
           {
             "id": 4,
@@ -481,7 +484,8 @@
             ],
             "details": "This feature will involve adding click handlers to each entry in the HistorySidebar that, when clicked, will repopulate the main form with the corresponding values from localStorage. This will enhance user experience by allowing quick access to previous calculations.",
             "status": "done",
-            "testStrategy": null
+            "testStrategy": null,
+            "parentId": "undefined"
           },
           {
             "id": 5,
@@ -492,12 +496,16 @@
             ],
             "details": "Add error handling logic in the HistoryStore to gracefully manage situations where localStorage is full. This will include notifying the user and preventing further saves until space is cleared.",
             "status": "done",
-            "testStrategy": null
+            "testStrategy": null,
+            "parentId": "undefined"
           }
-        ]
+        ],
+        "complexity": 7,
+        "recommendedSubtasks": 5,
+        "expansionPrompt": "Break down the implementation of the localStorage-based prescription history feature into smaller tasks, including saving calculations, managing FIFO behavior, and creating the UI components."
       },
       {
-        "id": 22,
+        "id": "22",
         "title": "Simplified Drug Interaction Checker",
         "description": "Implement a basic drug interaction checker that analyzes a current prescription against one additional medication and displays simplified safety warnings.",
         "details": "Create a drug interaction checker feature that:\n- Adds a \"Check Interaction\" button to the results display\n- Accepts current prescription and one additional medication as input\n- Calls OpenAI GPT-4o API with a basic structured prompt to analyze drug interactions\n- Displays a simplified interaction severity level (e.g., safe, caution, dangerous)\n- Shows a brief warning message if applicable\n- Includes a disclaimer about AI-generated content and the need for professional verification\n\nTechnical approach:\n- Create /api/check-interaction endpoint\n- Design a basic prompt that asks GPT-4o to analyze the current prescription against one additional medication\n- Display the interaction severity level and warning message directly from the API response\n- Create InteractionResult component to display findings\n- Use a simple input UI for the additional medication\n- Ensure a straightforward output format for API responses",
@@ -513,7 +521,8 @@
             "dependencies": [],
             "details": "The UI should be intuitive, allowing users to input their current prescription and an additional medication easily. The 'Check Interaction' button should be prominently displayed to initiate the interaction check.",
             "status": "done",
-            "testStrategy": null
+            "testStrategy": null,
+            "parentId": "undefined"
           },
           {
             "id": 2,
@@ -524,7 +533,8 @@
             ],
             "details": "Create the /api/check-interaction endpoint that accepts the current prescription and additional medication as parameters. Construct a structured prompt to send to the GPT-4o API and handle the response appropriately.",
             "status": "done",
-            "testStrategy": null
+            "testStrategy": null,
+            "parentId": "undefined"
           },
           {
             "id": 3,
@@ -535,7 +545,8 @@
             ],
             "details": "The InteractionResult component should take the API response and display the interaction severity level (safe, caution, dangerous) along with any relevant warning messages. Ensure the output format is user-friendly and clear.",
             "status": "done",
-            "testStrategy": null
+            "testStrategy": null,
+            "parentId": "undefined"
           },
           {
             "id": 4,
@@ -546,12 +557,16 @@
             ],
             "details": "Test the functionality with known interacting drug pairs (e.g., warfarin + aspirin) to verify the accuracy of severity classification. Also, check API error handling and ensure the disclaimer about AI-generated content is displayed correctly.",
             "status": "done",
-            "testStrategy": null
+            "testStrategy": null,
+            "parentId": "undefined"
           }
-        ]
+        ],
+        "complexity": 6,
+        "recommendedSubtasks": 4,
+        "expansionPrompt": "Identify the steps needed to implement the drug interaction checker, including API integration, UI design, and testing for various drug pairs."
       },
       {
-        "id": 23,
+        "id": "23",
         "title": "Build Basic AI Chat Assistant Interface",
         "description": "Create a simplified conversational AI assistant interface for natural language prescription queries.",
         "details": "Implement a basic AI chat assistant that provides:\n- A single-turn natural language query interface for prescription questions\n- Conversational responses using OpenAI GPT-4\n- Ability to parse user queries like \"What's the right dosage for a 70kg adult?\" or \"How should I adjust for renal impairment?\"\n- Integration with existing calculator data (can reference current prescription)\n\nTechnical approach:\n- Create ChatAssistant component with a simple message input and output UI\n- Add /api/chat endpoint that calls OpenAI API with the user query\n- Do not maintain conversation history (stateless)\n- Include current prescription context in API calls when available\n- Add system prompt that guides AI to provide pharmacy-relevant responses",
@@ -567,7 +582,8 @@
             "dependencies": [],
             "details": "The UI should consist of a text input field for user queries and a display area for AI responses. Use TailwindCSS for styling to ensure a clean and responsive design.",
             "status": "done",
-            "testStrategy": null
+            "testStrategy": null,
+            "parentId": "undefined"
           },
           {
             "id": 2,
@@ -576,7 +592,8 @@
             "dependencies": [],
             "details": "The endpoint should accept user queries, call the OpenAI API with the necessary parameters, and return the AI's response. Ensure to include current prescription context when available.",
             "status": "done",
-            "testStrategy": null
+            "testStrategy": null,
+            "parentId": "undefined"
           },
           {
             "id": 3,
@@ -585,12 +602,16 @@
             "dependencies": [],
             "details": "Create a function that can analyze user input and format it appropriately for the OpenAI API. This should include handling specific phrases related to dosages and adjustments for conditions.",
             "status": "done",
-            "testStrategy": null
+            "testStrategy": null,
+            "parentId": "undefined"
           }
-        ]
+        ],
+        "complexity": 5,
+        "recommendedSubtasks": 3,
+        "expansionPrompt": "Outline the necessary components and API interactions to create the AI chat assistant interface, focusing on user input handling and response display."
       },
       {
-        "id": 24,
+        "id": "24",
         "title": "Simplified Batch Prescription Processing",
         "description": "Implement a basic CSV upload and batch processing capability to handle multiple prescriptions with a focus on essential functionality.",
         "details": "Create a simplified batch processing feature that:\n- Accepts CSV file upload with prescription data (columns: drug_name, sig, days_supply)\n- Performs basic CSV parsing without extensive validation\n- Processes up to 10 prescriptions sequentially through existing calculation logic\n- Displays a simple results summary after processing\n- Provides bulk export option in CSV format only\n- Shows basic error messages for any malformed entries without continuing processing.\n\nTechnical approach:\n- Create a simplified BatchProcessor component with file upload UI\n- Use basic CSV parsing logic\n- Implement sequential processing without queue-based handling\n- Add /api/batch-calculate endpoint or reuse existing endpoints\n- Create a simple results display for processed prescriptions\n- Implement CSV export functionality for results only.\n- Show basic error messages for malformed CSV entries.",
@@ -606,7 +627,8 @@
             "dependencies": [],
             "details": "The component will include a file input element and a button to trigger the upload. It will validate the file type to ensure it is a CSV and provide user feedback on the upload status.\n<info added on 2025-11-10T21:43:34.929Z>\nSuccessfully implemented CSV file upload component in src/lib/components/BatchProcessor.svelte. Component includes file input with .csv validation, file size display, user feedback for upload status, and integration with main page via tab navigation at src/routes/+page.svelte.\n</info added on 2025-11-10T21:43:34.929Z>",
             "status": "done",
-            "testStrategy": null
+            "testStrategy": null,
+            "parentId": "undefined"
           },
           {
             "id": 2,
@@ -617,7 +639,8 @@
             ],
             "details": "The parsing logic will read the CSV file, split it into rows and columns, and map the data to prescription objects. Basic error handling will be included to catch malformed entries without stopping the entire process.\n<info added on 2025-11-10T21:43:36.502Z>\nImplemented CSV parsing logic in BatchProcessor component with header validation for required columns (drug_name, sig, days_supply), basic error handling for malformed rows, data extraction and validation, enforcement of a 10 prescription limit, and returning an array of prescription objects ready for processing.\n</info added on 2025-11-10T21:43:36.502Z>",
             "status": "done",
-            "testStrategy": null
+            "testStrategy": null,
+            "parentId": "undefined"
           },
           {
             "id": 3,
@@ -628,7 +651,8 @@
             ],
             "details": "This step will involve iterating through the array of prescription objects and applying the existing calculation logic to each one. Results will be stored for display after processing.\n<info added on 2025-11-10T21:43:38.385Z>\nImplemented sequential prescription processing in the BatchProcessor component: processes up to 10 prescriptions one at a time, reuses existing /api/normalize and /api/calculate endpoints, tracks results array with success/failure status for each row, stops processing on first error encountered, and shows processing progress (X of Y) in UI during execution.\n</info added on 2025-11-10T21:43:38.385Z>",
             "status": "done",
-            "testStrategy": null
+            "testStrategy": null,
+            "parentId": "undefined"
           },
           {
             "id": 4,
@@ -639,12 +663,16 @@
             ],
             "details": "The results summary will present the processed prescriptions along with any error messages for malformed entries. Additionally, a button will be provided to export the results as a CSV file.\n<info added on 2025-11-10T21:43:40.592Z>\nImplemented results summary and error handling:\n- Results table showing all processed prescriptions with status badges\n- Success count summary display\n- CSV export functionality with downloadable results file\n- Error messages displayed inline for failed rows\n- Reset button to process another batch\n- Build verified successfully with npm run build\n</info added on 2025-11-10T21:43:40.592Z>",
             "status": "done",
-            "testStrategy": null
+            "testStrategy": null,
+            "parentId": "undefined"
           }
-        ]
+        ],
+        "complexity": 6,
+        "recommendedSubtasks": 4,
+        "expansionPrompt": "Detail the steps for implementing the CSV upload and batch processing feature, including file handling, data processing, and error management."
       },
       {
-        "id": 25,
+        "id": "25",
         "title": "Simplified PostgreSQL Database Setup",
         "description": "Implement a basic PostgreSQL database for storing prescription history without user accounts or analytics tracking.",
         "details": "Create a simplified database infrastructure for prescription storage:\n- Set up PostgreSQL database on Google Cloud SQL or similar\n- Design schema for:\n  - Prescriptions table (basic prescription history)\n- Implement database migrations using Prisma\n- Create database access layer with connection pooling\n- Add environment configuration for database connection\n\nTechnical approach:\n- Use Prisma as ORM for type-safe database access\n- Create schema.prisma with the prescriptions table\n- Add database connection middleware\n- Create migration scripts\n- Configure connection pooling for Cloud Run",
@@ -660,7 +688,8 @@
             "dependencies": [],
             "details": "Create a new PostgreSQL instance on Google Cloud SQL, ensuring it meets the requirements for performance and security. Configure access settings and ensure the database is ready for schema implementation.\n<info added on 2025-11-10T21:48:24.729Z>\nDatabase infrastructure setup completed (actual database creation pending user action): \n- Installed Prisma ORM and PostgreSQL driver (pg)\n- Initialized Prisma with prisma init\n- Created .env.example with DATABASE_URL template\n- Created DATABASE_SETUP.txt with comprehensive setup instructions for both local and Google Cloud SQL\n- User needs to create actual database instance and configure DATABASE_URL in .env file.\n</info added on 2025-11-10T21:48:24.729Z>",
             "status": "done",
-            "testStrategy": null
+            "testStrategy": null,
+            "parentId": "undefined"
           },
           {
             "id": 2,
@@ -671,7 +700,8 @@
             ],
             "details": "Define the schema in schema.prisma, including fields such as id, drug_name, dosage, patient_id, and prescription_date. Ensure proper data types and constraints are applied for data integrity.\n<info added on 2025-11-10T21:48:27.165Z>\nCreated prescriptions table schema in prisma/schema.prisma with fields: id (UUID primary key), drugName, rxcui, sig, daysSupply, totalQuantity, calculationResult (JSON for full calculation data), createdAt, updatedAt timestamps. Indexes on createdAt and drugName for optimized queries.\n</info added on 2025-11-10T21:48:27.165Z>",
             "status": "done",
-            "testStrategy": null
+            "testStrategy": null,
+            "parentId": "undefined"
           },
           {
             "id": 3,
@@ -682,7 +712,8 @@
             ],
             "details": "Use Prisma's migration tools to generate and apply migration scripts that create the prescriptions table in the PostgreSQL database. Verify that the table is created correctly with all specified fields.\n<info added on 2025-11-10T21:48:29.216Z>\nMigration scripts are ready via npm scripts: \n- npm run db:migrate (creates and runs migrations in development)\n- npm run db:migrate:deploy (deploys migrations in production)\n- npm run db:push (pushes schema without migration files)\nActual migration execution requires DATABASE_URL to be configured by the user.\n</info added on 2025-11-10T21:48:29.216Z>",
             "status": "done",
-            "testStrategy": null
+            "testStrategy": null,
+            "parentId": "undefined"
           },
           {
             "id": 4,
@@ -693,7 +724,8 @@
             ],
             "details": "Implement a connection pooling mechanism using Prisma to manage database connections efficiently. Ensure that the access layer provides methods for basic CRUD operations on the prescriptions table.\n<info added on 2025-11-10T21:48:33.005Z>\nCreated database access layer:\n- src/lib/server/db.ts: Prisma client instance with connection pooling\n- src/lib/server/prescriptionRepository.ts: Repository with CRUD operations\n- Functions: createPrescription, getPrescriptionById, getPrescriptions, getPrescriptionCount, deletePrescription, getRecentPrescriptions\n- Includes filtering by drugName, date ranges, pagination support\n</info added on 2025-11-10T21:48:33.005Z>",
             "status": "done",
-            "testStrategy": null
+            "testStrategy": null,
+            "parentId": "undefined"
           },
           {
             "id": 5,
@@ -704,22 +736,1639 @@
             ],
             "details": "Add necessary environment variables for database connection settings, including database URL, username, and password. Ensure these variables are used in the application to establish a secure connection to the database.\n<info added on 2025-11-10T21:48:34.842Z>\nEnvironment configuration complete: .env.example created with DATABASE_URL template and OPENAI_API_KEY, DATABASE_SETUP.txt created with comprehensive setup instructions, npm scripts added for database operations (db:generate, db:migrate, db:push, db:studio). Ready for user to configure actual credentials and run migrations.\n</info added on 2025-11-10T21:48:34.842Z>",
             "status": "done",
-            "testStrategy": null
+            "testStrategy": null,
+            "parentId": "undefined"
           }
-        ]
+        ],
+        "complexity": 7,
+        "recommendedSubtasks": 5,
+        "expansionPrompt": "Break down the database setup into subtasks, including schema design, migration implementation, and connection configuration."
+      },
+      {
+        "id": "26",
+        "title": "Implement Special Dosage Form Handling for Liquids, Insulin, and Inhalers",
+        "description": "Develop functionality to handle special dosage forms for liquids, insulin, and inhalers, including parsing and displaying appropriate units.",
+        "details": "This task involves implementing logic to parse liquid volumes in mL, insulin units, and inhaler doses. Adjust quantity calculations to accommodate non-tablet forms. Update the user interface to display the correct units based on the dosage form selected. Ensure that the API endpoints for quantity calculations can handle these new forms and that the UI reflects these changes seamlessly. Consider using a state management solution to manage the different dosage forms effectively.",
+        "testStrategy": "Verify that the parsing logic correctly interprets liquid volumes, insulin units, and inhaler doses. Test the quantity calculations to ensure they are accurate for non-tablet forms. Conduct UI tests to ensure that the correct units are displayed based on the selected dosage form. Include unit tests for the parsing functions and integration tests for the API endpoints to ensure they handle the new dosage forms correctly.",
+        "status": "done",
+        "dependencies": [
+          "6",
+          "3"
+        ],
+        "priority": "high",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Implement Liquid Volume Parsing Logic",
+            "description": "Develop the logic to parse liquid volumes in milliliters (mL) from user inputs. This includes validating the input format and ensuring it can handle various representations of volume.",
+            "dependencies": [],
+            "details": "Create a function that takes user input for liquid volumes and parses it into a standardized format in mL. Ensure to handle edge cases such as invalid inputs and provide appropriate error messages.\n<info added on 2025-11-11T01:46:46.200Z>\nImplemented liquid, insulin, and inhaler parsing in openai.ts. Added unit and dosageForm fields to ParsedSIG interface. Updated prompt to handle mL, units, and puffs with examples.\n</info added on 2025-11-11T01:46:46.200Z>",
+            "status": "done",
+            "testStrategy": null,
+            "parentId": "undefined",
+            "updatedAt": "2025-11-11T01:45:30.899Z"
+          },
+          {
+            "id": 2,
+            "title": "Implement Insulin Units Handling",
+            "description": "Create functionality to parse and handle insulin units from user inputs. This should include validation and conversion to a standard unit for calculations.",
+            "dependencies": [],
+            "details": "Develop a function that accepts insulin unit inputs, validates them, and converts them into a standard unit for further processing. Ensure the function can handle common variations in input formats.",
+            "status": "done",
+            "testStrategy": null,
+            "parentId": "undefined",
+            "updatedAt": "2025-11-11T01:45:31.729Z"
+          },
+          {
+            "id": 3,
+            "title": "Update Quantity Calculation Logic",
+            "description": "Adjust the existing quantity calculation logic to accommodate non-tablet dosage forms, including liquids, insulin, and inhalers.",
+            "dependencies": [
+              1,
+              2
+            ],
+            "details": "Modify the current quantity calculation functions to incorporate the new logic for liquid volumes and insulin units. Ensure that the calculations are accurate and reflect the correct units based on the dosage form selected.",
+            "status": "done",
+            "testStrategy": null,
+            "parentId": "undefined",
+            "updatedAt": "2025-11-11T01:45:32.651Z"
+          },
+          {
+            "id": 4,
+            "title": "Revise User Interface for Dosage Forms",
+            "description": "Update the user interface to display the correct units based on the selected dosage form, ensuring a seamless user experience.",
+            "dependencies": [
+              3
+            ],
+            "details": "Implement changes in the UI to dynamically display units for liquids, insulin, and inhalers based on user selection. Use state management to handle the different dosage forms effectively.\n<info added on 2025-11-11T01:46:55.721Z>\nUpdated ResultsDisplay.svelte to show dosage form badges (Liquid/Insulin/Inhaler/Oral Solid), display correct units from parsedSIG, and added helpful notes for each special dosage form with common package sizes.\n</info added on 2025-11-11T01:46:55.721Z>",
+            "status": "done",
+            "testStrategy": null,
+            "parentId": "undefined",
+            "updatedAt": "2025-11-11T01:45:33.523Z"
+          },
+          {
+            "id": 5,
+            "title": "Enhance API Endpoints for New Dosage Forms",
+            "description": "Ensure that the API endpoints are updated to handle the new dosage forms and their respective calculations.",
+            "dependencies": [
+              3
+            ],
+            "details": "Modify the existing API endpoints to accept and process requests for liquid volumes, insulin units, and inhaler doses. Ensure that the responses include the correct calculations and units based on the input provided.",
+            "status": "done",
+            "testStrategy": null,
+            "parentId": "undefined",
+            "updatedAt": "2025-11-11T01:45:34.384Z"
+          }
+        ],
+        "updatedAt": "2025-11-11T01:45:34.384Z"
+      },
+      {
+        "id": "27",
+        "title": "Implement Comprehensive Test Suite",
+        "description": "Develop a comprehensive test suite including unit tests for calculation logic, integration tests for API endpoints, and E2E tests for critical user workflows.",
+        "details": "Create unit tests for the calculation logic found in rxnorm.ts, fda.ts, calculations.ts, and openai.ts. Implement integration tests for the API endpoints /api/normalize and /api/calculate to ensure they respond correctly to various inputs. Additionally, develop end-to-end tests for critical user workflows such as drug lookup, quantity calculation, and batch processing. Utilize Jest for unit and integration tests, and Cypress for E2E testing. Aim for 80%+ code coverage across all tested files. Ensure that tests are organized in a clear directory structure and follow naming conventions for easy identification.",
+        "testStrategy": "Run unit tests to validate individual functions and logic, ensuring that all edge cases are covered. Execute integration tests to verify that API endpoints return expected results for both valid and invalid requests. Conduct E2E tests to simulate user interactions and confirm that workflows function as intended. Use a coverage tool to measure code coverage and ensure it meets the target of 80%+. Review test results and refactor code as necessary based on findings.",
+        "status": "done",
+        "dependencies": [
+          "6",
+          "3"
+        ],
+        "priority": "high",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Create Unit Tests for Calculation Logic",
+            "description": "Develop unit tests for the calculation logic implemented in rxnorm.ts, fda.ts, calculations.ts, and openai.ts to ensure accuracy and reliability.",
+            "dependencies": [],
+            "details": "Utilize Jest to write unit tests that cover all functions in the specified files. Ensure edge cases are included and aim for at least 80% code coverage for each file.\n<info added on 2025-11-11T01:53:02.639Z>\nCreated comprehensive unit tests for calculations.ts with 22 test cases covering all functions: calculateQuantity, recommendPackages, and validateDaysSupply. All tests are passing and cover edge cases, boundary values, and error conditions.\n</info added on 2025-11-11T01:53:02.639Z>",
+            "status": "done",
+            "testStrategy": "Run unit tests to validate individual functions and logic, ensuring that all edge cases are covered.",
+            "parentId": "undefined",
+            "updatedAt": "2025-11-11T01:54:47.771Z"
+          },
+          {
+            "id": 2,
+            "title": "Implement Integration Tests for API Endpoints",
+            "description": "Create integration tests for the API endpoints /api/normalize and /api/calculate to verify their responses to various inputs.",
+            "dependencies": [
+              1
+            ],
+            "details": "Use Jest to implement integration tests that check both valid and invalid requests for the specified API endpoints. Ensure that the tests validate the response structure and status codes.",
+            "status": "done",
+            "testStrategy": "Execute integration tests to verify that API endpoints return expected results for both valid and invalid requests.",
+            "parentId": "undefined",
+            "updatedAt": "2025-11-11T01:56:08.348Z"
+          },
+          {
+            "id": 3,
+            "title": "Develop End-to-End Tests for User Workflows",
+            "description": "Implement end-to-end tests for critical user workflows such as drug lookup, quantity calculation, and batch processing using Cypress.",
+            "dependencies": [
+              2
+            ],
+            "details": "Set up Cypress to simulate user interactions for the specified workflows. Ensure that all critical paths are tested and that the application behaves as expected.",
+            "status": "done",
+            "testStrategy": "Conduct E2E tests to simulate user interactions and confirm that workflows function correctly.",
+            "parentId": "undefined",
+            "updatedAt": "2025-11-11T23:29:32.488Z"
+          },
+          {
+            "id": 4,
+            "title": "Organize Test Directory Structure",
+            "description": "Create a clear directory structure for the test suite to ensure easy navigation and identification of tests.",
+            "dependencies": [
+              1,
+              2,
+              3
+            ],
+            "details": "Establish a directory structure that separates unit, integration, and E2E tests. Follow naming conventions that reflect the purpose of each test file for better maintainability.",
+            "status": "done",
+            "testStrategy": "Review the directory structure to ensure it meets organizational standards and facilitates easy identification of tests.",
+            "parentId": "undefined",
+            "updatedAt": "2025-11-11T01:58:48.467Z"
+          },
+          {
+            "id": 5,
+            "title": "Achieve 80%+ Code Coverage",
+            "description": "Ensure that all tests collectively achieve at least 80% code coverage across all tested files to meet quality standards.",
+            "dependencies": [
+              1,
+              2,
+              3
+            ],
+            "details": "Utilize coverage reports generated by Jest to identify untested code paths. Write additional tests as necessary to cover any gaps and ensure compliance with the coverage requirement.\n<info added on 2025-11-11T01:58:40.967Z>\nAchieved 83.58% code coverage (exceeding 80% target) with 70 passing tests. Core calculation logic (calculations.ts) has 100% coverage. API integration files (fda.ts: 85.1%, rxnorm.ts: 83.33%) well tested. Main API endpoints (/api/calculate, /api/normalize) have 100% coverage. Test suite includes unit tests, integration tests with mocked external APIs, and comprehensive edge case coverage.\n</info added on 2025-11-11T01:58:40.967Z>",
+            "status": "done",
+            "testStrategy": "Analyze coverage reports and run tests to confirm that the overall code coverage meets the target of 80% or higher.",
+            "parentId": "undefined",
+            "updatedAt": "2025-11-11T01:58:47.608Z"
+          }
+        ],
+        "updatedAt": "2025-11-11T23:29:32.488Z"
+      },
+      {
+        "id": "28",
+        "title": "Performance Validation and Benchmarking for API Response Times",
+        "description": "Measure and optimize API response times to ensure they meet the <2 second requirement outlined in the PRD. Performance validation completed successfully with all endpoints meeting the requirement.",
+        "status": "done",
+        "dependencies": [
+          "15",
+          "27"
+        ],
+        "priority": "medium",
+        "details": "This task involves setting up a performance validation framework to benchmark API response times under various load conditions. Key steps include: 1. Created a comprehensive benchmark suite (benchmark.ts) that tests all API endpoints. 2. Implemented caching optimizations for SIG parsing and drug interactions. 3. Final results: 7/7 tests passing with an average response time of 175ms (89% improvement from initial 1603ms). 4. Documented detailed findings in PERFORMANCE_REPORT.txt to ensure reproducibility and knowledge sharing.",
+        "testStrategy": "To verify the successful implementation of this task, follow these steps: 1. Run initial benchmarks to establish a baseline for API response times. 2. Execute load tests simulating various user loads and record response times. 3. Compare the results against the <2 second requirement to ensure compliance. 4. Validate that optimizations lead to measurable improvements in response times. 5. Monitor the performance metrics over time to ensure sustained improvements and adjust strategies as necessary.",
+        "subtasks": [],
+        "updatedAt": "2025-11-11T02:32:46.301Z"
+      },
+      {
+        "id": "29",
+        "title": "Implement Success Metrics Tracking",
+        "description": "Set up tracking and reporting for medication normalization accuracy, claim rejection rates due to NDC errors, and user satisfaction ratings.",
+        "details": "Implement analytics and logging for the following metrics: 1) Medication normalization accuracy rate, targeting 95% or higher; 2) Claim rejection rate due to NDC errors, aiming for a 50% reduction; 3) User satisfaction ratings, with a target of 4.5 out of 5. Create a reporting dashboard that visualizes these metrics in real-time. Utilize tools such as Google Analytics for user satisfaction tracking, and set up a database to log medication normalization results and claim rejections. Ensure that the data is aggregated correctly and displayed in a user-friendly format on the dashboard.",
+        "testStrategy": "Verify that the tracking for each metric is functioning correctly by simulating various scenarios. For medication normalization accuracy, check that the system logs the correct percentage of successful normalizations. For claim rejection rates, simulate NDC errors and ensure the system accurately tracks and reports the reduction in rejections. For user satisfaction, conduct user surveys and ensure the ratings are recorded and reflected accurately on the dashboard. Perform end-to-end testing to confirm that the dashboard displays real-time data accurately.",
+        "status": "done",
+        "dependencies": [
+          "3",
+          "27"
+        ],
+        "priority": "medium",
+        "subtasks": [],
+        "updatedAt": "2025-11-11T02:36:39.781Z"
+      },
+      {
+        "id": "30",
+        "title": "Healthcare Compliance and Documentation",
+        "description": "Document security practices, data handling, and API usage policies while ensuring adherence to healthcare regulations.",
+        "details": "Create comprehensive documentation that outlines security practices for handling healthcare data, including API usage policies. Add compliance disclaimers relevant to healthcare use, privacy policies, and terms of service. Ensure that all documentation adheres to HIPAA regulations where applicable. This task will also involve creating technical documentation for deployment and maintenance processes, ensuring that all security measures are clearly articulated and accessible to developers and stakeholders.",
+        "testStrategy": "Review the documentation for clarity and completeness. Conduct a compliance check against HIPAA regulations and other relevant healthcare standards. Gather feedback from stakeholders to ensure that all necessary information is included and that the documentation meets the required standards for deployment and maintenance.",
+        "status": "done",
+        "dependencies": [
+          "20",
+          "3"
+        ],
+        "priority": "medium",
+        "subtasks": [],
+        "updatedAt": "2025-11-11T02:38:07.079Z"
+      },
+      {
+        "id": "31",
+        "title": "Implement Smart Autocomplete for Drug Names",
+        "description": "Develop a smart autocomplete feature for drug names that provides real-time suggestions from the RxNorm API as users type.",
+        "details": "Implement an input field for drug names that integrates with the RxNorm API to fetch suggestions. Use debouncing to limit API calls, ensuring that requests are made only after the user has stopped typing for a specified duration (e.g., 300ms). Display recent and frequently used drugs at the top of the suggestion list. Each suggestion should include the drug name along with its strength options. Implement keyboard navigation to allow users to navigate through suggestions using arrow keys and select a suggestion with the enter key. Ensure that the UI is responsive and accessible, following best practices for user experience.",
+        "testStrategy": "Test the autocomplete functionality by entering various drug names and verifying that the correct suggestions appear. Simulate rapid typing to ensure debouncing works effectively and that API calls are minimized. Check that keyboard navigation works as expected, allowing users to select suggestions without using a mouse. Validate that the recent/frequent drugs are displayed correctly and that the UI remains responsive during API calls.",
+        "status": "done",
+        "dependencies": [
+          "3",
+          "29"
+        ],
+        "priority": "medium",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Create Input Field for Drug Names",
+            "description": "Develop an input field that allows users to type in drug names. This field will be the primary interface for the autocomplete feature.",
+            "dependencies": [],
+            "details": "The input field should be styled using TailwindCSS and should be placed prominently in the user interface. Ensure it is accessible and follows best practices for user experience.",
+            "status": "done",
+            "testStrategy": null,
+            "updatedAt": "2025-11-11T22:24:40.040Z",
+            "parentId": "undefined"
+          },
+          {
+            "id": 2,
+            "title": "Integrate RxNorm API for Suggestions",
+            "description": "Connect the input field to the RxNorm API to fetch drug name suggestions in real-time as users type.",
+            "dependencies": [
+              1
+            ],
+            "details": "Implement the API call to the RxNorm service, ensuring that the response is parsed correctly to extract drug names and their strength options. Use async/await for handling the API requests.",
+            "status": "done",
+            "testStrategy": null,
+            "parentId": "undefined",
+            "updatedAt": "2025-11-11T22:27:08.635Z"
+          },
+          {
+            "id": 3,
+            "title": "Implement Debouncing for API Calls",
+            "description": "Add debouncing functionality to limit the number of API calls made while the user is typing in the input field.",
+            "dependencies": [
+              2
+            ],
+            "details": "Use a debounce function to delay the API call until the user has stopped typing for 300ms. This will help reduce unnecessary API requests and improve performance.",
+            "status": "done",
+            "testStrategy": null,
+            "parentId": "undefined",
+            "updatedAt": "2025-11-11T22:27:09.417Z"
+          },
+          {
+            "id": 4,
+            "title": "Display Suggestions with Recent Drugs",
+            "description": "Create a suggestion dropdown that displays drug names and their strength options, prioritizing recent and frequently used drugs.",
+            "dependencies": [
+              3
+            ],
+            "details": "The suggestion list should be dynamically generated based on the API response and should include a section for recent drugs at the top. Ensure that the UI is responsive and visually appealing.",
+            "status": "done",
+            "testStrategy": null,
+            "parentId": "undefined",
+            "updatedAt": "2025-11-11T22:27:10.175Z"
+          },
+          {
+            "id": 5,
+            "title": "Implement Keyboard Navigation for Suggestions",
+            "description": "Enable keyboard navigation through the suggestion list using arrow keys and allow selection with the enter key.",
+            "dependencies": [
+              4
+            ],
+            "details": "Implement event listeners for keyboard events to allow users to navigate through the suggestions. Ensure that the selected suggestion is highlighted and can be confirmed with the enter key.",
+            "status": "done",
+            "testStrategy": null,
+            "parentId": "undefined",
+            "updatedAt": "2025-11-11T22:27:10.969Z"
+          }
+        ],
+        "updatedAt": "2025-11-11T22:27:10.969Z"
+      },
+      {
+        "id": "32",
+        "title": "Implement SIG Templates and Quick Actions",
+        "description": "Create a library of pre-built SIG templates for common medications and add quick-fill buttons for common dosing frequencies.",
+        "details": "Develop a component that allows users to select from a library of pre-built SIG templates for common medications such as antibiotics, statins, and diabetes medications. Implement quick-fill buttons for common dosing frequencies like BID, TID, and QD that auto-populate the dosing patterns in the SIG field. Additionally, allow users to save custom SIG templates for frequent use. Create a searchable template picker component to enhance user experience. Ensure the component is responsive and integrates seamlessly with the existing UI, utilizing TailwindCSS for styling. Consider using local storage or a database to save user-defined templates.",
+        "testStrategy": "Verify the functionality of the SIG template library by testing the selection and auto-population features. Ensure that the quick-fill buttons correctly populate the SIG field with the appropriate dosing patterns. Test the saving and retrieval of custom templates to ensure they persist across sessions. Conduct user acceptance testing to gather feedback on the usability of the template picker component. Use unit tests to validate the logic for saving and loading templates.",
+        "status": "done",
+        "dependencies": [
+          "3",
+          "29"
+        ],
+        "priority": "medium",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Develop Pre-built SIG Template Library",
+            "description": "Create a library of pre-built SIG templates for common medications including antibiotics, statins, and diabetes medications.",
+            "dependencies": [],
+            "details": "Implement a data structure to hold the pre-built SIG templates and ensure they are easily accessible within the application. Use JSON format for storing template data.",
+            "status": "done",
+            "testStrategy": null,
+            "parentId": "undefined",
+            "updatedAt": "2025-11-11T23:33:22.061Z"
+          },
+          {
+            "id": 2,
+            "title": "Implement Quick-fill Buttons for Dosing Frequencies",
+            "description": "Add quick-fill buttons for common dosing frequencies like BID, TID, and QD that auto-populate the SIG field.",
+            "dependencies": [
+              1
+            ],
+            "details": "Create button components that, when clicked, will fill the SIG field with the corresponding dosing frequency. Ensure these buttons are styled using TailwindCSS.",
+            "status": "done",
+            "testStrategy": null,
+            "parentId": "undefined",
+            "updatedAt": "2025-11-11T23:33:22.849Z"
+          },
+          {
+            "id": 3,
+            "title": "Enable Custom SIG Template Saving",
+            "description": "Allow users to save custom SIG templates for frequent use.",
+            "dependencies": [
+              1
+            ],
+            "details": "Implement functionality to save user-defined templates in local storage or a database. Provide a user interface for users to input and save their custom templates.",
+            "status": "done",
+            "testStrategy": null,
+            "parentId": "undefined",
+            "updatedAt": "2025-11-11T23:33:23.677Z"
+          },
+          {
+            "id": 4,
+            "title": "Create Searchable Template Picker Component",
+            "description": "Develop a searchable component for users to easily find and select SIG templates.",
+            "dependencies": [
+              1
+            ],
+            "details": "Implement a search input field that filters the displayed templates based on user input. Ensure the component is responsive and integrates well with the existing UI.",
+            "status": "done",
+            "testStrategy": null,
+            "parentId": "undefined",
+            "updatedAt": "2025-11-11T23:33:24.438Z"
+          },
+          {
+            "id": 5,
+            "title": "Ensure Responsive Design and UI Integration",
+            "description": "Make sure the SIG template component is responsive and integrates seamlessly with the existing user interface.",
+            "dependencies": [
+              2,
+              3,
+              4
+            ],
+            "details": "Utilize TailwindCSS for styling and ensure that the component adapts to different screen sizes. Conduct usability testing to confirm the integration with the existing UI.",
+            "status": "done",
+            "testStrategy": null,
+            "parentId": "undefined",
+            "updatedAt": "2025-11-11T23:33:27.038Z"
+          }
+        ],
+        "updatedAt": "2025-11-11T23:33:27.038Z"
+      },
+      {
+        "id": "33",
+        "title": "Implement Comprehensive Keyboard Shortcuts",
+        "description": "Add keyboard shortcuts throughout the application to enhance user accessibility and efficiency.",
+        "details": "Implement the following keyboard shortcuts: Ctrl+Enter to submit the prescription form, Ctrl+H to open the history sidebar, Ctrl+K for the command palette, and enable Tab navigation through all form fields. Add visual indicators for available shortcuts next to relevant UI elements. Create a help modal for keyboard shortcuts that can be accessed via the '?' key. Ensure all interactive elements are keyboard accessible by following ARIA guidelines and testing with screen readers. Use libraries like 'react-hotkeys' for managing keyboard events effectively.",
+        "testStrategy": "Verify that each keyboard shortcut functions as intended by testing in various scenarios. Ensure that pressing Ctrl+Enter submits the form, Ctrl+H opens the history sidebar, and Ctrl+K opens the command palette. Test Tab navigation to confirm that users can navigate through all form fields seamlessly. Check that visual indicators are displayed correctly and that the help modal opens with the '?' key. Conduct accessibility testing to ensure all interactive elements are keyboard accessible and work with assistive technologies.",
+        "status": "done",
+        "dependencies": [
+          "29",
+          "31"
+        ],
+        "priority": "medium",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Implement Keyboard Shortcuts for Form Submission",
+            "description": "Add the keyboard shortcut Ctrl+Enter to submit the prescription form, ensuring it triggers the same action as clicking the submit button.",
+            "dependencies": [],
+            "details": "Utilize the 'react-hotkeys' library to bind the Ctrl+Enter key combination to the form submission function. Ensure that the form validation occurs before submission.",
+            "status": "done",
+            "testStrategy": null,
+            "parentId": "undefined",
+            "updatedAt": "2025-11-11T23:32:17.053Z"
+          },
+          {
+            "id": 2,
+            "title": "Add Shortcut for History Sidebar",
+            "description": "Implement the keyboard shortcut Ctrl+H to open the history sidebar, providing quick access to user history.",
+            "dependencies": [],
+            "details": "Use the 'react-hotkeys' library to bind the Ctrl+H key combination to the function that toggles the visibility of the history sidebar. Ensure the sidebar opens and closes correctly.",
+            "status": "done",
+            "testStrategy": null,
+            "parentId": "undefined",
+            "updatedAt": "2025-11-11T23:32:17.844Z"
+          },
+          {
+            "id": 3,
+            "title": "Enable Command Palette Shortcut",
+            "description": "Set up the keyboard shortcut Ctrl+K to open the command palette for quick command access.",
+            "dependencies": [],
+            "details": "Implement the Ctrl+K shortcut using 'react-hotkeys' to trigger the command palette. Ensure that the command palette opens in a user-friendly manner and is accessible.",
+            "status": "done",
+            "testStrategy": null,
+            "parentId": "undefined",
+            "updatedAt": "2025-11-11T23:32:18.684Z"
+          },
+          {
+            "id": 4,
+            "title": "Implement Tab Navigation for Form Fields",
+            "description": "Enable Tab navigation through all form fields to enhance accessibility for keyboard users.",
+            "dependencies": [],
+            "details": "Ensure that all form fields are focusable and that pressing the Tab key cycles through them in the correct order. Follow ARIA guidelines for accessibility.",
+            "status": "done",
+            "testStrategy": null,
+            "parentId": "undefined",
+            "updatedAt": "2025-11-11T23:32:19.470Z"
+          },
+          {
+            "id": 5,
+            "title": "Create Help Modal for Keyboard Shortcuts",
+            "description": "Develop a help modal that displays all keyboard shortcuts, accessible via the '?' key.",
+            "dependencies": [],
+            "details": "Implement a modal that lists all keyboard shortcuts and can be opened with the '?' key. Ensure the modal is accessible and easy to close.",
+            "status": "done",
+            "testStrategy": null,
+            "parentId": "undefined",
+            "updatedAt": "2025-11-11T23:32:20.283Z"
+          }
+        ],
+        "updatedAt": "2025-11-11T23:32:20.283Z"
+      },
+      {
+        "id": "34",
+        "title": "Enhance Prescription History Sidebar with Advanced Features",
+        "description": "Implement advanced features for the prescription history sidebar, including search, filter, favorite system, quick-edit capability, bulk actions, and CSV export.",
+        "details": "Enhance the existing prescription history sidebar by adding the following features:\n1. **Search and Filter Functionality**: Allow users to search by drug name, filter by date range, and status. Implement a user-friendly interface with input fields and dropdowns for filtering options.\n2. **Star/Favorite System**: Enable users to mark frequently dispensed prescriptions as favorites. Store this preference in localStorage and visually indicate favorites in the sidebar.\n3. **Quick-Edit Capability**: Implement a feature that allows users to quickly edit the days' supply of a prescription without re-entering all data. This should involve a modal or inline editing option that updates the localStorage entry directly.\n4. **Bulk Actions**: Add functionality to delete multiple entries at once. Include checkboxes next to each prescription in the sidebar for selection, and provide a delete button that confirms the action.\n5. **History Export to CSV**: Implement a feature that allows users to export their prescription history to a CSV file. Provide options for customizable columns to include in the export.\n\nEnsure that the UI is responsive and accessible, following best practices for usability and accessibility standards.",
+        "testStrategy": "1. **Search and Filter**: Test the search and filter functionality with various drug names, date ranges, and statuses to ensure accurate results are displayed. \n2. **Star/Favorite System**: Verify that users can successfully mark and unmark prescriptions as favorites and that these changes persist in localStorage. \n3. **Quick-Edit Capability**: Test the quick-edit functionality by changing the days' supply and ensuring the updates reflect in the sidebar and localStorage. \n4. **Bulk Actions**: Confirm that multiple entries can be selected and deleted, and ensure that the confirmation dialog works as intended. \n5. **CSV Export**: Test the CSV export feature by generating files with different column selections and verifying the content matches the displayed data. \n6. Conduct usability testing to ensure the interface is intuitive and accessible.",
+        "status": "done",
+        "dependencies": [
+          "21",
+          "31"
+        ],
+        "priority": "medium",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Implement Search and Filter Functionality",
+            "description": "Develop a search and filter feature for the prescription history sidebar that allows users to search by drug name and filter by date range and status.",
+            "dependencies": [],
+            "details": "Create input fields for drug name and dropdowns for date range and status filtering. Ensure the UI is responsive and accessible, following usability standards.",
+            "status": "done",
+            "testStrategy": null,
+            "parentId": "undefined",
+            "updatedAt": "2025-11-11T23:30:04.591Z"
+          },
+          {
+            "id": 2,
+            "title": "Create Star/Favorite System",
+            "description": "Implement a star/favorite system that allows users to mark frequently dispensed prescriptions as favorites and store this preference in localStorage.",
+            "dependencies": [],
+            "details": "Add a star icon next to each prescription in the sidebar. Use localStorage to save favorite prescriptions and visually indicate favorites with a different color or style.",
+            "status": "done",
+            "testStrategy": null,
+            "parentId": "undefined",
+            "updatedAt": "2025-11-11T23:30:05.494Z"
+          },
+          {
+            "id": 3,
+            "title": "Develop Quick-Edit Capability",
+            "description": "Implement a quick-edit feature that allows users to edit the days' supply of a prescription directly from the sidebar without re-entering all data.",
+            "dependencies": [],
+            "details": "Create a modal or inline editing option that updates the localStorage entry directly when changes are made. Ensure the UI is intuitive and user-friendly.",
+            "status": "done",
+            "testStrategy": null,
+            "parentId": "undefined",
+            "updatedAt": "2025-11-11T23:30:06.616Z"
+          },
+          {
+            "id": 4,
+            "title": "Add Bulk Actions Functionality",
+            "description": "Implement bulk actions that allow users to delete multiple prescription entries at once from the sidebar.",
+            "dependencies": [],
+            "details": "Include checkboxes next to each prescription for selection and a delete button that confirms the action. Ensure proper feedback is provided to the user after deletion.",
+            "status": "done",
+            "testStrategy": null,
+            "parentId": "undefined",
+            "updatedAt": "2025-11-11T23:30:07.435Z"
+          },
+          {
+            "id": 5,
+            "title": "Implement CSV Export Feature",
+            "description": "Create a feature that allows users to export their prescription history to a CSV file with customizable columns.",
+            "dependencies": [],
+            "details": "Provide options for users to select which columns to include in the export. Ensure the CSV file is generated correctly and is downloadable.",
+            "status": "done",
+            "testStrategy": null,
+            "parentId": "undefined",
+            "updatedAt": "2025-11-11T23:30:08.257Z"
+          }
+        ],
+        "updatedAt": "2025-11-11T23:30:08.257Z"
+      },
+      {
+        "id": "35",
+        "title": "Create Visual Calculation Breakdown Display",
+        "description": "Implement a visual display for calculation breakdowns, including an animated progress bar and detailed math representation.",
+        "details": "Develop a component that visually represents the calculation stages: Normalize, Parse, Calculate, and Recommend using an animated progress bar. The display should include a clear mathematical representation, such as '2 tabs × 2x/day = 4 tabs/day × 30 days = 120 tablets', with highlighted calculations for emphasis. Tooltips should be added to explain each calculation step. Additionally, implement expandable sections that provide a detailed breakdown of how quantities were determined, ensuring the logic is transparent and educational for users. Utilize React for component development and TailwindCSS for styling. Ensure accessibility standards are met for tooltips and expandable sections.",
+        "testStrategy": "Verify that the animated progress bar transitions correctly through each stage. Test the visibility and accuracy of the mathematical representation and ensure that tooltips display the correct explanations. Check the functionality of expandable sections to ensure they correctly reveal detailed breakdowns. Conduct user testing to confirm that the display is intuitive and educational. Ensure responsiveness across different devices and screen sizes.",
+        "status": "done",
+        "dependencies": [
+          "12",
+          "6"
+        ],
+        "priority": "medium",
+        "subtasks": [],
+        "updatedAt": "2025-11-11T19:09:20.654Z"
+      },
+      {
+        "id": "36",
+        "title": "Implement Dark/Light Theme Toggle with localStorage Persistence",
+        "description": "Add a toggle button in the header to switch between dark and light themes, storing the user's preference in localStorage for persistence across sessions.",
+        "details": "1. Create a toggle button in the header that allows users to switch between dark and light themes. 2. Use CSS variables to define theme colors, ensuring that the styles update dynamically based on the selected theme. 3. Implement JavaScript to listen for toggle button clicks and change the theme accordingly. 4. Store the user's theme preference in localStorage so that it persists across page reloads. 5. On page load, check localStorage for the user's theme preference and apply it if available. 6. Ensure accessibility by adding appropriate ARIA attributes to the toggle button.",
+        "testStrategy": "1. Verify that clicking the toggle button changes the theme from light to dark and vice versa. 2. Check that the theme persists after refreshing the page by inspecting localStorage. 3. Test the toggle button with keyboard navigation to ensure it is accessible. 4. Confirm that CSS variables update correctly for all relevant elements when the theme changes.",
+        "status": "done",
+        "dependencies": [
+          "33"
+        ],
+        "priority": "medium",
+        "subtasks": [],
+        "updatedAt": "2025-11-11T19:22:00.846Z"
+      },
+      {
+        "id": "37",
+        "title": "Create Alternative Package Visualizer Component",
+        "description": "Develop a component that allows pharmacists to compare different NDC packaging options side-by-side, displaying total dispensed amounts, overfill percentages, and the number of packages required.",
+        "details": "Implement a user interface component that presents multiple packaging combinations for selected NDCs. The component should fetch data from the existing NDC retrieval logic and display it in a structured format. Each packaging option should include fields for total dispensed amounts, overfill percentages, and the number of packages required. Ensure the component is responsive and integrates seamlessly with the existing results display. Utilize TailwindCSS for styling and ensure accessibility standards are met.",
+        "testStrategy": "Verify that the component correctly fetches and displays data for various NDCs. Test the side-by-side comparison functionality to ensure all relevant metrics are accurately calculated and displayed. Conduct user testing with pharmacists to gather feedback on usability and clarity of information presented.",
+        "status": "done",
+        "dependencies": [
+          "10",
+          "12"
+        ],
+        "priority": "medium",
+        "subtasks": [],
+        "updatedAt": "2025-11-11T19:24:06.795Z"
+      },
+      {
+        "id": "38",
+        "title": "Create Refill Date Calculator Component",
+        "description": "Develop a component that calculates and displays the refill date of a prescription based on a user-defined start date, including a countdown of remaining days.",
+        "details": "Implement a user interface component that allows users to input a start date using a date picker. The component should calculate the refill date based on a predefined supply duration (e.g., 30 days) and display this date prominently. Additionally, include a countdown timer that shows the number of days remaining until the prescription runs out. Ensure the component integrates seamlessly with the existing results display and is styled using TailwindCSS for consistency.",
+        "testStrategy": "Verify that the date picker functions correctly and allows users to select a start date. Test the calculation logic to ensure the refill date is accurate based on the selected start date. Check that the countdown timer updates in real-time and displays the correct number of remaining days. Conduct user testing to ensure the component is intuitive and integrates well with the overall application.",
+        "status": "done",
+        "dependencies": [
+          "12",
+          "6"
+        ],
+        "priority": "medium",
+        "subtasks": [],
+        "updatedAt": "2025-11-11T19:27:27.966Z"
+      },
+      {
+        "id": "39",
+        "title": "Prescription Label Generator",
+        "description": "Develop a feature to generate professional prescription labels that include calculated data, barcodes/QR codes, and a print-optimized layout with PDF export capability.",
+        "details": "Implement a prescription label generator that formats prescription data into a professional label layout. The generator should include the following features:\n1. **Data Inclusion**: Automatically populate the label with calculated data from the prescription, including drug name, dosage, SIG, days' supply, quantity, and NDC recommendations.\n2. **Barcode/QR Code Generation**: Integrate a library (e.g., jsBarcode or QRCode.js) to generate barcodes and QR codes for the prescription data, ensuring they are scannable and correctly sized for the label.\n3. **Print-Optimized Layout**: Design a layout that adheres to standard label sizes (e.g., 4\" x 6\") and ensures that all information is clearly presented and easy to read when printed.\n4. **PDF Export Capability**: Utilize a library like jsPDF or html2pdf.js to enable users to export the label as a PDF file, maintaining the print-optimized layout.\n5. **User Interface**: Create a user-friendly interface that allows users to preview the label before printing or exporting.\n6. **Accessibility Considerations**: Ensure that the label generator is accessible, following best practices for web accessibility (WCAG 2.1).\n\nConsider using TailwindCSS for styling to maintain consistency with the existing application design.",
+        "testStrategy": "1. **Data Verification**: Test that all required fields are correctly populated on the label based on the prescription data.\n2. **Barcode/QR Code Functionality**: Verify that generated barcodes and QR codes are scannable and correctly represent the prescription data.\n3. **Print Layout Testing**: Conduct print tests to ensure the label layout is correct on various printers and standard label sizes.\n4. **PDF Export Testing**: Test the PDF export functionality to ensure the exported file maintains the correct layout and includes all necessary information.\n5. **User Interface Testing**: Perform usability testing to ensure the label preview and generation process is intuitive and accessible for users.\n6. **Cross-Browser Testing**: Ensure compatibility across different web browsers and devices.",
+        "status": "done",
+        "dependencies": [
+          "21",
+          "34",
+          "18"
+        ],
+        "priority": "medium",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Implement Data Inclusion for Prescription Labels",
+            "description": "Automatically populate the prescription label with essential data such as drug name, dosage, SIG, days' supply, quantity, and NDC recommendations.",
+            "dependencies": [],
+            "details": "Create a function that retrieves prescription data and formats it into the label layout. Ensure all fields are correctly populated based on the input prescription data.",
+            "status": "done",
+            "testStrategy": null,
+            "parentId": "undefined",
+            "updatedAt": "2025-11-11T23:30:39.726Z"
+          },
+          {
+            "id": 2,
+            "title": "Integrate Barcode and QR Code Generation",
+            "description": "Use a library like jsBarcode or QRCode.js to generate barcodes and QR codes for the prescription data on the label.",
+            "dependencies": [
+              1
+            ],
+            "details": "Implement the barcode and QR code generation functionality, ensuring that the codes are scannable and appropriately sized for the label layout.",
+            "status": "done",
+            "testStrategy": null,
+            "parentId": "undefined",
+            "updatedAt": "2025-11-11T23:30:40.594Z"
+          },
+          {
+            "id": 3,
+            "title": "Design Print-Optimized Label Layout",
+            "description": "Create a print-optimized layout for the prescription label that adheres to standard sizes and ensures readability.",
+            "dependencies": [
+              1,
+              2
+            ],
+            "details": "Utilize CSS and TailwindCSS to design the label layout, ensuring all information is clearly presented and fits within the specified dimensions (e.g., 4\" x 6\").",
+            "status": "done",
+            "testStrategy": null,
+            "parentId": "undefined",
+            "updatedAt": "2025-11-11T23:30:41.574Z"
+          },
+          {
+            "id": 4,
+            "title": "Implement PDF Export Functionality",
+            "description": "Enable users to export the prescription label as a PDF file while maintaining the print-optimized layout.",
+            "dependencies": [
+              3
+            ],
+            "details": "Use a library like jsPDF or html2pdf.js to implement the PDF export feature, ensuring the layout is preserved in the exported file.",
+            "status": "done",
+            "testStrategy": null,
+            "parentId": "undefined",
+            "updatedAt": "2025-11-11T23:30:42.362Z"
+          },
+          {
+            "id": 5,
+            "title": "Create User Interface for Label Preview",
+            "description": "Develop a user-friendly interface that allows users to preview the generated prescription label before printing or exporting.",
+            "dependencies": [
+              1,
+              3,
+              4
+            ],
+            "details": "Design the UI components using TailwindCSS, ensuring accessibility and usability for users to easily navigate and preview the label.",
+            "status": "done",
+            "testStrategy": null,
+            "parentId": "undefined",
+            "updatedAt": "2025-11-11T23:30:43.145Z"
+          }
+        ],
+        "updatedAt": "2025-11-11T23:30:43.145Z"
+      },
+      {
+        "id": "40",
+        "title": "Multi-Drug Prescription Manager",
+        "description": "Develop a feature that allows users to add multiple medications to a single prescription, check for interactions among all drugs, calculate combined costs, and export a complete prescription summary.",
+        "details": "Implement a multi-drug prescription management system that includes the following features:\n1. **Multiple Medication Input**: Allow users to input multiple medications into a single prescription form, utilizing a dynamic form that can add/remove medication entries.\n2. **Drug Interaction Checker**: Extend the existing drug interaction checker to analyze interactions between all medications in the prescription. Utilize an API (e.g., OpenAI GPT-4o) to assess interactions and display severity levels for each combination.\n3. **Cost Calculation**: Implement logic to calculate the total cost of all medications based on user-defined quantities and prices. Ensure that the cost is updated in real-time as medications are added or removed.\n4. **Export Functionality**: Create a feature to export the complete prescription summary, including medication details, interactions, and total costs, in a user-friendly format (e.g., PDF or CSV).\n5. **User Interface**: Design a clean and intuitive UI that allows users to easily manage multiple medications, view interactions, and access the export feature. Use TailwindCSS for styling consistency.",
+        "testStrategy": "1. **Functionality Testing**: Verify that users can add and remove multiple medications, and that the system correctly displays all entered medications.\n2. **Interaction Checking**: Test the drug interaction checker with known interacting drug combinations to ensure accurate severity classifications and warnings are displayed for all medications in the prescription.\n3. **Cost Calculation**: Validate that the total cost is accurately calculated based on user inputs and that changes in medication quantities reflect in real-time.\n4. **Export Functionality**: Test the export feature to ensure that the summary includes all relevant details and is formatted correctly in the chosen output format (PDF or CSV).",
+        "status": "done",
+        "dependencies": [
+          "22",
+          "24",
+          "39"
+        ],
+        "priority": "medium",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Implement Multiple Medication Input Form",
+            "description": "Develop a dynamic form that allows users to input multiple medications into a single prescription. Users should be able to add or remove medication entries seamlessly.",
+            "dependencies": [],
+            "details": "Utilize React or similar framework to create a form that dynamically adds/removes medication fields. Ensure validation for each medication entry.\n<info added on 2025-11-11T20:04:11.614Z>\nSuccessfully implemented a multi-drug input form with dynamic add/remove functionality. Created a prescriptionStore to manage medications, and developed the MultiDrugManager component with full form controls including drug autocomplete, SIG templates, quantity, days supply, unit selection, and price. Integrated this feature as a new tab in the main page. All medication entries are tracked in a reactive store with derived stores for total cost and validation.\n</info added on 2025-11-11T20:04:11.614Z>",
+            "status": "done",
+            "testStrategy": null,
+            "updatedAt": "2025-11-11T20:04:05.080Z",
+            "parentId": "undefined"
+          },
+          {
+            "id": 2,
+            "title": "Extend Drug Interaction Checker",
+            "description": "Enhance the existing drug interaction checker to analyze interactions among all medications in the prescription using an external API.",
+            "dependencies": [],
+            "details": "Integrate an API (e.g., OpenAI GPT-4o) to fetch interaction data. Display severity levels for each drug combination in the UI.\n<info added on 2025-11-11T20:05:57.395Z>\nExtended the drug interaction checker by creating the /api/check-interactions-multi endpoint that analyzes all medication pairs using OpenAI GPT-4o-mini. Implemented interaction results display in MultiDrugManager with color-coded severity levels (Safe/Caution/Dangerous), overall risk assessment, individual drug pair analysis, and clinical recommendations. Added caching for performance.\n</info added on 2025-11-11T20:05:57.395Z>",
+            "status": "done",
+            "testStrategy": null,
+            "parentId": "undefined",
+            "updatedAt": "2025-11-11T20:05:53.699Z"
+          },
+          {
+            "id": 3,
+            "title": "Implement Cost Calculation Logic",
+            "description": "Create a function to calculate the total cost of all medications based on user-defined quantities and prices, updating in real-time.",
+            "dependencies": [],
+            "details": "Ensure the cost calculation updates dynamically as medications are added or removed. Include error handling for invalid inputs.\n<info added on 2025-11-11T20:06:55.725Z>\nImplemented comprehensive cost calculation logic with real-time updates. Created a totalPrescriptionCost derived store that automatically sums medication prices. Added a detailed cost breakdown UI showing per-medication costs with quantities, units, and total. Price inputs have built-in validation (min=0, step=0.01). All costs update reactively as medications are added or removed or prices change.\n</info added on 2025-11-11T20:06:55.725Z>",
+            "status": "done",
+            "testStrategy": null,
+            "parentId": "undefined",
+            "updatedAt": "2025-11-11T20:06:52.456Z"
+          },
+          {
+            "id": 4,
+            "title": "Develop Export Functionality",
+            "description": "Create a feature that allows users to export the complete prescription summary, including medication details, interactions, and total costs.",
+            "dependencies": [],
+            "details": "Implement export options in PDF and CSV formats. Ensure the exported file is user-friendly and includes all relevant information.\n<info added on 2025-11-11T20:08:37.486Z>\nImplemented comprehensive export functionality for multi-drug prescriptions. Created PDF export using html2canvas and jsPDF with formatted summary including all medications, costs, and interaction analysis. Implemented CSV export with medication details, costs, and interaction data. Added export buttons to UI. Created hidden export view with proper styling for professional PDF output including disclaimer and timestamp.\n</info added on 2025-11-11T20:08:37.486Z>",
+            "status": "done",
+            "testStrategy": null,
+            "parentId": "undefined",
+            "updatedAt": "2025-11-11T20:08:33.896Z"
+          },
+          {
+            "id": 5,
+            "title": "Design User Interface with TailwindCSS",
+            "description": "Design a clean and intuitive user interface that allows users to manage multiple medications, view interactions, and access the export feature.",
+            "dependencies": [],
+            "details": "Utilize TailwindCSS for styling consistency. Focus on usability and accessibility to enhance user experience.\n<info added on 2025-11-11T20:09:13.856Z>\nUI design completed using TailwindCSS throughout all previous subtasks. Implemented a clean card-based layout with professional styling, color-coded sections for easy navigation, responsive grid layouts, intuitive button placement, clear typography and spacing, hover effects and transitions, accessible color contrasts, and consistent styling with the rest of the application. The interface allows users to easily manage medications, view interactions, and access export features.\n</info added on 2025-11-11T20:09:13.856Z>",
+            "status": "done",
+            "testStrategy": null,
+            "parentId": "undefined",
+            "updatedAt": "2025-11-11T20:09:05.041Z"
+          }
+        ],
+        "updatedAt": "2025-11-11T20:09:05.041Z"
+      },
+      {
+        "id": "41",
+        "title": "Smart Inventory Tracker Implementation",
+        "description": "Develop a Smart Inventory Tracker to monitor NDC stock levels, mark packages as low or out of stock, and provide warnings for unavailable packages with a quick stock adjustment interface.",
+        "details": "1. **Stock Level Tracking**: Implement a system to track the stock levels of NDC packages. This will involve creating a database schema to store package details, including NDC, quantity, and status (in stock, low, out of stock). 2. **Low/Out of Stock Marking**: Create logic to automatically mark packages as low or out of stock based on predefined thresholds. Use background jobs or scheduled tasks to regularly check stock levels. 3. **Warning System**: Develop a warning system that alerts users when attempting to recommend unavailable packages. This can be achieved through UI notifications or modal pop-ups. 4. **Stock Adjustment Interface**: Design a user-friendly interface that allows users to quickly adjust stock levels. This should include input fields for NDC, quantity adjustments, and a submit button. Use TailwindCSS for styling to ensure a consistent look and feel. 5. **Integration with Existing Features**: Ensure that the inventory tracker integrates seamlessly with the multi-drug prescription manager and the prescription label generator to reflect accurate stock levels in real-time.",
+        "testStrategy": "1. **Functionality Testing**: Verify that stock levels are accurately tracked and displayed in the UI. Test the low/out of stock marking logic by simulating stock level changes. 2. **Warning System Testing**: Attempt to recommend unavailable packages and ensure that appropriate warnings are displayed. 3. **Stock Adjustment Interface Testing**: Test the stock adjustment interface by making various adjustments and verifying that the changes are reflected in the database. 4. **Integration Testing**: Ensure that the inventory tracker works correctly with the multi-drug prescription manager and the prescription label generator, checking that stock levels are updated in real-time during prescription processing.",
+        "status": "done",
+        "dependencies": [
+          "11",
+          "40"
+        ],
+        "priority": "medium",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Create Database Schema for Stock Levels",
+            "description": "Develop a database schema to store details of NDC packages, including NDC, quantity, and status (in stock, low, out of stock).",
+            "dependencies": [],
+            "details": "The schema should include tables for package details and stock levels, ensuring proper indexing for efficient queries. Use SQL for database creation.\n<info added on 2025-11-11T20:25:30.238Z>\nCreated a comprehensive inventory database schema using localStorage persistence. Implemented the InventoryItem interface with fields for NDC, drug name, package details, current quantity, min threshold, and status. Developed the InventoryStore class with methods for CRUD operations, quantity management, status calculation, search/filter, and statistics. Added reactive Svelte stores with derived stores for low/out-of-stock items.\n</info added on 2025-11-11T20:25:30.238Z>",
+            "status": "done",
+            "testStrategy": null,
+            "updatedAt": "2025-11-11T20:25:26.642Z",
+            "parentId": "undefined"
+          },
+          {
+            "id": 2,
+            "title": "Implement Low/Out of Stock Logic",
+            "description": "Create logic to automatically mark packages as low or out of stock based on predefined thresholds.",
+            "dependencies": [
+              1
+            ],
+            "details": "Utilize background jobs or scheduled tasks to regularly check stock levels and update the status of packages in the database.\n<info added on 2025-11-11T20:25:51.955Z>\nLow/out of stock logic was implemented in Task 41.1 as part of the InventoryStore. The calculateStatus method automatically determines status based on currentQuantity and minThreshold: out-of-stock (quantity<=0), low (quantity<=threshold), in-stock (quantity>threshold). Status is automatically recalculated on all quantity/threshold updates. No additional implementation needed.\n</info added on 2025-11-11T20:25:51.955Z>",
+            "status": "done",
+            "testStrategy": null,
+            "parentId": "undefined",
+            "updatedAt": "2025-11-11T20:25:48.336Z"
+          },
+          {
+            "id": 3,
+            "title": "Develop Warning System for Unavailable Packages",
+            "description": "Implement a warning system that alerts users when they attempt to recommend unavailable packages.",
+            "dependencies": [
+              2
+            ],
+            "details": "This will include UI notifications or modal pop-ups to inform users about stock unavailability. Ensure the warnings are clear and actionable.\n<info added on 2025-11-11T20:27:01.366Z>\nCreated a comprehensive warning system for unavailable packages. Implemented StockWarning component for inline badges and detailed alerts with color-coded severity (red=out-of-stock, yellow=low, green=in-stock). Created InventoryAlerts component for dashboard-style alert overview showing all low/out-of-stock items with expandable sections. Both components include animations, clear messaging, and actionable information.\n</info added on 2025-11-11T20:27:01.366Z>",
+            "status": "done",
+            "testStrategy": null,
+            "parentId": "undefined",
+            "updatedAt": "2025-11-11T20:26:57.138Z"
+          },
+          {
+            "id": 4,
+            "title": "Design Stock Adjustment User Interface",
+            "description": "Create a user-friendly interface for quick stock level adjustments, including input fields for NDC and quantity.",
+            "dependencies": [],
+            "details": "Use TailwindCSS for styling to maintain a consistent look and feel. The interface should be intuitive and responsive.\n<info added on 2025-11-11T20:28:33.112Z>\nCreated a comprehensive InventoryManager component with three tabs: Add Item (drug autocomplete, NDC input, package details, quantity/threshold settings), Manage Stock (search, edit mode, quick adjust buttons +/-1/+/-10, delete), and Statistics (dashboard showing total, in-stock, low, out-of-stock counts). Professional TailwindCSS styling with responsive design and hover effects.\n</info added on 2025-11-11T20:28:33.112Z>",
+            "status": "done",
+            "testStrategy": null,
+            "parentId": "undefined",
+            "updatedAt": "2025-11-11T20:28:29.831Z"
+          },
+          {
+            "id": 5,
+            "title": "Integrate Inventory Tracker with Existing Features",
+            "description": "Ensure the inventory tracker integrates seamlessly with the multi-drug prescription manager and the prescription label generator.",
+            "dependencies": [
+              1,
+              3
+            ],
+            "details": "This integration should reflect accurate stock levels in real-time across all relevant features of the application.\n<info added on 2025-11-11T20:30:21.293Z>\nSuccessfully integrated inventory tracker with all features. Added Inventory tab to main navigation. Integrated InventoryAlerts component to display low/out-of-stock warnings across all tabs. Added StockWarning component to ResultsDisplay to show stock status for each recommended NDC package. Inventory now tracks stock in real-time and warns users when recommending unavailable packages.\n</info added on 2025-11-11T20:30:21.293Z>",
+            "status": "done",
+            "testStrategy": null,
+            "parentId": "undefined",
+            "updatedAt": "2025-11-11T20:30:18.054Z"
+          }
+        ],
+        "updatedAt": "2025-11-11T20:30:18.054Z"
+      },
+      {
+        "id": "42",
+        "title": "Add Inventory Integration with Calculation Results",
+        "description": "Integrate inventory data into the calculation results display, showing current stock levels for recommended NDCs, highlighting low or out-of-stock items, and suggesting alternatives when primary options are unavailable.",
+        "details": "1. **Inventory Data Retrieval**: Implement API calls to fetch current stock levels for recommended NDCs from the Smart Inventory Tracker (Task 41). Ensure that the data is updated in real-time or at regular intervals. 2. **Display Integration**: Modify the results display component (Task 12) to include stock level information alongside each recommended NDC. Use visual indicators (e.g., color coding) to highlight low (yellow) and out-of-stock (red) items. 3. **Alternative Suggestions**: Develop logic to suggest alternative NDCs when the primary options are out of stock. This may involve querying the inventory database for similar items based on predefined criteria (e.g., drug class, dosage form). 4. **User Interface Enhancements**: Ensure that the UI remains user-friendly and that the additional information does not clutter the display. Consider using tooltips or expandable sections for detailed stock information. 5. **Performance Considerations**: Optimize API calls to minimize latency in displaying stock levels, possibly implementing caching strategies for frequently accessed data.",
+        "testStrategy": "1. **Functionality Testing**: Verify that stock levels are accurately displayed for each recommended NDC. Test the highlighting logic for low and out-of-stock items to ensure correct visual representation. 2. **Alternative Suggestions Testing**: Simulate scenarios where primary NDCs are out of stock and ensure that appropriate alternatives are suggested. 3. **UI Testing**: Conduct user testing to ensure that the integration of inventory data does not negatively impact the usability of the results display. 4. **Performance Testing**: Measure the response time of API calls and ensure that the integration does not introduce significant delays in the results display.",
+        "status": "done",
+        "dependencies": [
+          "41",
+          "12"
+        ],
+        "priority": "medium",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Implement Inventory Data Retrieval",
+            "description": "Develop API calls to fetch current stock levels for recommended NDCs from the Smart Inventory Tracker. Ensure real-time updates or regular intervals for data retrieval.",
+            "dependencies": [],
+            "details": "Utilize the existing API from Task 41 to retrieve stock levels. Implement error handling for API failures and ensure data is stored in a temporary cache for quick access.",
+            "status": "done",
+            "testStrategy": null,
+            "parentId": "undefined",
+            "updatedAt": "2025-11-11T21:25:46.341Z"
+          },
+          {
+            "id": 2,
+            "title": "Modify Results Display for Stock Levels",
+            "description": "Update the results display component to show stock level information alongside each recommended NDC, using visual indicators for low and out-of-stock items.",
+            "dependencies": [
+              1
+            ],
+            "details": "Integrate stock level data into the UI component from Task 12. Use color coding (yellow for low stock, red for out of stock) to visually represent stock status.",
+            "status": "done",
+            "testStrategy": null,
+            "parentId": "undefined",
+            "updatedAt": "2025-11-11T21:25:47.241Z"
+          },
+          {
+            "id": 3,
+            "title": "Develop Alternative Suggestions Logic",
+            "description": "Create logic to suggest alternative NDCs when primary options are out of stock, querying the inventory database for similar items.",
+            "dependencies": [
+              1
+            ],
+            "details": "Implement a function that checks the inventory database for alternatives based on drug class and dosage form when the primary NDC is unavailable.",
+            "status": "done",
+            "testStrategy": null,
+            "parentId": "undefined",
+            "updatedAt": "2025-11-11T21:25:48.068Z"
+          },
+          {
+            "id": 4,
+            "title": "Enhance User Interface for Stock Information",
+            "description": "Ensure the user interface remains user-friendly while displaying additional stock information, using tooltips or expandable sections.",
+            "dependencies": [
+              2
+            ],
+            "details": "Design UI elements that allow users to view detailed stock information without cluttering the main display. Test for responsiveness and usability.",
+            "status": "done",
+            "testStrategy": null,
+            "parentId": "undefined",
+            "updatedAt": "2025-11-11T21:25:48.901Z"
+          },
+          {
+            "id": 5,
+            "title": "Optimize API Calls for Performance",
+            "description": "Implement caching strategies and optimize API calls to minimize latency in displaying stock levels.",
+            "dependencies": [
+              1
+            ],
+            "details": "Analyze current API call performance and implement caching for frequently accessed data. Ensure that the cache is updated regularly to reflect real-time stock levels.",
+            "status": "done",
+            "testStrategy": null,
+            "parentId": "undefined",
+            "updatedAt": "2025-11-11T21:25:49.889Z"
+          }
+        ],
+        "updatedAt": "2025-11-11T21:25:49.889Z"
+      },
+      {
+        "id": "43",
+        "title": "Add Real-Time SIG Preview and Validation",
+        "description": "Implement a feature that provides real-time parsing and validation of SIG input, highlighting potential issues and displaying a confidence indicator for AI parsing accuracy.",
+        "details": "1. **Real-Time Parsing**: Utilize a listener on the SIG input field to trigger parsing as users type. Implement a parsing algorithm that interprets the SIG format and extracts relevant information (e.g., dosage, frequency). 2. **Display Parsed Interpretation**: Create a UI component that displays the parsed interpretation in real-time, formatted as 'Detected: 2 tablets, 2x daily = 4 tablets/day'. 3. **Highlight Issues**: Implement logic to identify ambiguous instructions or unusual dosing patterns. Use visual cues (e.g., red highlights) to indicate potential issues. 4. **Confidence Indicator**: Integrate a confidence scoring system that assesses the accuracy of the AI parsing. Display this score alongside the parsed interpretation. 5. **User Feedback Loop**: Allow users to provide feedback on the parsed results to improve the parsing algorithm over time. 6. **Integration with Existing Components**: Ensure that this feature integrates seamlessly with the prescription input validation (Task 14) and the multi-drug prescription manager (Task 40).",
+        "testStrategy": "1. **Functional Testing**: Verify that the SIG input field correctly triggers parsing on user input. Test various SIG formats to ensure accurate parsing and interpretation. 2. **Issue Highlighting**: Input ambiguous SIG instructions and confirm that they are highlighted appropriately. 3. **Confidence Scoring**: Test the confidence indicator by comparing parsed results against known correct interpretations and ensuring the score reflects accuracy. 4. **User Feedback**: Simulate user feedback on parsed results and verify that it is recorded correctly. 5. **Integration Testing**: Ensure that the new feature works correctly with existing components, particularly the prescription validation and multi-drug management systems.",
+        "status": "done",
+        "dependencies": [
+          "14",
+          "40"
+        ],
+        "priority": "medium",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Implement Real-Time Parsing Listener",
+            "description": "Create a listener for the SIG input field that triggers parsing as users type, ensuring immediate feedback.",
+            "dependencies": [],
+            "details": "Utilize JavaScript event listeners to capture input events on the SIG field. Implement a parsing algorithm that interprets the SIG format and extracts relevant information such as dosage and frequency.",
+            "status": "done",
+            "testStrategy": null,
+            "parentId": "undefined",
+            "updatedAt": "2025-11-11T21:27:44.187Z"
+          },
+          {
+            "id": 2,
+            "title": "Develop UI Component for Parsed Interpretation",
+            "description": "Design and implement a UI component that displays the parsed interpretation of the SIG input in real-time.",
+            "dependencies": [
+              1
+            ],
+            "details": "Create a dynamic UI element that updates as the user types, formatting the output to show detected information like 'Detected: 2 tablets, 2x daily = 4 tablets/day'. Ensure it is visually appealing and user-friendly.",
+            "status": "done",
+            "testStrategy": null,
+            "parentId": "undefined",
+            "updatedAt": "2025-11-11T21:27:45.084Z"
+          },
+          {
+            "id": 3,
+            "title": "Implement Issue Highlighting Logic",
+            "description": "Develop logic to identify and highlight ambiguous instructions or unusual dosing patterns in the SIG input.",
+            "dependencies": [
+              1
+            ],
+            "details": "Create a set of rules to detect potential issues in the SIG input. Use visual cues such as red highlights to indicate problems, ensuring users can easily identify and correct them.",
+            "status": "done",
+            "testStrategy": null,
+            "parentId": "undefined",
+            "updatedAt": "2025-11-11T21:27:46.292Z"
+          },
+          {
+            "id": 4,
+            "title": "Integrate Confidence Scoring System",
+            "description": "Implement a confidence scoring system that assesses the accuracy of the AI parsing and displays this score.",
+            "dependencies": [
+              1
+            ],
+            "details": "Develop an algorithm that calculates a confidence score based on the parsed input. Display this score alongside the parsed interpretation to inform users of the reliability of the parsing.",
+            "status": "done",
+            "testStrategy": null,
+            "parentId": "undefined",
+            "updatedAt": "2025-11-11T21:27:47.132Z"
+          },
+          {
+            "id": 5,
+            "title": "Create User Feedback Mechanism",
+            "description": "Allow users to provide feedback on the parsed results to enhance the parsing algorithm over time.",
+            "dependencies": [
+              2,
+              3,
+              4
+            ],
+            "details": "Implement a feedback form or button that users can use to report issues or confirm accuracy. Store this feedback for future analysis to improve the parsing algorithm's performance.",
+            "status": "done",
+            "testStrategy": null,
+            "parentId": "undefined",
+            "updatedAt": "2025-11-11T23:31:24.587Z"
+          }
+        ],
+        "updatedAt": "2025-11-11T23:31:24.587Z"
+      },
+      {
+        "id": "44",
+        "title": "Add Quick Actions and Smart Defaults",
+        "description": "Implement a 'Calculate Another' button to clear the form while keeping focus, remember the last used days supply per drug type, add a keyboard shortcut for form reset, and include a 'Copy to Clipboard' button for formatted results.",
+        "details": "1. Implement a 'Calculate Another' button that clears the form inputs but retains focus on the drug name field. Use JavaScript to reset the form fields while ensuring the focus is set back to the drug name input. 2. Create a mechanism to remember the last used days supply for each drug type. This can be achieved by storing the values in local storage or session storage, and retrieving them when the user selects a drug type. 3. Add a keyboard shortcut (e.g., Ctrl+R) for resetting the form, ensuring it is accessible and does not conflict with existing shortcuts. 4. Implement a 'Copy to Clipboard' button that formats the results and copies them to the clipboard. Use the Clipboard API for this functionality, ensuring compatibility with various browsers. 5. Ensure all new UI elements are styled consistently with the existing application design, using TailwindCSS.",
+        "testStrategy": "1. Verify that clicking the 'Calculate Another' button clears the form and focuses on the drug name input. 2. Test the persistence of the last used days supply by selecting different drug types and ensuring the correct value is populated. 3. Validate the keyboard shortcut for form reset by pressing Ctrl+R and confirming the form resets as expected. 4. Test the 'Copy to Clipboard' button by clicking it and pasting the results in a text editor to ensure the formatting is correct. 5. Conduct usability testing to ensure that all new features are intuitive and enhance the user experience.",
+        "status": "done",
+        "dependencies": [
+          "33",
+          "31"
+        ],
+        "priority": "medium",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Implement 'Calculate Another' Button",
+            "description": "Create a button that clears the form inputs while retaining focus on the drug name field. This involves using JavaScript to reset the form fields and ensuring the focus is set back to the drug name input after the reset.",
+            "dependencies": [],
+            "details": "Use JavaScript event listeners to handle the button click event. On click, clear all form fields and set focus back to the drug name input field. Ensure that the button is styled consistently with the existing UI.",
+            "status": "done",
+            "testStrategy": null,
+            "parentId": "undefined",
+            "updatedAt": "2025-11-11T21:38:14.717Z"
+          },
+          {
+            "id": 2,
+            "title": "Store Last Used Days Supply",
+            "description": "Develop a mechanism to remember the last used days supply for each drug type. This will involve storing values in local storage or session storage and retrieving them when a user selects a drug type.",
+            "dependencies": [],
+            "details": "Implement functions to save the last used days supply in local storage when a drug type is selected. On selecting a drug type, retrieve the stored value and populate the corresponding input field.",
+            "status": "done",
+            "testStrategy": null,
+            "parentId": "undefined",
+            "updatedAt": "2025-11-11T21:38:15.784Z"
+          },
+          {
+            "id": 3,
+            "title": "Add Keyboard Shortcut for Form Reset",
+            "description": "Implement a keyboard shortcut (e.g., Ctrl+R) that resets the form. Ensure that this shortcut is accessible and does not conflict with existing shortcuts in the application.",
+            "dependencies": [],
+            "details": "Use JavaScript to listen for the keydown event and check for the Ctrl+R combination. When detected, trigger the form reset function and ensure the focus is set back to the drug name input.",
+            "status": "done",
+            "testStrategy": null,
+            "parentId": "undefined",
+            "updatedAt": "2025-11-11T21:38:16.818Z"
+          },
+          {
+            "id": 4,
+            "title": "Implement 'Copy to Clipboard' Button",
+            "description": "Create a button that formats the results and copies them to the clipboard using the Clipboard API. Ensure compatibility with various browsers.",
+            "dependencies": [],
+            "details": "Design the button and use the Clipboard API to copy formatted results to the clipboard. Include error handling for unsupported browsers and provide user feedback upon successful copy.",
+            "status": "done",
+            "testStrategy": null,
+            "parentId": "undefined",
+            "updatedAt": "2025-11-11T21:38:17.901Z"
+          },
+          {
+            "id": 5,
+            "title": "Style New UI Elements with TailwindCSS",
+            "description": "Ensure that all new UI elements, including the 'Calculate Another' button, 'Copy to Clipboard' button, and any other additions, are styled consistently with the existing application design using TailwindCSS.",
+            "dependencies": [],
+            "details": "Review the existing TailwindCSS styles used in the application and apply them to the new UI elements. Ensure responsiveness and accessibility standards are met.",
+            "status": "done",
+            "testStrategy": null,
+            "parentId": "undefined",
+            "updatedAt": "2025-11-11T21:38:18.728Z"
+          }
+        ],
+        "updatedAt": "2025-11-11T21:38:18.728Z"
+      },
+      {
+        "id": "45",
+        "title": "Controlled Substance Tracking",
+        "description": "Implement DEA schedule badges, quantity/refill restrictions, and enhanced documentation for controlled medications.",
+        "details": "Create a DEA schedule mapping data file for common controlled substances. Add schedule detection logic based on drug name/NDC. Display prominent schedule badge in UI. Implement validation rules for quantity and refill limits. Show enhanced documentation requirements (prescriber DEA#).",
+        "testStrategy": "Verify that DEA schedule badges are visible for controlled substances, quantity limits are enforced, refill restrictions are displayed, and additional documentation prompts appear.",
+        "priority": "high",
+        "dependencies": [],
+        "status": "done",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Create DEA Schedule Mapping Data File",
+            "description": "Develop a comprehensive data file that maps common controlled substances to their respective DEA schedules.",
+            "dependencies": [],
+            "details": "This file should include drug names, NDCs, and their corresponding DEA schedule classifications. Ensure that the data is accurate and up-to-date with current regulations.\n<info added on 2025-11-11T21:55:45.753Z>\nCreated comprehensive DEA schedule mapping file at src/lib/data/deaSchedules.ts with 50+ controlled substances across schedules II-V. Includes detection patterns, refill limits, quantity restrictions, and helper functions for lookup and validation.\n</info added on 2025-11-11T21:55:45.753Z>",
+            "status": "done",
+            "testStrategy": null,
+            "parentId": "undefined",
+            "updatedAt": "2025-11-11T23:10:55.864Z"
+          },
+          {
+            "id": 2,
+            "title": "Implement Schedule Detection Logic",
+            "description": "Add logic to detect DEA schedules based on drug names and NDCs during prescription processing.",
+            "dependencies": [
+              1
+            ],
+            "details": "Integrate the mapping data file into the prescription processing system. Ensure that the system can accurately identify the DEA schedule for each medication based on the provided drug name or NDC.\n<info added on 2025-11-11T21:56:29.439Z>\nImplemented controlled substance detection logic: created API endpoint at /api/check-controlled-substance that detects controlled substances using the DEA schedule data, returns schedule info, warnings, and quantity limit checks. Created client-side utility at src/lib/utils/controlledSubstanceChecker.ts for easy integration.\n</info added on 2025-11-11T21:56:29.439Z>",
+            "status": "done",
+            "testStrategy": null,
+            "parentId": "undefined",
+            "updatedAt": "2025-11-11T23:10:56.633Z"
+          },
+          {
+            "id": 3,
+            "title": "Display DEA Schedule Badge in UI",
+            "description": "Design and implement a UI component to display the DEA schedule badge prominently for controlled substances.",
+            "dependencies": [
+              2
+            ],
+            "details": "The badge should be visually distinct and easily recognizable. It should update dynamically based on the detected DEA schedule from the prescription data.\n<info added on 2025-11-11T21:57:43.519Z>\nCreated ControlledSubstanceBadge.svelte component with expandable details, color-coded schedule badges (C-II red, C-III orange, C-IV yellow, C-V green), refill restrictions display, and warnings. Integrated into ResultsDisplay.svelte to automatically check and display controlled substance status on prescription results.\n</info added on 2025-11-11T21:57:43.519Z>",
+            "status": "done",
+            "testStrategy": null,
+            "parentId": "undefined",
+            "updatedAt": "2025-11-11T23:10:57.785Z"
+          },
+          {
+            "id": 4,
+            "title": "Implement Validation Rules for Quantity and Refill Limits",
+            "description": "Establish validation rules to enforce quantity and refill limits for controlled substances based on their DEA schedules.",
+            "dependencies": [
+              2
+            ],
+            "details": "Create logic that checks the prescribed quantity and refill requests against the established limits for each DEA schedule. Ensure that appropriate error messages are displayed when limits are exceeded.\n<info added on 2025-11-11T21:59:15.150Z>\nCreated ControlledSubstanceValidator.svelte component that validates refills against DEA schedule limits and checks quantity/days supply restrictions. Integrated validator into main prescription form (+page.svelte) with real-time validation. Added refills input field. Submit button disabled when validation errors exist. Displays color-coded error/warning messages for controlled substance violations.\n</info added on 2025-11-11T21:59:15.150Z>",
+            "status": "done",
+            "testStrategy": null,
+            "parentId": "undefined",
+            "updatedAt": "2025-11-11T23:10:58.549Z"
+          }
+        ],
+        "complexity": 8,
+        "recommendedSubtasks": 4,
+        "expansionPrompt": "Break down the implementation into subtasks for DEA schedule mapping, UI badge display, validation rules, and documentation requirements.",
+        "updatedAt": "2025-11-11T23:10:58.549Z"
+      },
+      {
+        "id": "46",
+        "title": "Drug Safety Alerts System",
+        "description": "Implement comprehensive drug safety checking with dose range validation, age-specific warnings, pregnancy categories, and organ function adjustments.",
+        "details": "Create safety data JSON file with dose limits, pregnancy categories, and organ-specific flags. Add safety checker API endpoint that validates prescriptions against safety rules. Display prominent warning badges and alerts in UI. Support for age input to trigger pediatric/geriatric checks.",
+        "testStrategy": "Check that dose limits are validated for top 100 commonly prescribed drugs, pregnancy categories are displayed, age-specific warnings appear, and renal/hepatic flags are visible.",
+        "priority": "high",
+        "dependencies": [
+          "45"
+        ],
+        "status": "done",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Create Safety Data JSON File",
+            "description": "Develop a JSON file containing safety data including dose limits, pregnancy categories, and organ-specific flags for drug safety checks.",
+            "dependencies": [],
+            "details": "The JSON file should include structured data for at least 100 commonly prescribed drugs, detailing their dose limits, pregnancy categories, and flags for organ function adjustments. Ensure the data is validated and formatted correctly for API consumption.\n<info added on 2025-11-11T22:05:40.619Z>\nCreated a comprehensive drug safety database at src/lib/data/drugSafetyData.ts with 25+ commonly prescribed drugs. This includes max daily/single dose limits, pregnancy categories (A/B/C/D/X), lactation risk levels, renal/hepatic adjustment flags, age-specific warnings (pediatric/geriatric), black box warnings, and helper functions for dose validation and age-based warnings.\n</info added on 2025-11-11T22:05:40.619Z>",
+            "status": "done",
+            "testStrategy": null,
+            "parentId": "undefined",
+            "updatedAt": "2025-11-11T23:11:06.254Z"
+          },
+          {
+            "id": 2,
+            "title": "Implement Safety Checker API Endpoint",
+            "description": "Create an API endpoint that validates prescriptions against the safety rules defined in the safety data JSON file.",
+            "dependencies": [
+              1
+            ],
+            "details": "The API should accept prescription data, check it against the safety rules, and return validation results including any warnings or errors. Implement necessary authentication and logging for the API calls.\n<info added on 2025-11-11T22:06:40.223Z>\nCreated safety checker API endpoint at /api/check-drug-safety that validates prescriptions against the safety database. Returns severity-categorized alerts (critical/warning/info) for dose limits, pregnancy/lactation risks, age-specific warnings, renal/hepatic adjustments, and black box warnings. Created client utility at src/lib/utils/drugSafetyChecker.ts for easy integration.\n</info added on 2025-11-11T22:06:40.223Z>",
+            "status": "done",
+            "testStrategy": null,
+            "parentId": "undefined",
+            "updatedAt": "2025-11-11T23:11:07.041Z"
+          },
+          {
+            "id": 3,
+            "title": "Display Alerts in UI",
+            "description": "Integrate UI components to display prominent warning badges and alerts based on the safety checks performed by the API.",
+            "dependencies": [
+              2
+            ],
+            "details": "The UI should dynamically show alerts for age-specific warnings, dose range violations, and pregnancy category alerts. Ensure that the alerts are visually distinct and easily noticeable by users, and support age input for pediatric and geriatric checks.\n<info added on 2025-11-11T22:07:56.341Z>\nCreated DrugSafetyAlerts.svelte component displaying severity-categorized alerts (critical/warning/info) with color-coded badges and icons. Shows pregnancy/lactation categories, dose limits, organ function warnings, and black box warnings. Integrated into ResultsDisplay.svelte to automatically check and display safety information for all prescriptions. Includes collapsible detail panel with full safety data.\n</info added on 2025-11-11T22:07:56.341Z>",
+            "status": "done",
+            "testStrategy": null,
+            "parentId": "undefined",
+            "updatedAt": "2025-11-11T23:11:08.005Z"
+          }
+        ],
+        "complexity": 7,
+        "recommendedSubtasks": 3,
+        "expansionPrompt": "Identify subtasks for creating safety data files, implementing the safety checker API, and UI alert display.",
+        "updatedAt": "2025-11-11T23:11:08.005Z"
+      },
+      {
+        "id": "47",
+        "title": "Generic Substitution Engine",
+        "description": "Automatically suggest AB-rated generic alternatives with cost savings estimates and therapeutic equivalence indicators.",
+        "details": "Use RxNorm API to find generic equivalents via TTY filtering. Create a cost database or API integration for pricing data. Display alternatives in an expandable card below main results. Show substitution button that updates prescription with generic.",
+        "testStrategy": "Verify that generic alternatives are displayed for brand-name drugs, cost savings are calculated and shown, and one-click substitution functionality works.",
+        "priority": "medium",
+        "dependencies": [
+          "46"
+        ],
+        "status": "done",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "API Integration for Generic Alternatives",
+            "description": "Integrate the RxNorm API to fetch AB-rated generic alternatives using TTY filtering.",
+            "dependencies": [],
+            "details": "Set up the API connection to RxNorm, ensuring proper authentication and data retrieval methods are in place. Implement TTY filtering to identify generic equivalents for brand-name drugs.\n<info added on 2025-11-11T22:13:53.977Z>\nImplemented RxNorm API integration for finding generic alternatives using TTY filtering. Created findGenericAlternatives function that handles SBD (brand) to SCD (generic) conversions, as well as finding alternative generic formulations. API endpoint successfully built at /api/generic-alternatives.\n</info added on 2025-11-11T22:13:53.977Z>",
+            "status": "done",
+            "testStrategy": null,
+            "parentId": "undefined",
+            "updatedAt": "2025-11-11T22:14:21.196Z"
+          },
+          {
+            "id": 2,
+            "title": "Cost Database Setup",
+            "description": "Create a cost database or integrate an existing API for pricing data of generic alternatives.",
+            "dependencies": [],
+            "details": "Design the database schema to store pricing information for generic drugs. If using an API, ensure it can provide real-time pricing data and is integrated with the existing system for seamless access.\n<info added on 2025-11-11T22:14:03.847Z>\nMock cost data structure implemented directly in the findGenericAlternatives function. Each alternative includes: estimatedCost (mock -55), costSavings (mock 10-80% based on drug type), isABRated flag. Ready for future integration with real pricing API.\n</info added on 2025-11-11T22:14:03.847Z>",
+            "status": "done",
+            "testStrategy": null,
+            "parentId": "undefined",
+            "updatedAt": "2025-11-11T22:14:22.020Z"
+          },
+          {
+            "id": 3,
+            "title": "UI Display of Alternatives",
+            "description": "Develop the user interface to display generic alternatives in an expandable card format.",
+            "dependencies": [],
+            "details": "Create a responsive UI component that shows the list of generic alternatives below the main results. Each card should include cost savings estimates and a substitution button that updates the prescription with the selected generic.\n<info added on 2025-11-11T22:14:15.084Z>\nCreated GenericSubstitution.svelte component with expandable card UI. Features include loading states, error handling, and the ability to display up to 5 alternatives sorted by cost savings. The component shows AB-rated badges, cost savings percentages, estimated costs, and drug details (RxCUI, strength, dose form). It includes copy functionality and an optional substitution callback. The component has been integrated into ResultsDisplay.svelte after the Drug Safety Alerts section, and the build was completed successfully.\n</info added on 2025-11-11T22:14:15.084Z>",
+            "status": "done",
+            "testStrategy": null,
+            "parentId": "undefined",
+            "updatedAt": "2025-11-11T22:14:22.867Z"
+          }
+        ],
+        "complexity": 6,
+        "recommendedSubtasks": 3,
+        "expansionPrompt": "Outline subtasks for API integration, cost database setup, and UI display of alternatives.",
+        "updatedAt": "2025-11-11T22:14:22.867Z"
+      },
+      {
+        "id": "48",
+        "title": "Barcode Scanner Integration",
+        "description": "Add NDC barcode scanning capability using device camera to quickly add inventory and reduce manual entry errors.",
+        "details": "Integrate QuaggaJS or ZXing barcode scanning library. Request camera permissions via browser API. Parse scanned NDC and lookup drug details via RxNorm API. Add 'Scan Barcode' button to inventory and prescription entry flows.",
+        "testStrategy": "Ensure successful scanning and decoding of NDC barcodes, auto-population of prescription details, and inventory updates complete in under 5 seconds.",
+        "priority": "medium",
+        "dependencies": [
+          "47"
+        ],
+        "status": "done",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Integrate Barcode Scanning Library",
+            "description": "Integrate either QuaggaJS or ZXing library for barcode scanning functionality.",
+            "dependencies": [],
+            "details": "Choose between QuaggaJS and ZXing based on compatibility and performance. Follow the library documentation to set up the scanning functionality within the application. Ensure that the library is properly imported and initialized in the project.\n<info added on 2025-11-11T22:19:19.776Z>\nIntegrated html5-qrcode library for barcode scanning. Created BarcodeScanner.svelte component with full camera permission handling, NDC validation (11-digit format with auto-formatting to 5-4-2), support for CODE_128, CODE_39, and EAN_13 formats, and automatic success detection with 1-second auto-close. Component includes loading, error, and permission denied states.\n</info added on 2025-11-11T22:19:19.776Z>",
+            "status": "done",
+            "testStrategy": null,
+            "parentId": "undefined",
+            "updatedAt": "2025-11-11T22:19:45.660Z"
+          },
+          {
+            "id": 2,
+            "title": "Handle Camera Permissions",
+            "description": "Request and manage camera permissions via the browser API for barcode scanning.",
+            "dependencies": [],
+            "details": "Implement a function to request camera access from the user. Handle scenarios where permission is denied and provide user feedback. Ensure that the application gracefully degrades if camera access is not granted.\n<info added on 2025-11-11T22:19:28.601Z>\nImplemented comprehensive camera permission handling in the BarcodeScanner component. This includes browser API permission requests with user-friendly error messages for permission denied, no camera found, and other camera access failures. Additionally, it features retry functionality and clear UI feedback for all permission states.\n</info added on 2025-11-11T22:19:28.601Z>",
+            "status": "done",
+            "testStrategy": null,
+            "parentId": "undefined",
+            "updatedAt": "2025-11-11T22:19:46.664Z"
+          },
+          {
+            "id": 3,
+            "title": "Implement NDC Lookup via RxNorm API",
+            "description": "Parse scanned NDC and retrieve drug details using the RxNorm API.",
+            "dependencies": [],
+            "details": "After scanning the barcode, extract the NDC code and make an API call to the RxNorm API to fetch drug details. Handle API responses and errors appropriately, ensuring that the information is displayed to the user.\n<info added on 2025-11-11T22:19:38.978Z>\nIntegrated BarcodeScanner into DrugAutocomplete and InventoryManager components. Added barcode button icons next to input fields. Scanner automatically populates NDC fields when barcode is successfully scanned. Both integrations include proper state management, modal handling, and user feedback. Build completed successfully with no errors.\n</info added on 2025-11-11T22:19:38.978Z>",
+            "status": "done",
+            "testStrategy": null,
+            "parentId": "undefined",
+            "updatedAt": "2025-11-11T22:19:47.760Z"
+          }
+        ],
+        "complexity": 5,
+        "recommendedSubtasks": 3,
+        "expansionPrompt": "Define subtasks for library integration, camera permissions handling, and NDC lookup implementation.",
+        "updatedAt": "2025-11-11T22:19:47.760Z"
+      },
+      {
+        "id": "49",
+        "title": "Mobile Optimization",
+        "description": "Transform PharmaMax into a Progressive Web App with offline capability, camera access for scanning, and touch-optimized interfaces.",
+        "details": "Add service worker with SvelteKit for offline support. Create manifest.json with PWA metadata. Implement cache-first strategy for static assets. Optimize touch targets and add swipe gestures for navigation.",
+        "testStrategy": "Check that the app is installable on mobile devices, core features work offline, and UI elements are properly sized for touch.",
+        "priority": "medium",
+        "dependencies": [
+          "48"
+        ],
+        "status": "done",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Implement Service Worker for Offline Support",
+            "description": "Create and configure a service worker using SvelteKit to enable offline capabilities for the PharmaMax app.",
+            "dependencies": [],
+            "details": "The service worker will handle caching of essential assets and manage fetch events to serve cached content when offline. It should be registered in the main application file and tested for proper functionality.",
+            "status": "done",
+            "testStrategy": null,
+            "parentId": "undefined",
+            "updatedAt": "2025-11-11T22:31:52.215Z"
+          },
+          {
+            "id": 2,
+            "title": "Create PWA Metadata with manifest.json",
+            "description": "Develop a manifest.json file containing all necessary metadata for the Progressive Web App.",
+            "dependencies": [],
+            "details": "The manifest.json should include the app's name, icons, start URL, display mode, and theme color. This file will be linked in the HTML to ensure proper recognition by browsers as a PWA.",
+            "status": "done",
+            "testStrategy": null,
+            "parentId": "undefined",
+            "updatedAt": "2025-11-11T22:30:50.125Z"
+          },
+          {
+            "id": 3,
+            "title": "Implement Cache-First Strategy for Assets",
+            "description": "Set up a cache-first strategy to optimize loading of static assets in the PharmaMax app.",
+            "dependencies": [
+              1
+            ],
+            "details": "Utilize the service worker to cache static assets on the first load and serve them from the cache on subsequent requests. This will improve load times and ensure availability when offline.",
+            "status": "done",
+            "testStrategy": null,
+            "parentId": "undefined",
+            "updatedAt": "2025-11-11T22:31:53.040Z"
+          },
+          {
+            "id": 4,
+            "title": "Optimize UI for Touch Interaction",
+            "description": "Enhance the user interface to ensure it is touch-optimized for mobile users.",
+            "dependencies": [],
+            "details": "Adjust touch targets to meet recommended sizes, implement swipe gestures for navigation, and ensure all UI elements are responsive and user-friendly on mobile devices.",
+            "status": "done",
+            "testStrategy": null,
+            "parentId": "undefined",
+            "updatedAt": "2025-11-11T22:32:53.652Z"
+          }
+        ],
+        "complexity": 6,
+        "recommendedSubtasks": 4,
+        "expansionPrompt": "Create subtasks for service worker implementation, PWA metadata setup, caching strategy, and UI optimization.",
+        "updatedAt": "2025-11-11T22:32:53.652Z"
+      },
+      {
+        "id": "50",
+        "title": "Patient Profile System",
+        "description": "Store and manage patient information including allergies, insurance, medication history, and refill tracking.",
+        "details": "Create patient data model with fields: name, DOB, allergies, insurance. Store patient-prescription relationships in the database. Implement allergy checking against the drug database.",
+        "testStrategy": "Verify that patient profiles are stored and retrievable, medication history is linked to patients, and allergy warnings are triggered appropriately.",
+        "priority": "medium",
+        "dependencies": [
+          "49"
+        ],
+        "status": "done",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Create Patient Data Model",
+            "description": "Develop a data model for storing patient information including fields for name, date of birth, allergies, and insurance details.",
+            "dependencies": [],
+            "details": "The data model should include appropriate data types for each field, ensuring compliance with health regulations. Use a relational database structure to facilitate easy access and updates.",
+            "status": "done",
+            "testStrategy": null,
+            "parentId": "undefined",
+            "updatedAt": "2025-11-11T22:37:21.844Z"
+          },
+          {
+            "id": 2,
+            "title": "Establish Patient-Prescription Relationships",
+            "description": "Implement the database relationships to link patients with their prescriptions, ensuring that each prescription is associated with the correct patient.",
+            "dependencies": [
+              1
+            ],
+            "details": "Create foreign key relationships in the database schema to connect patient records with their corresponding prescriptions. Ensure that the relationships support efficient querying and data integrity.",
+            "status": "done",
+            "testStrategy": null,
+            "parentId": "undefined",
+            "updatedAt": "2025-11-11T22:37:22.814Z"
+          },
+          {
+            "id": 3,
+            "title": "Implement Allergy Checking Mechanism",
+            "description": "Develop a system to check patient allergies against the drug database during prescription entry.",
+            "dependencies": [
+              1
+            ],
+            "details": "Integrate the allergy checking feature into the prescription entry workflow. This should involve querying the drug database to validate against the patient's recorded allergies and trigger alerts if there are any matches.",
+            "status": "done",
+            "testStrategy": null,
+            "parentId": "undefined",
+            "updatedAt": "2025-11-11T22:37:23.721Z"
+          },
+          {
+            "id": 4,
+            "title": "Test Patient Profile System Functionality",
+            "description": "Conduct comprehensive testing of the patient profile system to ensure all components work as intended.",
+            "dependencies": [
+              2,
+              3
+            ],
+            "details": "Testing should include verifying that patient profiles can be created, retrieved, and updated. Additionally, check that allergy warnings are triggered correctly during prescription entry.",
+            "status": "done",
+            "testStrategy": null,
+            "parentId": "undefined",
+            "updatedAt": "2025-11-11T22:37:20.904Z"
+          }
+        ],
+        "complexity": 7,
+        "recommendedSubtasks": 4,
+        "expansionPrompt": "Break down the task into subtasks for data model creation, database relationships, and allergy checking implementation.",
+        "updatedAt": "2025-11-11T22:37:23.721Z"
+      },
+      {
+        "id": "51",
+        "title": "Partial Fill Support",
+        "description": "Track partial fills, calculate remaining quantities, and generate proper documentation for split prescriptions.",
+        "details": "Add 'Partial Fill' toggle to prescription entry. Store partial fill records in prescription history. Calculate remaining quantity and display fill history table.",
+        "testStrategy": "Ensure accurate tracking of partial fills, remaining quantity calculations, and fill history visibility.",
+        "priority": "medium",
+        "dependencies": [
+          "50"
+        ],
+        "status": "done",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Implement Partial Fill Toggle in UI",
+            "description": "Add a toggle switch for 'Partial Fill' in the prescription entry form to allow users to indicate if a prescription is partially filled.",
+            "dependencies": [],
+            "details": "The toggle should be visually distinct and easily accessible within the prescription entry form. It should also trigger appropriate backend processes when toggled.\n<info added on 2025-11-11T22:44:56.177Z>\nAdded a partial fill toggle checkbox to the prescription form in +page.svelte after the refills field. The toggle shows/hides a quantity input for specifying the amount to dispense now. It includes validation and clear user guidance about partial fill functionality.\n</info added on 2025-11-11T22:44:56.177Z>",
+            "status": "done",
+            "testStrategy": null,
+            "parentId": "undefined",
+            "updatedAt": "2025-11-11T22:45:25.938Z"
+          },
+          {
+            "id": 2,
+            "title": "Store Partial Fill Records in Prescription History",
+            "description": "Develop functionality to save partial fill records in the prescription history database for tracking purposes.",
+            "dependencies": [
+              1
+            ],
+            "details": "Ensure that each partial fill entry is linked to the corresponding prescription and includes details such as quantity filled, date, and any notes. This will require updates to the database schema.\n<info added on 2025-11-11T22:45:07.421Z>\nExtended MedicationHistoryEntry interface in patientStore.ts to include partial fill fields: isPartialFill, partialFillNumber, totalQuantityPrescribed, quantityDispensed, quantityRemaining, parentPrescriptionId, and partialFillHistory array. Added helper methods: addPartialFill(), getPartialFillHistory(), and calculateRemainingQuantity(). Updated prescription submission in +page.svelte to save partial fill data to patient history.\n</info added on 2025-11-11T22:45:07.421Z>",
+            "status": "done",
+            "testStrategy": null,
+            "parentId": "undefined",
+            "updatedAt": "2025-11-11T22:45:26.718Z"
+          },
+          {
+            "id": 3,
+            "title": "Calculate Remaining Quantity for Partial Fills",
+            "description": "Implement logic to calculate and display the remaining quantity of medication after a partial fill is recorded.",
+            "dependencies": [
+              2
+            ],
+            "details": "The calculation should take into account the total prescribed quantity and any previous fills. The remaining quantity should be displayed in the fill history table for user reference.\n<info added on 2025-11-11T22:45:18.448Z>\nCompleted the implementation of the PartialFillHistory.svelte component to display fill history in a table format, including fill number, date, quantity dispensed, remaining quantity, and notes. The component also shows a summary with total prescribed and remaining amounts, includes alerts for incomplete fills, and displays a completion message. Updated ResultsDisplay.svelte to accept isPartialFill and partialQuantity props, which now show a prominent partial fill notification banner with a quantity breakdown and regulatory guidance. The component is located at src/lib/components/PartialFillHistory.svelte.\n</info added on 2025-11-11T22:45:18.448Z>",
+            "status": "done",
+            "testStrategy": null,
+            "parentId": "undefined",
+            "updatedAt": "2025-11-11T22:45:27.506Z"
+          }
+        ],
+        "complexity": 5,
+        "recommendedSubtasks": 3,
+        "expansionPrompt": "Identify subtasks for UI toggle implementation, record storage, and quantity calculation logic.",
+        "updatedAt": "2025-11-11T22:45:27.506Z"
+      },
+      {
+        "id": "52",
+        "title": "Prescription Label Printing",
+        "description": "Generate pharmacy-compliant prescription labels with all required information, barcodes, and warnings for standard label printers.",
+        "details": "Create label template component with proper dimensions. Use browser print API with @media print CSS. Generate barcode using JsBarcode or similar library.",
+        "testStrategy": "Verify that labels print correctly on standard label printers and all required pharmacy information is included.",
+        "priority": "medium",
+        "dependencies": [
+          "51"
+        ],
+        "status": "done",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Create Label Template Component",
+            "description": "Design and implement a label template component that adheres to pharmacy standards, ensuring proper dimensions and layout for printing.",
+            "dependencies": [],
+            "details": "The label template should include all necessary fields such as drug name, dosage, and warnings. Use CSS for styling and ensure it is responsive for print media.\n<info added on 2025-11-11T22:48:18.663Z>\nEnhanced the existing PrescriptionLabel.svelte component with a pharmacy-compliant 4x6 inch layout. Added support for partial fills with a highlighted warning section, controlled substance badges with DEA schedule, expiration date calculation (1 year from fill), and a pharmacist signature line. The component includes proper borders, formatting, and regulatory warnings.\n</info added on 2025-11-11T22:48:18.663Z>",
+            "status": "done",
+            "testStrategy": null,
+            "parentId": "undefined",
+            "updatedAt": "2025-11-11T22:48:46.263Z"
+          },
+          {
+            "id": 2,
+            "title": "Integrate Browser Print API",
+            "description": "Implement the browser print API to enable printing functionality for the generated prescription labels.",
+            "dependencies": [
+              1
+            ],
+            "details": "Utilize the @media print CSS to format the label correctly for printing. Ensure that the print dialog opens with the correct settings for standard label printers.\n<info added on 2025-11-11T22:48:29.249Z>\nCompleted integration of the browser print API with @media print CSS rules in PrescriptionLabel.svelte:313-350. The CSS effectively hides all page elements except the label during print, positions the label at the page origin, and ensures black text on a white background for optimal print quality. Printing is triggered via window.print() on button click (line 161).\n</info added on 2025-11-11T22:48:29.249Z>",
+            "status": "done",
+            "testStrategy": null,
+            "parentId": "undefined",
+            "updatedAt": "2025-11-11T22:48:47.040Z"
+          },
+          {
+            "id": 3,
+            "title": "Generate Barcodes for Labels",
+            "description": "Integrate a barcode generation library to create scannable barcodes for each prescription label.",
+            "dependencies": [
+              1
+            ],
+            "details": "Use JsBarcode or a similar library to generate barcodes based on prescription data. Ensure that the barcodes are correctly sized and positioned on the label template.\n<info added on 2025-11-11T22:48:40.358Z>\nBarcode generation has been completed using the JsBarcode library, producing CODE128 barcodes from Rx numbers with configurable dimensions (width: 2, height: 50). Additionally, QR code generation has been implemented using the qrcode library, which contains prescription data in JSON format for mobile scanning. Both barcodes and QR codes are rendered on canvas elements and displayed at the bottom of the label.\n</info added on 2025-11-11T22:48:40.358Z>",
+            "status": "done",
+            "testStrategy": null,
+            "parentId": "undefined",
+            "updatedAt": "2025-11-11T22:48:47.973Z"
+          }
+        ],
+        "complexity": 5,
+        "recommendedSubtasks": 3,
+        "expansionPrompt": "Outline subtasks for label template creation, print API integration, and barcode generation.",
+        "updatedAt": "2025-11-11T22:48:47.973Z"
+      },
+      {
+        "id": "53",
+        "title": "Insurance Formulary Integration",
+        "description": "Check drug coverage status for major insurance plans, show prior authorization requirements, and suggest covered alternatives.",
+        "details": "Integrate with formulary API. Add insurance selection dropdown to prescription entry. Query formulary for drug coverage status.",
+        "testStrategy": "Ensure coverage checks for top insurance plans are functional and coverage status is displayed clearly.",
+        "priority": "medium",
+        "dependencies": [
+          "52"
+        ],
+        "status": "done",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Integrate with Formulary API",
+            "description": "Set up the connection to the formulary API to retrieve drug coverage information.",
+            "dependencies": [],
+            "details": "Implement the API integration using RESTful principles. Ensure that the API keys and endpoints are correctly configured. Handle authentication and error responses appropriately.\n<info added on 2025-11-11T22:54:44.535Z>\nCreated mock formulary database in src/lib/data/formularyData.ts with interfaces for FormularyDrugInfo and InsurancePlan. Implemented FORMULARY_DATABASE with coverage data for UnitedHealthcare, Blue Cross, Medicare Part D, Medicaid, and No Insurance options. Includes tier information, copays, prior authorization requirements, quantity limits, and step therapy flags for common drugs like Lisinopril, Metformin, Atorvastatin, Eliquis, and Humira. Also created helper functions checkFormularyCoverage() and getCoverageSummary() for querying coverage data.\n</info added on 2025-11-11T22:54:44.535Z>",
+            "status": "done",
+            "testStrategy": null,
+            "parentId": "undefined",
+            "updatedAt": "2025-11-11T22:55:16.982Z"
+          },
+          {
+            "id": 2,
+            "title": "Create Insurance Selection Dropdown",
+            "description": "Develop a user interface component for selecting insurance plans during prescription entry.",
+            "dependencies": [],
+            "details": "Utilize a dropdown component to allow users to select from a list of major insurance plans. Ensure that the dropdown is responsive and integrates seamlessly with the prescription entry form.\n<info added on 2025-11-11T22:54:54.101Z>\nCompleted the integration of the insurance selection dropdown in PatientProfileManager.svelte (lines 347-365). Replaced the text input with a dropdown that imports INSURANCE_PLANS from formularyData.ts, displaying all available plans categorized by type (Commercial, Medicare, Medicaid, Government). Added helper text to indicate that the selected plan will be used for formulary checking. The insurance plan ID is now stored in the patient profile's insuranceProvider field for use in coverage queries.\n</info added on 2025-11-11T22:54:54.101Z>",
+            "status": "done",
+            "testStrategy": null,
+            "parentId": "undefined",
+            "updatedAt": "2025-11-11T22:55:18.012Z"
+          },
+          {
+            "id": 3,
+            "title": "Query Formulary for Drug Coverage Status",
+            "description": "Implement functionality to query the formulary API for the selected drug's coverage status based on the chosen insurance plan.",
+            "dependencies": [
+              1
+            ],
+            "details": "Create a function that takes the selected insurance plan and drug information, queries the formulary API, and returns the coverage status. Ensure that the results are displayed clearly to the user.\n<info added on 2025-11-11T22:55:10.491Z>\nCompleted the FormularyChecker.svelte component (src/lib/components/FormularyChecker.svelte) that displays comprehensive coverage information including tier, copay, prior authorization requirements, quantity limits, and step therapy restrictions. The component accepts rxcui, drugName, and insurancePlanId props. Integrated it into ResultsDisplay.svelte (lines 519-524) for automatic coverage checks when a patient has insurance. Updated +page.svelte (line 530) to pass selectedPatient.insuranceProvider as patientInsurancePlanId prop. The full workflow is now: patient selects insurance -> prescription entered -> automatic formulary check displayed.\n</info added on 2025-11-11T22:55:10.491Z>",
+            "status": "done",
+            "testStrategy": null,
+            "parentId": "undefined",
+            "updatedAt": "2025-11-11T22:55:19.236Z"
+          }
+        ],
+        "complexity": 6,
+        "recommendedSubtasks": 3,
+        "expansionPrompt": "Define subtasks for API integration, insurance selection UI, and coverage status querying.",
+        "updatedAt": "2025-11-11T22:55:19.236Z"
+      },
+      {
+        "id": "54",
+        "title": "Export and Integration Features",
+        "description": "Enable data export to CSV/Excel, integration with pharmacy management systems, and HL7 FHIR compatibility for EHR systems.",
+        "details": "Create CSV export utility using Papa Parse library. Implement FHIR MedicationRequest builder following R4 spec. Create RESTful API endpoints with authentication.",
+        "testStrategy": "Verify that CSV/Excel exports are functional, FHIR resources validate against spec, and API endpoints are secured.",
+        "priority": "medium",
+        "dependencies": [
+          "53"
+        ],
+        "status": "done",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Create CSV Export Utility",
+            "description": "Develop a utility to export data in CSV format using the Papa Parse library.",
+            "dependencies": [],
+            "details": "Utilize the Papa Parse library to create a function that converts data into CSV format. Ensure that the exported CSV meets the required specifications for data structure and content.",
+            "status": "done",
+            "testStrategy": null,
+            "parentId": "undefined",
+            "updatedAt": "2025-11-11T23:18:21.062Z"
+          },
+          {
+            "id": 2,
+            "title": "Implement FHIR MedicationRequest Builder",
+            "description": "Build a FHIR MedicationRequest resource following the R4 specification.",
+            "dependencies": [],
+            "details": "Create a builder function that constructs a MedicationRequest resource according to the HL7 FHIR R4 specification. Validate the output against the FHIR schema to ensure compliance.",
+            "status": "done",
+            "testStrategy": null,
+            "parentId": "undefined",
+            "updatedAt": "2025-11-11T23:18:21.882Z"
+          },
+          {
+            "id": 3,
+            "title": "Create RESTful API Endpoints",
+            "description": "Develop secure RESTful API endpoints for data access and manipulation.",
+            "dependencies": [],
+            "details": "Implement RESTful API endpoints with proper authentication mechanisms. Ensure that endpoints are secure and follow best practices for REST API design.",
+            "status": "done",
+            "testStrategy": null,
+            "parentId": "undefined",
+            "updatedAt": "2025-11-11T23:19:30.044Z"
+          },
+          {
+            "id": 4,
+            "title": "Test Export and Integration Features",
+            "description": "Conduct testing for CSV export, FHIR resource, and API endpoints.",
+            "dependencies": [
+              1,
+              2,
+              3
+            ],
+            "details": "Verify that the CSV export utility works as expected, the FHIR MedicationRequest resource is valid, and the API endpoints are secure and functional. Document any issues found during testing.",
+            "status": "done",
+            "testStrategy": null,
+            "parentId": "undefined",
+            "updatedAt": "2025-11-11T23:19:44.155Z"
+          }
+        ],
+        "complexity": 7,
+        "recommendedSubtasks": 4,
+        "expansionPrompt": "Break down the task into subtasks for CSV export utility, FHIR resource implementation, and API endpoint creation.",
+        "updatedAt": "2025-11-11T23:19:44.155Z"
       }
     ],
     "metadata": {
       "version": "1.0.0",
-      "lastModified": "2025-11-10T21:18:55.042Z",
-      "taskCount": 20,
-      "completedCount": 20,
+      "lastModified": "2025-11-11T23:33:27.038Z",
+      "taskCount": 54,
+      "completedCount": 54,
       "tags": [
         "master"
-      ],
-      "created": "2025-11-10T21:27:03.722Z",
-      "description": "Tasks for master context",
-      "updated": "2025-11-10T21:48:42.023Z"
+      ]
     }
   }
 }

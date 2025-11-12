@@ -1,0 +1,50 @@
+{
+  "name": "PharmaMax - Prescription Calculator",
+  "short_name": "PharmaMax",
+  "description": "Professional pharmacy prescription calculator with RxNorm integration, inventory management, and controlled substance tracking",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#10b981",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["medical", "health", "productivity"],
+  "screenshots": [
+    {
+      "src": "/screenshot-mobile.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "PharmaMax prescription calculator"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "New Prescription",
+      "short_name": "New Rx",
+      "description": "Calculate a new prescription",
+      "url": "/",
+      "icons": [
+        {
+          "src": "/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    }
+  ],
+  "prefer_related_applications": false
+}

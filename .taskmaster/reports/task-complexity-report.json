@@ -1,53 +1,93 @@
 {
 	"meta": {
-		"generatedAt": "2025-11-10T21:28:49.591Z",
-		"tasksAnalyzed": 5,
-		"totalTasks": 25,
-		"analysisCount": 5,
-		"thresholdScore": 7,
+		"generatedAt": "2025-11-11T21:48:01.417Z",
+		"tasksAnalyzed": 10,
+		"totalTasks": 54,
+		"analysisCount": 10,
+		"thresholdScore": 5,
 		"projectName": "Taskmaster",
-		"usedResearch": false
+		"usedResearch": true
 	},
 	"complexityAnalysis": [
 		{
-			"taskId": 21,
-			"taskTitle": "Add Prescription History Feature",
-			"complexityScore": 7,
-			"recommendedSubtasks": 5,
-			"expansionPrompt": "Break down the implementation of the localStorage-based prescription history feature into smaller tasks, including saving calculations, managing FIFO behavior, and creating the UI components.",
-			"reasoning": "This task involves multiple components, including localStorage management, UI development, and error handling. The complexity arises from ensuring data persistence, managing the entry limit, and providing a user-friendly interface."
-		},
-		{
-			"taskId": 22,
-			"taskTitle": "Simplified Drug Interaction Checker",
-			"complexityScore": 6,
+			"taskId": 45,
+			"taskTitle": "Controlled Substance Tracking",
+			"complexityScore": 8,
 			"recommendedSubtasks": 4,
-			"expansionPrompt": "Identify the steps needed to implement the drug interaction checker, including API integration, UI design, and testing for various drug pairs.",
-			"reasoning": "The task requires API integration and handling user input, which adds complexity. Additionally, ensuring accurate interaction analysis and displaying results effectively increases the implementation effort."
+			"expansionPrompt": "Break down the implementation into subtasks for DEA schedule mapping, UI badge display, validation rules, and documentation requirements.",
+			"reasoning": "This task involves multiple components including data mapping, UI changes, and complex validation rules. The integration of legal requirements adds to its complexity."
 		},
 		{
-			"taskId": 23,
-			"taskTitle": "Build Basic AI Chat Assistant Interface",
+			"taskId": 46,
+			"taskTitle": "Drug Safety Alerts System",
+			"complexityScore": 7,
+			"recommendedSubtasks": 3,
+			"expansionPrompt": "Identify subtasks for creating safety data files, implementing the safety checker API, and UI alert display.",
+			"reasoning": "This task builds on the previous one and requires comprehensive validation logic, making it moderately complex. The need for age-specific checks adds additional layers of complexity."
+		},
+		{
+			"taskId": 47,
+			"taskTitle": "Generic Substitution Engine",
+			"complexityScore": 6,
+			"recommendedSubtasks": 3,
+			"expansionPrompt": "Outline subtasks for API integration, cost database setup, and UI display of alternatives.",
+			"reasoning": "This task involves API integration and UI changes, which are moderately complex. The need for accurate cost calculations adds to the complexity."
+		},
+		{
+			"taskId": 48,
+			"taskTitle": "Barcode Scanner Integration",
 			"complexityScore": 5,
 			"recommendedSubtasks": 3,
-			"expansionPrompt": "Outline the necessary components and API interactions to create the AI chat assistant interface, focusing on user input handling and response display.",
-			"reasoning": "While the task is straightforward, it involves integrating with an AI API and ensuring accurate responses to user queries. The complexity is moderate due to the need for effective UI design and error handling."
+			"expansionPrompt": "Define subtasks for library integration, camera permissions handling, and NDC lookup implementation.",
+			"reasoning": "While this task involves technical integration, it is straightforward compared to others. The complexity lies in ensuring smooth user experience and accurate scanning."
 		},
 		{
-			"taskId": 24,
-			"taskTitle": "Simplified Batch Prescription Processing",
+			"taskId": 49,
+			"taskTitle": "Mobile Optimization",
 			"complexityScore": 6,
 			"recommendedSubtasks": 4,
-			"expansionPrompt": "Detail the steps for implementing the CSV upload and batch processing feature, including file handling, data processing, and error management.",
-			"reasoning": "This task involves file handling, basic data validation, and processing multiple prescriptions, which adds complexity. The need for error handling and user feedback further complicates the implementation."
+			"expansionPrompt": "Create subtasks for service worker implementation, PWA metadata setup, caching strategy, and UI optimization.",
+			"reasoning": "Transforming the application into a PWA involves several technical challenges, including offline capabilities and UI adjustments for mobile, contributing to its complexity."
 		},
 		{
-			"taskId": 25,
-			"taskTitle": "Simplified PostgreSQL Database Setup",
+			"taskId": 50,
+			"taskTitle": "Patient Profile System",
 			"complexityScore": 7,
-			"recommendedSubtasks": 5,
-			"expansionPrompt": "Break down the database setup into subtasks, including schema design, migration implementation, and connection configuration.",
-			"reasoning": "Setting up a database involves several technical challenges, including schema design, migration management, and ensuring proper connection pooling. The complexity is heightened by the need for a robust access layer."
+			"recommendedSubtasks": 4,
+			"expansionPrompt": "Break down the task into subtasks for data model creation, database relationships, and allergy checking implementation.",
+			"reasoning": "This task requires careful data modeling and integration with existing systems, which adds to its complexity. The need for compliance with health regulations also plays a role."
+		},
+		{
+			"taskId": 51,
+			"taskTitle": "Partial Fill Support",
+			"complexityScore": 5,
+			"recommendedSubtasks": 3,
+			"expansionPrompt": "Identify subtasks for UI toggle implementation, record storage, and quantity calculation logic.",
+			"reasoning": "This task is moderately complex as it involves UI changes and backend logic, but it is less challenging than others due to its focused scope."
+		},
+		{
+			"taskId": 52,
+			"taskTitle": "Prescription Label Printing",
+			"complexityScore": 5,
+			"recommendedSubtasks": 3,
+			"expansionPrompt": "Outline subtasks for label template creation, print API integration, and barcode generation.",
+			"reasoning": "This task involves straightforward implementation of printing functionality, but ensuring compliance with pharmacy standards adds some complexity."
+		},
+		{
+			"taskId": 53,
+			"taskTitle": "Insurance Formulary Integration",
+			"complexityScore": 6,
+			"recommendedSubtasks": 3,
+			"expansionPrompt": "Define subtasks for API integration, insurance selection UI, and coverage status querying.",
+			"reasoning": "Integrating with external APIs and ensuring accurate coverage checks adds complexity, but the task is manageable with clear requirements."
+		},
+		{
+			"taskId": 54,
+			"taskTitle": "Export and Integration Features",
+			"complexityScore": 7,
+			"recommendedSubtasks": 4,
+			"expansionPrompt": "Break down the task into subtasks for CSV export utility, FHIR resource implementation, and API endpoint creation.",
+			"reasoning": "This task involves multiple integrations and compliance with standards, making it complex. The need for secure API endpoints adds to the overall effort."
 		}
 	]
 }

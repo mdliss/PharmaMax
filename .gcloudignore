@@ -1,0 +1,12 @@
+.git
+.gitignore
+node_modules/
+.svelte-kit/
+build/
+.taskmaster/
+.claude/
+*.md
+SYNTHETIC_DATA_PROMPT.txt
+PERFORMANCE_REPORT.txt
+.env
+.env.local

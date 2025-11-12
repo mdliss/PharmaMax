@@ -1,0 +1,336 @@
+# High-Impact Features PRD for PharmaMax
+
+## Overview
+This document outlines 10 high-impact pharmacy features to enhance the PharmaMax prescription calculator with safety, efficiency, and compliance capabilities.
+
+---
+
+## Feature 1: Drug Safety Alerts System
+
+### Description
+Implement comprehensive drug safety checking with dose range validation, age-specific warnings, pregnancy categories, and organ function adjustments.
+
+### Requirements
+- Dose Range Checking: Validate prescribed doses against FDA max daily limits, warn if exceeding
+- Pediatric/Geriatric Warnings: Display age-specific dosing alerts based on patient age
+- Pregnancy/Lactation Categories: Show FDA pregnancy categories (A/B/C/D/X) and lactation safety
+- Renal/Hepatic Dosing: Flag medications requiring dose adjustment for kidney/liver dysfunction
+
+### Technical Approach
+- Create safety data JSON file with dose limits, pregnancy categories, and organ-specific flags
+- Add safety checker API endpoint that validates prescription against safety rules
+- Display prominent warning badges and alerts in UI
+- Support for age input (optional) to trigger pediatric/geriatric checks
+- Color-coded safety warnings (yellow=caution, red=critical)
+
+### Success Criteria
+- Dose limits checked for top 100 commonly prescribed drugs
+- Pregnancy categories displayed for all drugs with known classifications
+- Age-specific warnings appear when appropriate
+- Renal/hepatic flags visible for affected medications
+
+### Complexity Target: 6
+Break into subtasks: (1) Safety data structure, (2) Dose validation logic, (3) Age-based checks, (4) Pregnancy/lactation display, (5) Renal/hepatic flags, (6) UI warnings component
+
+---
+
+## Feature 2: Barcode Scanner Integration
+
+### Description
+Add NDC barcode scanning capability using device camera to quickly add inventory and reduce manual entry errors.
+
+### Requirements
+- Scan standard NDC barcodes from drug packaging
+- Auto-populate drug information from scanned NDC
+- Quick inventory quantity updates via scanning
+- Works on desktop (webcam) and mobile devices
+- Fallback to manual NDC entry if scanning unavailable
+
+### Technical Approach
+- Integrate QuaggaJS or ZXing barcode scanning library
+- Request camera permissions via browser API
+- Parse scanned NDC and lookup drug details via RxNorm API
+- Add "Scan Barcode" button to inventory and prescription entry flows
+- Store scanned NDC history for quick re-entry
+
+### Success Criteria
+- Successfully scan and decode NDC barcodes from drug bottles
+- Auto-populate prescription details from scanned NDC
+- Inventory updates complete in <5 seconds via scanning
+- Graceful fallback if camera unavailable
+
+### Complexity Target: 5
+Break into subtasks: (1) Camera access and permissions, (2) Barcode library integration, (3) NDC parsing logic, (4) Auto-population of drug data, (5) UI scanner component
+
+---
+
+## Feature 3: Prescription Label Printing
+
+### Description
+Generate pharmacy-compliant prescription labels with all required information, barcodes, and warnings for standard label printers.
+
+### Requirements
+- Generate labels with drug name, SIG, prescriber, patient, warnings
+- Include NDC barcode on label
+- Comply with pharmacy label requirements (size, font, required fields)
+- Print to standard 4x2 inch label printers
+- Support auxiliary labels (shake well, refrigerate, etc.)
+
+### Technical Approach
+- Create label template component with proper dimensions (4x2 inches @ 300dpi)
+- Use browser print API with @media print CSS
+- Generate barcode using JsBarcode or similar library
+- Include required fields: drug, strength, quantity, SIG, warnings, expiration, lot#
+- Provide PDF export option for labels
+
+### Success Criteria
+- Labels print correctly on standard label printers
+- All required pharmacy information included
+- Readable barcodes generated
+- Professional appearance matching commercial pharmacy labels
+
+### Complexity Target: 6
+Break into subtasks: (1) Label template design, (2) Required fields mapping, (3) Barcode generation, (4) Print CSS styling, (5) Auxiliary label selection, (6) PDF export option
+
+---
+
+## Feature 4: Generic Substitution Engine
+
+### Description
+Automatically suggest AB-rated generic alternatives with cost savings estimates and therapeutic equivalence indicators.
+
+### Requirements
+- Display AB-rated generic alternatives for brand-name drugs
+- Show estimated cost savings (percentage and dollar amount)
+- Indicate therapeutic equivalence ratings (AB, AB1, AB2, etc.)
+- Allow quick substitution with one-click swap
+- Note when "DAW" (Dispense As Written) applies
+
+### Technical Approach
+- Use RxNorm API to find generic equivalents via TTY filtering
+- Create cost database or API integration for pricing data
+- Display alternatives in expandable card below main results
+- Show substitution button that updates prescription with generic
+- Add DAW checkbox to prevent automatic substitution suggestions
+
+### Success Criteria
+- Generic alternatives displayed for brand-name drugs
+- Cost savings calculated and shown
+- Therapeutic equivalence rating visible
+- One-click substitution functionality works
+- DAW prevents substitution suggestions
+
+### Complexity Target: 5
+Break into subtasks: (1) Generic lookup via RxNorm, (2) Cost comparison logic, (3) Equivalence rating display, (4) Substitution button functionality, (5) DAW handling
+
+---
+
+## Feature 5: Controlled Substance Tracking
+
+### Description
+Add DEA schedule badges, quantity/refill restrictions, and enhanced documentation for controlled medications.
+
+### Requirements
+- Display DEA schedule badges (C-II, C-III, C-IV, C-V)
+- Enforce quantity limits for Schedule II (typically 30-day supply)
+- Show refill restrictions (C-II: no refills, C-III/IV: max 5 refills)
+- Require additional documentation fields for controlled substances
+- Warn if exceeding state/federal limits
+
+### Technical Approach
+- Create DEA schedule mapping data file for common controlled substances
+- Add schedule detection logic based on drug name/NDC
+- Display prominent schedule badge in UI
+- Add validation rules for quantity and refill limits
+- Show enhanced documentation requirements (prescriber DEA#, etc.)
+
+### Success Criteria
+- DEA schedule badges visible for controlled substances
+- Quantity limits enforced for Schedule II
+- Refill restrictions displayed
+- Additional documentation prompts appear
+- State/federal limit warnings shown
+
+### Complexity Target: 5
+Break into subtasks: (1) DEA schedule mapping data, (2) Schedule detection logic, (3) Badge UI component, (4) Quantity/refill validation, (5) Documentation requirements display
+
+---
+
+## Feature 6: Partial Fill Support
+
+### Description
+Track partial fills, calculate remaining quantities, and generate proper documentation for split prescriptions.
+
+### Requirements
+- Mark prescriptions as partial fills
+- Track dispensed quantity vs total prescribed
+- Calculate remaining quantity and when patient can return
+- Generate documentation showing partial fill history
+- Handle REMS (Risk Evaluation Mitigation Strategy) partial fills
+
+### Technical Approach
+- Add "Partial Fill" toggle to prescription entry
+- Store partial fill records in prescription history
+- Calculate remaining quantity: (total prescribed - sum of previous fills)
+- Display refill due date based on days supply of current fill
+- Show fill history table with dates, quantities, and remaining balance
+
+### Success Criteria
+- Partial fill tracking for individual prescriptions
+- Accurate remaining quantity calculations
+- Return date calculated correctly
+- Fill history visible and accurate
+- REMS partial fills handled appropriately
+
+### Complexity Target: 6
+Break into subtasks: (1) Partial fill data model, (2) Remaining quantity calculation, (3) Return date logic, (4) Fill history component, (5) REMS handling, (6) Documentation generation
+
+---
+
+## Feature 7: Insurance Formulary Integration
+
+### Description
+Check drug coverage status for major insurance plans, show prior authorization requirements, and suggest covered alternatives.
+
+### Requirements
+- Look up drug coverage for major insurance plans (Medicare, Medicaid, top commercial)
+- Display coverage status (covered, not covered, prior auth required)
+- Show tier level (Tier 1/2/3/4) and estimated copay
+- Suggest covered alternatives if drug not covered
+- Provide prior authorization form links when required
+
+### Technical Approach
+- Integrate with formulary API (FormularyBrowser, SureScripts, or create simplified dataset)
+- Add insurance selection dropdown to prescription entry
+- Query formulary for drug coverage status
+- Display coverage badge with tier and PA status
+- Suggest alternatives from same therapeutic class if not covered
+
+### Success Criteria
+- Coverage checks for top 5 insurance plans
+- Coverage status displayed clearly
+- Prior authorization indicators shown
+- Alternative suggestions when appropriate
+- Tier and copay estimates visible
+
+### Complexity Target: 6
+Break into subtasks: (1) Formulary data structure/API, (2) Insurance selection UI, (3) Coverage lookup logic, (4) Coverage status display, (5) PA indicators, (6) Alternative suggestions
+
+---
+
+## Feature 8: Mobile Optimization
+
+### Description
+Transform PharmaMax into a Progressive Web App with offline capability, camera access for scanning, and touch-optimized interfaces.
+
+### Requirements
+- PWA with service worker for offline functionality
+- Install to home screen capability
+- Camera access for barcode scanning on mobile
+- Touch-optimized UI components (larger buttons, swipe gestures)
+- Responsive design for all screen sizes
+- Offline data caching for prescription history
+
+### Technical Approach
+- Add service worker with SvelteKit for offline support
+- Create manifest.json with PWA metadata
+- Implement cache-first strategy for static assets
+- Optimize touch targets (min 44x44px per Apple HIG)
+- Add swipe gestures for navigation and actions
+- Use IndexedDB for offline data storage
+
+### Success Criteria
+- App installable on mobile devices
+- Core features work offline
+- Camera accessible for scanning
+- UI elements properly sized for touch
+- Responsive across all breakpoints
+- Data syncs when back online
+
+### Complexity Target: 6
+Break into subtasks: (1) Service worker setup, (2) PWA manifest, (3) Offline caching strategy, (4) Touch UI optimization, (5) Responsive design updates, (6) IndexedDB integration
+
+---
+
+## Feature 9: Patient Profile System
+
+### Description
+Store and manage patient information including allergies, insurance, medication history, and refill tracking.
+
+### Requirements
+- Patient profile creation with demographics (name, DOB, allergies, insurance)
+- Store patient medication history
+- Track refill due dates per patient
+- Allergy checking against prescribed medications
+- Patient search and quick selection
+- Export patient medication list
+
+### Technical Approach
+- Create patient data model with fields: name, DOB, allergies, insurance, contact info
+- Store patient-prescription relationships in database
+- Add patient selector component to prescription entry
+- Implement allergy checking against drug database
+- Calculate refill due dates based on days supply
+- Create patient profile view with medication list
+
+### Success Criteria
+- Patient profiles stored and retrievable
+- Medication history linked to patients
+- Refill dates calculated and tracked
+- Allergy warnings triggered appropriately
+- Patient search works efficiently
+- Medication list exportable (PDF/CSV)
+
+### Complexity Target: 6
+Break into subtasks: (1) Patient data model, (2) Patient CRUD operations, (3) Patient selector UI, (4) Allergy checking logic, (5) Refill date tracking, (6) Medication list export
+
+---
+
+## Feature 10: Export and Integration Features
+
+### Description
+Enable data export to CSV/Excel, integration with pharmacy management systems, and HL7 FHIR compatibility for EHR systems.
+
+### Requirements
+- Export prescription data to CSV/Excel formats
+- Generate reports (daily dispensing, inventory, controlled substances)
+- HL7 FHIR MedicationRequest resource generation
+- API endpoints for third-party integrations
+- Webhook support for real-time updates
+- Standard pharmacy data formats (NCPDP SCRIPT)
+
+### Technical Approach
+- Create CSV export utility using Papa Parse library
+- Excel export via SheetJS or similar
+- Implement FHIR MedicationRequest builder following R4 spec
+- Create RESTful API endpoints with authentication
+- Add webhook registration and event broadcasting
+- Support NCPDP SCRIPT XML format for pharmacy integrations
+
+### Success Criteria
+- CSV/Excel exports functional with all prescription data
+- FHIR resources validate against spec
+- API endpoints secured and documented
+- Webhooks fire on prescription events
+- NCPDP SCRIPT format generated correctly
+- Reports generate with accurate data
+
+### Complexity Target: 6
+Break into subtasks: (1) CSV/Excel export, (2) FHIR resource builder, (3) API endpoint creation, (4) Webhook system, (5) NCPDP SCRIPT format, (6) Report generation
+
+---
+
+## Implementation Priority
+All features designed for complexity < 7 with clear subtask breakdown for efficient implementation.
+
+Recommended order:
+1. Controlled Substance Tracking (high safety value, low complexity)
+2. Drug Safety Alerts (critical safety feature)
+3. Generic Substitution (high cost-savings value)
+4. Barcode Scanner (efficiency improvement)
+5. Mobile Optimization (broad user experience improvement)
+6. Patient Profile System (foundation for other features)
+7. Partial Fill Support (common workflow need)
+8. Prescription Label Printing (professional output)
+9. Insurance Formulary Integration (complex but high value)
+10. Export/Integration (enables enterprise adoption)
