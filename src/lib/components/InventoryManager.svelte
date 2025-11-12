@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { inventoryStore, inventoryStats, type InventoryItem } from '$lib/utils/inventoryStore';
 	import DrugAutocomplete from './DrugAutocomplete.svelte';
+	import BarcodeScanner from './BarcodeScanner.svelte';
 	import { onMount } from 'svelte';
 
 	let items: InventoryItem[] = [];
@@ -26,6 +27,9 @@
 	// Search
 	let searchQuery = '';
 	let filteredItems: InventoryItem[] = [];
+
+	// Barcode Scanner
+	let showScanner = false;
 
 	inventoryStore.subscribe(value => {
 		items = value;
@@ -128,6 +132,19 @@
 	function toggleManager() {
 		showManager = !showManager;
 	}
+
+	function handleScan(ndc: string) {
+		newItem.ndc = ndc;
+		showScanner = false;
+	}
+
+	function openScanner() {
+		showScanner = true;
+	}
+
+	function closeScanner() {
+		showScanner = false;
+	}
 </script>
 
 <div class="inventory-manager">
@@ -200,12 +217,26 @@
 							<label class="block text-sm font-semibold mb-2" style="color: var(--text-secondary);">
 								NDC Code *
 							</label>
-							<input
-								type="text"
-								bind:value={newItem.ndc}
-								placeholder="e.g., 12345-678-90"
-								class="input-text w-full px-4 py-2 rounded-lg transition-all"
-							/>
+							<div class="relative">
+								<input
+									type="text"
+									bind:value={newItem.ndc}
+									placeholder="e.g., 12345-678-90"
+									class="input-text w-full px-4 py-2 rounded-lg transition-all"
+									style="padding-right: 3rem;"
+								/>
+								<button
+									type="button"
+									on:click={openScanner}
+									class="absolute right-2 top-1/2 -translate-y-1/2 p-1.5 rounded-lg transition-colors hover:bg-opacity-10"
+									style="color: var(--accent);"
+									title="Scan NDC barcode"
+								>
+									<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z" />
+									</svg>
+								</button>
+							</div>
 						</div>
 
 						<div class="grid grid-cols-2 gap-4">
@@ -465,6 +496,11 @@
 				</div>
 			{/if}
 		</div>
+	{/if}
+
+	<!-- Barcode Scanner Modal -->
+	{#if showScanner}
+		<BarcodeScanner onScan={handleScan} onClose={closeScanner} />
 	{/if}
 </div>
 

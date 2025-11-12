@@ -1086,3 +1086,206 @@ svg, img {
 		padding: 1rem;
 	}
 }
+
+/* ============================================================================
+   PWA & TOUCH OPTIMIZATION
+   ============================================================================ */
+
+/* ===== Touch Target Sizing ===== */
+/* Ensure all interactive elements meet minimum 44x44px touch target size */
+button,
+a,
+input,
+select,
+textarea,
+[role="button"],
+[role="link"],
+.btn,
+.button {
+  min-height: 44px;
+  min-width: 44px;
+  padding: 0.75rem 1rem;
+}
+
+/* ===== Touch-Friendly Spacing ===== */
+@media (hover: none) and (pointer: coarse) {
+  /* Increase spacing between interactive elements on touch devices */
+  button + button,
+  .btn + .btn,
+  a + a {
+    margin-left: 0.75rem;
+  }
+
+  /* Larger tap targets for form controls */
+  input[type="checkbox"],
+  input[type="radio"] {
+    min-width: 24px;
+    min-height: 24px;
+  }
+
+  /* Increase padding for better touch experience */
+  .card,
+  .modal,
+  .dropdown-menu {
+    padding: 1.25rem;
+  }
+
+  /* Optimize font sizes for mobile readability */
+  body {
+    font-size: 16px; /* Prevents iOS zoom on input focus */
+  }
+
+  /* Larger form inputs */
+  input,
+  select,
+  textarea {
+    font-size: 16px; /* Prevents iOS zoom */
+    padding: 0.875rem 1rem;
+  }
+
+  /* Remove hover effects on touch devices */
+  .card-hover:hover,
+  .card:hover {
+    transform: none;
+    box-shadow: none;
+  }
+
+  /* Better touch feedback */
+  button:active,
+  .btn:active,
+  a:active {
+    transform: scale(0.98);
+    opacity: 0.9;
+  }
+}
+
+/* ===== Safe Area Support for Notched Devices ===== */
+@supports (padding: max(0px)) {
+  body {
+    padding-left: max(0px, env(safe-area-inset-left));
+    padding-right: max(0px, env(safe-area-inset-right));
+    padding-bottom: max(0px, env(safe-area-inset-bottom));
+  }
+
+  /* Apply safe area to fixed headers/footers */
+  header,
+  footer,
+  .fixed {
+    padding-left: max(1rem, env(safe-area-inset-left));
+    padding-right: max(1rem, env(safe-area-inset-right));
+  }
+}
+
+/* ===== Smooth Scrolling ===== */
+html {
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch; /* Momentum scrolling on iOS */
+}
+
+/* ===== Prevent Text Selection Issues on Touch ===== */
+@media (hover: none) and (pointer: coarse) {
+  /* Prevent accidental text selection while scrolling */
+  body {
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
+  /* Allow text selection in input fields and content areas */
+  input,
+  textarea,
+  [contenteditable="true"],
+  p,
+  span,
+  .selectable {
+    -webkit-user-select: text;
+    user-select: text;
+  }
+}
+
+/* ===== Pull-to-Refresh Optimization ===== */
+body {
+  overscroll-behavior-y: contain;
+}
+
+/* ===== Touch Ripple Effect (Optional Enhancement) ===== */
+@media (hover: none) and (pointer: coarse) {
+  button,
+  .btn {
+    position: relative;
+    overflow: hidden;
+  }
+
+  button::after,
+  .btn::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.3s, height 0.3s;
+  }
+
+  button:active::after,
+  .btn:active::after {
+    width: 200px;
+    height: 200px;
+  }
+}
+
+/* ===== Mobile-Specific Utilities ===== */
+@media (max-width: 768px) {
+  /* Stack columns vertically on mobile */
+  .mobile-stack {
+    flex-direction: column;
+  }
+
+  /* Full width on mobile */
+  .mobile-full {
+    width: 100%;
+  }
+
+  /* Hide on mobile */
+  .mobile-hide {
+    display: none;
+  }
+
+  /* Reduce padding on mobile */
+  .mobile-compact {
+    padding: 0.5rem !important;
+  }
+
+  /* Larger text on mobile for readability */
+  h1 {
+    font-size: 1.75rem;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+
+  h3 {
+    font-size: 1.25rem;
+  }
+}
+
+/* ===== Landscape Mode Optimization ===== */
+@media (orientation: landscape) and (max-height: 500px) {
+  /* Reduce vertical spacing in landscape */
+  .space-y-6 > * + * {
+    margin-top: 0.75rem;
+  }
+
+  .space-y-4 > * + * {
+    margin-top: 0.5rem;
+  }
+
+  /* Compact padding in landscape */
+  .card,
+  .modal {
+    padding: 0.75rem;
+  }
+}

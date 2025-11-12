@@ -2,7 +2,7 @@
 	import { lowStockItems, outOfStockItems, inventoryStats } from '$lib/utils/inventoryStore';
 	import { slide } from 'svelte/transition';
 
-	let showAlerts = true;
+	let showAlerts = false;
 
 	function toggleAlerts() {
 		showAlerts = !showAlerts;
@@ -10,7 +10,7 @@
 </script>
 
 {#if $outOfStockItems.length > 0 || $lowStockItems.length > 0}
-	<div class="inventory-alerts mb-6">
+	<div class="inventory-alerts mt-6 mb-6">
 		<button
 			type="button"
 			on:click={toggleAlerts}

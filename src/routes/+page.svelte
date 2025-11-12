@@ -7,18 +7,27 @@
 	import SatisfactionWidget from '$lib/components/SatisfactionWidget.svelte';
 	import DrugAutocomplete from '$lib/components/DrugAutocomplete.svelte';
 	import SIGTemplatePicker from '$lib/components/SIGTemplatePicker.svelte';
+	import SIGPreview from '$lib/components/SIGPreview.svelte';
 	import KeyboardShortcutsHelp from '$lib/components/KeyboardShortcutsHelp.svelte';
 	import ThemeToggle from '$lib/components/ThemeToggle.svelte';
 	import MultiDrugManager from '$lib/components/MultiDrugManager.svelte';
 	import InventoryManager from '$lib/components/InventoryManager.svelte';
 	import InventoryAlerts from '$lib/components/InventoryAlerts.svelte';
+	import ControlledSubstanceValidator from '$lib/components/ControlledSubstanceValidator.svelte';
+	import PatientProfileManager from '$lib/components/PatientProfileManager.svelte';
+	import PatientAllergyAlert from '$lib/components/PatientAllergyAlert.svelte';
+	import DemoDataManager from '$lib/components/DemoDataManager.svelte';
 	import { HistoryStore } from '$lib/utils/historyStore';
+	import { PatientStore, type PatientProfile } from '$lib/utils/patientStore';
 	import { getKeyboardManager } from '$lib/utils/keyboardShortcuts';
+	import { smartDefaults } from '$lib/utils/smartDefaults';
 
-	let activeTab: 'single' | 'batch' | 'multi' | 'inventory' = 'single';
+	let activeTab: 'single' | 'batch' | 'multi' | 'inventory' | 'patients' = 'single';
+	let selectedPatient: PatientProfile | null = null;
 	let drugInput = '';
 	let sig = '';
 	let daysSupply = 30;
+	let refills = 0;
 	let loading = false;
 	let error = '';
 	let result: any = null;
@@ -26,6 +35,20 @@
 	let showKeyboardHelp = false;
 	let formElement: HTMLFormElement;
 	let historySidebarToggle: HTMLElement;
+	let drugInputElement: HTMLInputElement;
+	let hasValidationErrors = false;
+	let validationErrorMessages: string[] = [];
+	let isPartialFill = false;
+	let partialQuantity: number | null = null;
+
+	// Auto-fill days supply based on drug history
+	$: if (drugInput && drugInput.length > 3) {
+		const rememberedDays = smartDefaults.getDaysSupply(drugInput);
+		if (rememberedDays && rememberedDays !== daysSupply) {
+			// Only update if different and user hasn't manually changed it recently
+			daysSupply = rememberedDays;
+		}
+	}
 
 	async function handleSubmit(event: Event) {
 		event.preventDefault();
@@ -74,6 +97,38 @@
 				if (!saved) {
 					historySaveError = 'Unable to save to history. Storage may be full.';
 				}
+
+				// Remember days supply for this drug
+				smartDefaults.rememberDaysSupply(normalizeData.drugName, daysSupply);
+
+				// Add to patient's medication history if a patient is selected
+				if (selectedPatient) {
+					const totalQuantity = calculateData.totalQuantity || 0;
+					const dispensedQuantity = isPartialFill && partialQuantity ? partialQuantity : totalQuantity;
+
+					PatientStore.addMedication(selectedPatient.id, {
+						drugName: normalizeData.drugName,
+						rxcui: normalizeData.rxcui,
+						sig: sig,
+						daysSupply: daysSupply,
+						quantity: totalQuantity,
+						prescribedDate: new Date().toISOString(),
+						filledDate: new Date().toISOString(),
+						refillsRemaining: refills,
+						isPartialFill: isPartialFill,
+						totalQuantityPrescribed: isPartialFill ? totalQuantity : undefined,
+						quantityDispensed: isPartialFill ? dispensedQuantity : undefined,
+						quantityRemaining: isPartialFill ? totalQuantity - dispensedQuantity : undefined,
+						partialFillNumber: isPartialFill ? 1 : undefined,
+						partialFillHistory: isPartialFill ? [{
+							fillNumber: 1,
+							fillDate: new Date().toISOString(),
+							quantityDispensed: dispensedQuantity,
+							quantityRemaining: totalQuantity - dispensedQuantity,
+							notes: `Initial partial fill of ${dispensedQuantity} out of ${totalQuantity} total`
+						}] : undefined
+					});
+				}
 			}
 		} catch (e: any) {
 			error = e.message;
@@ -87,6 +142,29 @@
 		sig = reloadSig;
 		daysSupply = reloadDaysSupply;
 		// Scroll to top to show the form
+		window.scrollTo({ top: 0, behavior: 'smooth' });
+	}
+
+	function resetForm() {
+		// Clear form fields
+		drugInput = '';
+		sig = '';
+		daysSupply = 30;
+		refills = 0;
+		result = null;
+		error = '';
+		historySaveError = '';
+		isPartialFill = false;
+		partialQuantity = null;
+
+		// Focus on drug input
+		setTimeout(() => {
+			if (drugInputElement) {
+				drugInputElement.focus();
+			}
+		}, 100);
+
+		// Scroll to top
 		window.scrollTo({ top: 0, behavior: 'smooth' });
 	}
 
@@ -126,6 +204,16 @@
 			category: 'Help',
 			action: () => {
 				showKeyboardHelp = true;
+			}
+		});
+
+		manager.register('reset-form', {
+			key: 'r',
+			ctrl: true,
+			description: 'Reset form (Calculate Another)',
+			category: 'Form Actions',
+			action: () => {
+				resetForm();
 			}
 		});
 
@@ -192,6 +280,15 @@
 				>
 					Inventory
 				</button>
+				<button
+					on:click={() => activeTab = 'patients'}
+					class="flex-1 px-6 py-4 text-sm font-medium transition"
+					style="{activeTab === 'patients'
+						? `background-color: var(--card-bg); color: var(--accent); border-bottom: 2px solid var(--accent);`
+						: `background-color: var(--background); color: var(--text-secondary);`}"
+				>
+					Patients
+				</button>
 			</div>
 		</div>
 
@@ -215,16 +312,42 @@
 			</h2>
 
 			<form bind:this={formElement} on:submit={handleSubmit} class="space-y-6">
+				<!-- Selected Patient Display -->
+				{#if selectedPatient}
+					<div class="p-4 rounded-lg mb-4" style="background-color: var(--success-bg); border: 1px solid var(--success);">
+						<div class="flex justify-between items-center">
+							<div>
+								<span class="text-sm" style="color: var(--text-secondary);">Selected Patient:</span>
+								<span class="font-semibold ml-2" style="color: var(--foreground);">{selectedPatient.name}</span>
+								<span class="text-sm ml-2" style="color: var(--text-muted);">
+									(DOB: {new Date(selectedPatient.dateOfBirth).toLocaleDateString()})
+								</span>
+							</div>
+							<button
+								type="button"
+								on:click={() => selectedPatient = null}
+								class="text-sm px-3 py-1 rounded"
+								style="color: var(--text-muted); hover:color: var(--foreground);"
+							>
+								Clear
+							</button>
+						</div>
+					</div>
+				{/if}
+
 				<!-- Drug Name/NDC Input with Autocomplete -->
 				<div>
 					<label for="drugInput" class="block text-sm font-medium mb-2" style="color: var(--text-secondary);">
 						Drug Name or NDC
 					</label>
-					<DrugAutocomplete bind:value={drugInput} required />
+					<DrugAutocomplete bind:value={drugInput} bind:inputElement={drugInputElement} required />
 					<p class="mt-1 text-sm" style="color: var(--text-muted);">
 						Enter a drug name or 11-digit NDC code. Start typing to see suggestions.
 					</p>
 				</div>
+
+				<!-- Allergy Alert -->
+				<PatientAllergyAlert patient={selectedPatient} drugName={drugInput} />
 
 				<!-- SIG Input with Templates -->
 				<div>
@@ -243,6 +366,9 @@
 						placeholder="e.g., Take 2 tablets by mouth twice daily"
 						class="input-text w-full px-4 py-3 rounded-lg transition"
 					/>
+
+					<!-- Real-Time SIG Preview -->
+					<SIGPreview sigValue={sig} daysSupply={daysSupply} />
 
 					<div class="mt-2 p-3 rounded" style="background-color: rgba(16, 185, 129, 0.05); border: 1px solid rgba(16, 185, 129, 0.2);">
 						<p class="text-xs font-medium mb-1" style="color: var(--accent);">Quick tip:</p>
@@ -269,11 +395,85 @@
 					<p class="mt-1 text-sm" style="color: var(--text-muted);">Number of days the prescription should last</p>
 				</div>
 
+				<!-- Refills Input -->
+				<div>
+					<label for="refills" class="block text-sm font-medium mb-2" style="color: var(--text-secondary);">
+						Refills
+					</label>
+					<input
+						id="refills"
+						type="number"
+						bind:value={refills}
+						required
+						min="0"
+						max="12"
+						class="input-text w-full px-4 py-3 rounded-lg transition"
+					/>
+					<p class="mt-1 text-sm" style="color: var(--text-muted);">Number of refills allowed (subject to DEA limits for controlled substances)</p>
+				</div>
+
+				<!-- Partial Fill Toggle -->
+				<div class="p-4 rounded-lg" style="background-color: var(--background); border: 1px solid var(--border-color);">
+					<div class="flex items-start">
+						<div class="flex items-center h-5">
+							<input
+								id="partialFill"
+								type="checkbox"
+								bind:checked={isPartialFill}
+								class="h-4 w-4 rounded transition"
+								style="accent-color: var(--accent);"
+							/>
+						</div>
+						<div class="ml-3">
+							<label for="partialFill" class="font-medium" style="color: var(--foreground);">
+								Partial Fill
+							</label>
+							<p class="text-sm" style="color: var(--text-muted);">
+								Enable to dispense only part of the total quantity now, with remaining quantity to be filled later
+							</p>
+						</div>
+					</div>
+
+					{#if isPartialFill}
+						<div class="mt-4 transition-all">
+							<label for="partialQuantity" class="block text-sm font-medium mb-2" style="color: var(--text-secondary);">
+								Quantity to Dispense Now
+							</label>
+							<input
+								id="partialQuantity"
+								type="number"
+								bind:value={partialQuantity}
+								required={isPartialFill}
+								min="1"
+								placeholder="Enter quantity to dispense"
+								class="input-text w-full px-4 py-3 rounded-lg transition"
+							/>
+							<p class="mt-1 text-sm" style="color: var(--text-muted);">
+								This amount will be dispensed now. Remaining quantity will be tracked for future fills.
+							</p>
+						</div>
+					{/if}
+				</div>
+
+				<!-- Controlled Substance Validation -->
+				<ControlledSubstanceValidator
+					drugName={drugInput}
+					daysSupply={daysSupply}
+					refills={refills}
+					onValidationChange={(isValid, errors) => {
+						hasValidationErrors = !isValid;
+						validationErrorMessages = errors;
+					}}
+				/>
+
 				<!-- Submit Button -->
 				<button
 					type="submit"
-					disabled={loading}
+					disabled={loading || hasValidationErrors}
 					class="btn-primary w-full font-semibold py-3 px-6 rounded-lg transition duration-200 flex items-center justify-center"
+					class:opacity-50={hasValidationErrors}
+					class:cursor-not-allowed={hasValidationErrors}
+					title={hasValidationErrors ? 'Please fix validation errors before submitting' : ''}
 				>
 					{#if loading}
 						<svg class="animate-spin -ml-1 mr-3 h-5 w-5" style="color: var(--background);" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -324,7 +524,27 @@
 			<!-- Results Display -->
 			{#if result}
 				<div class="mt-6">
-					<ResultsDisplay {result} />
+					<ResultsDisplay
+						{result}
+						{isPartialFill}
+						{partialQuantity}
+						patientInsurancePlanId={selectedPatient?.insuranceProvider || null}
+					/>
+
+					<!-- Calculate Another Button -->
+					<div class="mt-6 flex justify-center">
+						<button
+							type="button"
+							on:click={resetForm}
+							class="btn-primary px-8 py-3 rounded-lg transition-all duration-200 flex items-center gap-2 shadow-lg hover:shadow-xl"
+							title="Reset form (Ctrl+R)"
+						>
+							<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+							</svg>
+							Calculate Another
+						</button>
+					</div>
 				</div>
 			{/if}
 		</div>
@@ -340,6 +560,20 @@
 		<!-- Inventory Manager -->
 		<div class="rounded-lg shadow-lg p-8 mb-8 drop-in-3" style="background-color: var(--card-bg); border: 1px solid var(--border-color);">
 			<InventoryManager />
+		</div>
+		{:else if activeTab === 'patients'}
+		<!-- Patient Profile Manager -->
+		<div class="rounded-lg shadow-lg p-8 mb-8 drop-in-3" style="background-color: var(--card-bg); border: 1px solid var(--border-color);">
+			<PatientProfileManager
+				bind:selectedPatient={selectedPatient}
+				onPatientSelect={(patient) => {
+					selectedPatient = patient;
+					// Switch to single prescription tab when a patient is selected
+					if (patient) {
+						activeTab = 'single';
+					}
+				}}
+			/>
 		</div>
 		{/if}
 	</div>
@@ -374,4 +608,7 @@
 
 	<!-- Keyboard Shortcuts Help Modal -->
 	<KeyboardShortcutsHelp show={showKeyboardHelp} onClose={() => showKeyboardHelp = false} />
+
+	<!-- Demo Data Manager -->
+	<DemoDataManager />
 </div>

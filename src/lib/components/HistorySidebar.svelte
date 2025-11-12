@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { HistoryStore, type HistoryEntry } from '$lib/utils/historyStore';
+	import { exportHistoryToCSV } from '$lib/utils/exportUtils';
 	import { onMount } from 'svelte';
 
 	export let onReload: (drugInput: string, sig: string, daysSupply: number) => void;
@@ -76,6 +77,10 @@
 		}
 	}
 
+	function exportToCSV() {
+		exportHistoryToCSV(filteredHistory);
+	}
+
 	function toggleFavorite(id: string, event: Event) {
 		event.stopPropagation();
 		HistoryStore.toggleFavorite(id);
@@ -124,17 +129,6 @@
 			loadHistory();
 			quickEditEntry = null;
 		}
-	}
-
-	function exportToCSV() {
-		const csv = HistoryStore.exportToCSV(['timestamp', 'drugInput', 'sig', 'daysSupply', 'isFavorite']);
-		const blob = new Blob([csv], { type: 'text/csv' });
-		const url = URL.createObjectURL(blob);
-		const a = document.createElement('a');
-		a.href = url;
-		a.download = `pharmamax-history-${new Date().toISOString().split('T')[0]}.csv`;
-		a.click();
-		URL.revokeObjectURL(url);
 	}
 
 	function formatTimestamp(timestamp: number): string {

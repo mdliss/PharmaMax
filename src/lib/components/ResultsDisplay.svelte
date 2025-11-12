@@ -7,13 +7,63 @@
 	import RefillCalculator from './RefillCalculator.svelte';
 	import PrescriptionLabel from './PrescriptionLabel.svelte';
 	import StockWarning from './StockWarning.svelte';
+	import ControlledSubstanceBadge from './ControlledSubstanceBadge.svelte';
+	import DrugSafetyAlerts from './DrugSafetyAlerts.svelte';
+	import GenericSubstitution from './GenericSubstitution.svelte';
+	import FormularyChecker from './FormularyChecker.svelte';
+	import { inventoryStore } from '$lib/utils/inventoryStore';
+	import { checkControlledSubstance } from '$lib/utils/controlledSubstanceChecker';
+	import type { ControlledSubstanceInfo } from '$lib/utils/controlledSubstanceChecker';
+	import { buildFHIRMedicationRequest, exportFHIRResource } from '$lib/utils/fhirUtils';
+	import { onMount } from 'svelte';
 
 	export let result: any;
+	export let isPartialFill: boolean = false;
+	export let partialQuantity: number | null = null;
+	export let patientInsurancePlanId: string | null = null;
 
 	const { prescription, sigParsed, calculation, ndcs, recommendation } = result;
+	let controlledSubstanceInfo: ControlledSubstanceInfo | null = null;
+	let checkingControlledStatus = true;
+
+	// Check controlled substance status on mount
+	onMount(async () => {
+		try {
+			controlledSubstanceInfo = await checkControlledSubstance(
+				prescription.drugName,
+				prescription.daysSupply
+			);
+		} catch (error) {
+			console.error('Error checking controlled substance:', error);
+		} finally {
+			checkingControlledStatus = false;
+		}
+	});
 
 	let copySuccess = false;
 	let copyingNDC: string | null = null;
+
+	// Check if any recommended packages are low/out of stock
+	$: hasStockIssues = recommendation.packages?.some((pkg: any) => {
+		const item = inventoryStore.getItem(pkg.ndc);
+		return item && (item.status === 'low' || item.status === 'out-of-stock');
+	});
+
+	// Get alternative NDCs that are in stock
+	$: alternativeNdcs = hasStockIssues
+		? ndcs.filter((ndc: any) => {
+				// Exclude NDCs already in recommendation
+				const isInRecommendation = recommendation.packages?.some((pkg: any) => pkg.ndc === ndc.ndc);
+				if (isInRecommendation) return false;
+
+				// Only include active NDCs
+				if (!ndc.isActive) return false;
+
+				// Check stock status
+				const item = inventoryStore.getItem(ndc.ndc);
+				return item && item.status === 'in-stock';
+		  })
+		: [];
 
 	async function copyFullResults() {
 		let output = '=== PRESCRIPTION CALCULATION ===\n\n';
@@ -87,6 +137,22 @@
 		document.body.removeChild(a);
 		URL.revokeObjectURL(url);
 	}
+
+	function exportFHIR() {
+		const fhirResource = buildFHIRMedicationRequest({
+			drugName: prescription.drugName,
+			rxcui: prescription.rxcui,
+			sig: prescription.sig,
+			daysSupply: prescription.daysSupply,
+			quantity: calculation.totalQuantityNeeded,
+			unit: calculation.unit,
+			refills: 0,
+			isPartialFill,
+			partialQuantity: partialQuantity || undefined
+		});
+
+		exportFHIRResource(fhirResource, `FHIR-MedicationRequest-${prescription.rxcui}.json`);
+	}
 </script>
 
 <div class="space-y-6">
@@ -107,6 +173,23 @@
 				/>
 			</svg>
 			Export JSON
+		</button>
+
+		<button
+			on:click={exportFHIR}
+			class="px-4 py-2 rounded-lg transition-colors flex items-center gap-2"
+			style="background-color: var(--border-color); color: var(--foreground);"
+			title="Export as FHIR R4 MedicationRequest"
+		>
+			<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+				<path
+					stroke-linecap="round"
+					stroke-linejoin="round"
+					stroke-width="2"
+					d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+				/>
+			</svg>
+			Export FHIR
 		</button>
 
 		<button
@@ -201,6 +284,36 @@
 		</div>
 	{/if}
 
+	{#if isPartialFill && partialQuantity}
+		<div class="rounded-lg p-4 flex items-start gap-3" style="background-color: rgba(59, 130, 246, 0.15); border: 2px solid rgba(59, 130, 246, 0.5);">
+			<svg class="w-6 h-6 flex-shrink-0 mt-0.5" style="color: #3b82f6;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+			</svg>
+			<div class="flex-1">
+				<p class="font-semibold text-lg" style="color: #3b82f6;">
+					Partial Fill
+				</p>
+				<div class="mt-2 space-y-2">
+					<div class="flex justify-between items-center">
+						<span class="text-sm" style="color: var(--text-secondary);">Total Quantity Prescribed:</span>
+						<span class="font-semibold" style="color: var(--foreground);">{calculation.totalQuantityNeeded} {calculation.unit}</span>
+					</div>
+					<div class="flex justify-between items-center">
+						<span class="text-sm" style="color: var(--text-secondary);">Quantity to Dispense Now:</span>
+						<span class="font-bold text-lg" style="color: #3b82f6;">{partialQuantity} {calculation.unit}</span>
+					</div>
+					<div class="flex justify-between items-center">
+						<span class="text-sm" style="color: var(--text-secondary);">Remaining to Fill:</span>
+						<span class="font-semibold text-lg" style="color: var(--accent);">{calculation.totalQuantityNeeded - partialQuantity} {calculation.unit}</span>
+					</div>
+				</div>
+				<p class="text-sm mt-3 p-2 rounded" style="background-color: rgba(59, 130, 246, 0.1); color: var(--text-secondary);">
+					This is a partial fill. The remaining {calculation.totalQuantityNeeded - partialQuantity} {calculation.unit} should be dispensed within the timeframe allowed by state regulations (typically 72 hours to 30 days depending on schedule and state).
+				</p>
+			</div>
+		</div>
+	{/if}
+
 	<!-- Prescription Summary -->
 	<div class="card-hover rounded-lg p-6" style="background-color: var(--card-bg); border: 1px solid rgba(16, 185, 129, 0.3);">
 		<h3 class="text-xl font-semibold mb-4" style="color: var(--accent);">Prescription Summary</h3>
@@ -209,6 +322,13 @@
 				<p class="text-sm font-medium" style="color: var(--text-secondary);">Drug</p>
 				<p class="text-lg" style="color: var(--foreground);">{prescription.drugName}</p>
 				<p class="text-sm" style="color: var(--text-muted);">RxCUI: {prescription.rxcui}</p>
+
+				<!-- Controlled Substance Badge -->
+				{#if !checkingControlledStatus}
+					<ControlledSubstanceBadge substanceInfo={controlledSubstanceInfo} />
+				{:else}
+					<div class="mt-2 text-sm text-gray-500">Checking DEA status...</div>
+				{/if}
 			</div>
 			<div>
 				<p class="text-sm font-medium" style="color: var(--text-secondary);">Days' Supply</p>
@@ -220,6 +340,19 @@
 			<p style="color: var(--foreground);">{prescription.sig}</p>
 		</div>
 	</div>
+
+	<!-- Drug Safety Alerts -->
+	<DrugSafetyAlerts
+		drugName={prescription.drugName}
+		dailyDose={sigParsed.totalDailyDose}
+		doseUnit={calculation.unit}
+	/>
+
+	<!-- Generic Substitution -->
+	<GenericSubstitution
+		rxcui={prescription.rxcui}
+		currentDrugName={prescription.drugName}
+	/>
 
 	<!-- Parsed SIG Details -->
 	<div class="card-hover rounded-lg p-6" style="background-color: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3);">
@@ -317,6 +450,9 @@
 							Status
 						</th>
 						<th class="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider" style="color: var(--text-muted);">
+							Stock
+						</th>
+						<th class="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider" style="color: var(--text-muted);">
 							Labeler
 						</th>
 						<th class="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider print:hidden" style="color: var(--text-muted);">
@@ -346,6 +482,9 @@
 										Inactive
 									</span>
 								{/if}
+							</td>
+							<td class="px-4 py-3 text-sm">
+								<StockWarning ndc={ndc.ndc} drugName={prescription.drugName} showInline={true} />
 							</td>
 							<td class="px-4 py-3 text-sm" style="color: var(--text-secondary);">{ndc.labelerName}</td>
 							<td class="px-4 py-3 text-sm print:hidden">
@@ -403,8 +542,19 @@
 			sig: prescription.sig,
 			daysSupply: prescription.daysSupply,
 			calculation,
-			recommendation
+			recommendation,
+			isPartialFill,
+			partialQuantity,
+			isControlledSubstance: controlledSubstanceInfo?.isControlled || false,
+			deaSchedule: controlledSubstanceInfo?.schedule
 		}}
+	/>
+
+	<!-- Insurance Formulary Checker -->
+	<FormularyChecker
+		rxcui={prescription.rxcui}
+		drugName={prescription.drugName}
+		insurancePlanId={patientInsurancePlanId}
 	/>
 
 	<!-- Drug Interaction Checker -->
@@ -424,6 +574,42 @@
 			unit: calculation.unit
 		}}
 	/>
+
+	<!-- Alternative Suggestions (if stock issues) -->
+	{#if hasStockIssues && alternativeNdcs.length > 0}
+		<div class="rounded-lg p-6" style="background-color: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3);">
+			<div class="flex items-start gap-3 mb-4">
+				<svg class="w-6 h-6 flex-shrink-0 mt-0.5" style="color: #3b82f6;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+				</svg>
+				<div class="flex-1">
+					<h3 class="text-xl font-semibold" style="color: #3b82f6;">Alternative Packages Available</h3>
+					<p class="text-sm mt-1" style="color: var(--text-secondary);">
+						Some recommended packages have stock issues. Consider these in-stock alternatives:
+					</p>
+				</div>
+			</div>
+			<div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+				{#each alternativeNdcs.slice(0, 4) as altNdc}
+					<div class="rounded-lg p-4" style="background-color: var(--card-bg); border: 1px solid rgba(59, 130, 246, 0.3);">
+						<div class="flex items-start justify-between">
+							<div class="flex-1">
+								<p class="font-mono text-xs" style="color: var(--text-muted);">NDC: {altNdc.ndc}</p>
+								<p class="text-lg font-semibold mt-1" style="color: var(--foreground);">
+									{altNdc.packageSize}
+								</p>
+								<p class="text-xs" style="color: var(--text-secondary);">{altNdc.packageType}</p>
+								<p class="text-xs mt-2" style="color: var(--text-muted);">{altNdc.labelerName}</p>
+							</div>
+							<span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium flex-shrink-0" style="background-color: rgba(16, 185, 129, 0.2); color: #10b981;">
+								In Stock
+							</span>
+						</div>
+					</div>
+				{/each}
+			</div>
+		</div>
+	{/if}
 
 	<!-- Packaging Recommendation -->
 	<div class="card-hover rounded-lg p-6" style="background-color: rgba(168, 85, 247, 0.1); border: 1px solid rgba(168, 85, 247, 0.3);">

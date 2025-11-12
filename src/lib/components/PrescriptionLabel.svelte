@@ -37,6 +37,10 @@
 		rxNumber?: string;
 		fillDate?: string;
 		refills?: number;
+		isPartialFill?: boolean;
+		partialQuantity?: number;
+		isControlledSubstance?: boolean;
+		deaSchedule?: string;
 	};
 
 	let mounted = false;
@@ -105,6 +109,19 @@
 	// Generate a random Rx number if not provided
 	function getRxNumber(): string {
 		return prescription.rxNumber || `RX${Math.floor(Math.random() * 1000000)}`;
+	}
+
+	// Calculate expiration date (typically 1 year from fill date)
+	function getExpirationDate(): string {
+		const fillDate = prescription.fillDate ? new Date(prescription.fillDate) : new Date();
+		const expDate = new Date(fillDate);
+		expDate.setFullYear(expDate.getFullYear() + 1);
+		return expDate.toLocaleDateString('en-US');
+	}
+
+	// Get pharmacist initials (placeholder for actual implementation)
+	function getPharmacistInitials(): string {
+		return 'RPH';
 	}
 
 	// Export label as PDF
@@ -225,13 +242,34 @@
 
 				<!-- Medication Information -->
 				<div class="mb-3 pb-2" style="border-bottom: 1px solid black;">
-					<div class="font-bold text-base mb-1">
-						{prescription.drugName.toUpperCase()}
+					<div class="flex items-center justify-between mb-1">
+						<div class="font-bold text-base">
+							{prescription.drugName.toUpperCase()}
+						</div>
+						{#if prescription.isControlledSubstance && prescription.deaSchedule}
+							<div class="text-xs font-bold px-2 py-1 rounded" style="background-color: #ef4444; color: white;">
+								C-{prescription.deaSchedule}
+							</div>
+						{/if}
 					</div>
-					<div class="text-sm">
-						<span class="font-bold">Quantity:</span>
-						{prescription.calculation.totalQuantityNeeded} {prescription.calculation.unit}
-					</div>
+
+					{#if prescription.isPartialFill && prescription.partialQuantity}
+						<div class="text-sm mb-1" style="background-color: #dbeafe; padding: 2px 4px; border: 1px solid #3b82f6;">
+							<span class="font-bold" style="color: #1e40af;">⚠ PARTIAL FILL:</span>
+							<span style="color: #1e40af;">
+								{prescription.partialQuantity} of {prescription.calculation.totalQuantityNeeded} {prescription.calculation.unit}
+							</span>
+						</div>
+						<div class="text-xs mb-1" style="color: #1e40af;">
+							Remaining: {prescription.calculation.totalQuantityNeeded - prescription.partialQuantity} {prescription.calculation.unit}
+						</div>
+					{:else}
+						<div class="text-sm">
+							<span class="font-bold">Quantity:</span>
+							{prescription.calculation.totalQuantityNeeded} {prescription.calculation.unit}
+						</div>
+					{/if}
+
 					<div class="text-sm">
 						<span class="font-bold">Days Supply:</span>
 						{prescription.daysSupply} days
@@ -242,6 +280,10 @@
 							{prescription.refills}
 						</div>
 					{/if}
+					<div class="text-xs mt-1">
+						<span class="font-bold">Expires:</span>
+						{getExpirationDate()}
+					</div>
 				</div>
 
 				<!-- SIG (Directions) -->
@@ -269,7 +311,7 @@
 
 				<!-- Prescriber Information -->
 				{#if prescription.prescriber}
-					<div class="text-xs">
+					<div class="text-xs mb-2">
 						<span class="font-bold">Prescriber:</span>
 						{prescription.prescriber.name}
 						{#if prescription.prescriber.npi}
@@ -277,6 +319,29 @@
 						{/if}
 					</div>
 				{/if}
+
+				<!-- Warning Labels -->
+				{#if prescription.isControlledSubstance || prescription.isPartialFill}
+					<div class="mb-2 text-[10px] border border-black p-1">
+						{#if prescription.isControlledSubstance}
+							<div class="font-bold mb-1">⚠ CAUTION: Federal law prohibits transfer of this drug to any person other than the patient for whom it was prescribed.</div>
+						{/if}
+						{#if prescription.isPartialFill}
+							<div class="font-bold">• PARTIAL FILL: Complete remaining fill by regulatory deadline.</div>
+						{/if}
+					</div>
+				{/if}
+
+				<!-- Pharmacist Signature -->
+				<div class="text-[10px] flex justify-between items-center pb-2" style="border-bottom: 1px solid black;">
+					<div>
+						<span class="font-bold">Pharmacist:</span>
+						<span style="border-bottom: 1px solid black; padding: 0 20px;">_____</span>
+					</div>
+					<div>
+						<span class="font-bold">RPh:</span> {getPharmacistInitials()}
+					</div>
+				</div>
 
 				<!-- Barcode and QR Code -->
 				<div class="mt-4 flex justify-between items-center">

@@ -194,6 +194,17 @@ export interface DrugSuggestion {
 	tty: string;
 }
 
+export interface GenericAlternative {
+	rxcui: string;
+	name: string;
+	doseForm: string;
+	strength: string;
+	tty: string; // Term type (e.g., SCD for Semantic Clinical Drug)
+	isABRated?: boolean; // Therapeutic equivalence
+	costSavings?: number; // Estimated percentage savings
+	estimatedCost?: number; // Estimated cost in dollars
+}
+
 /**
  * Search for drug suggestions for autocomplete
  */
@@ -207,7 +218,7 @@ export async function searchRxNormDrugs(query: string): Promise<DrugSuggestion[]
 	try {
 		// Use approximate term search for fuzzy matching
 		const response = await fetch(
-			`${RXNORM_BASE_URL}/approximateTerm.json?term=${encodeURIComponent(processedQuery)}&maxEntries=10`
+			`${RXNORM_BASE_URL}/approximateTerm.json?term=${encodeURIComponent(processedQuery)}&maxEntries=20`
 		);
 
 		const data = await response.json();
@@ -217,23 +228,197 @@ export async function searchRxNormDrugs(query: string): Promise<DrugSuggestion[]
 		}
 
 		// Filter and format suggestions
-		const suggestions: DrugSuggestion[] = data.approximateGroup.candidate
+		const seen = new Map<string, DrugSuggestion>(); // Track unique names (case-insensitive)
+
+		data.approximateGroup.candidate
 			.filter((candidate: any) => {
+				// Filter out empty/null names
+				if (!candidate.name || candidate.name.trim().length === 0) {
+					return false;
+				}
+
 				// Filter out certain types we don't want (like ingredients, allergenic extracts, etc.)
 				const unwantedTypes = ['IN', 'PIN', 'MIN'];
 				return !unwantedTypes.includes(candidate.source);
 			})
-			.slice(0, 8) // Limit to 8 suggestions
-			.map((candidate: any) => ({
-				rxcui: candidate.rxcui,
-				name: candidate.name,
-				synonym: candidate.synonym || candidate.name,
-				tty: candidate.source || ''
-			}));
+			.forEach((candidate: any) => {
+				const normalizedName = candidate.name.toLowerCase().trim();
+
+				// Only add if we haven't seen this name before
+				if (!seen.has(normalizedName)) {
+					seen.set(normalizedName, {
+						rxcui: candidate.rxcui,
+						name: candidate.name,
+						synonym: candidate.synonym || candidate.name,
+						tty: candidate.source || ''
+					});
+				}
+			});
+
+		// Convert map to array and limit to 8 suggestions
+		const suggestions = Array.from(seen.values()).slice(0, 8);
 
 		return suggestions;
 	} catch (error) {
 		console.error('Error searching RxNorm drugs:', error);
+		return [];
+	}
+}
+
+/**
+ * Find generic alternatives for a given drug (RXCUI)
+ * Uses TTY filtering to find Semantic Clinical Drugs (generic formulations)
+ */
+export async function findGenericAlternatives(rxcui: string): Promise<GenericAlternative[]> {
+	try {
+		// First, get the drug properties to understand what we're working with
+		const propsResponse = await fetch(`${RXNORM_BASE_URL}/rxcui/${rxcui}/properties.json`);
+		const propsData = await propsResponse.json();
+
+		if (!propsData.properties) {
+			return [];
+		}
+
+		const currentDrug = propsData.properties;
+		const currentTty = currentDrug.tty;
+
+		// If this is already a generic (SCD = Semantic Clinical Drug), find related generics
+		// If this is a brand (SBD = Semantic Branded Drug), find the generic equivalent
+		let genericAlternatives: GenericAlternative[] = [];
+
+		if (currentTty === 'SBD') {
+			// This is a brand drug - find the generic equivalent
+			// Use the 'has_tradename' relationship to find the generic
+			const relatedResponse = await fetch(
+				`${RXNORM_BASE_URL}/rxcui/${rxcui}/related.json?tty=SCD`
+			);
+			const relatedData = await relatedResponse.json();
+
+			if (relatedData.relatedGroup?.conceptGroup) {
+				for (const group of relatedData.relatedGroup.conceptGroup) {
+					if (group.tty === 'SCD' && group.conceptProperties) {
+						for (const concept of group.conceptProperties) {
+							// Get detailed properties for each alternative
+							const altPropsResponse = await fetch(
+								`${RXNORM_BASE_URL}/rxcui/${concept.rxcui}/properties.json`
+							);
+							const altPropsData = await altPropsResponse.json();
+
+							if (altPropsData.properties) {
+								const altProps = altPropsData.properties;
+								genericAlternatives.push({
+									rxcui: concept.rxcui,
+									name: altProps.name,
+									doseForm: altProps.doseFormName || 'Unknown',
+									strength: altProps.strength || 'Unknown',
+									tty: 'SCD',
+									isABRated: true, // Assume AB-rated for SCD generics
+									costSavings: Math.floor(Math.random() * 30) + 50, // Mock: 50-80% savings
+									estimatedCost: Math.floor(Math.random() * 30) + 10 // Mock: $10-40
+								});
+							}
+						}
+					}
+				}
+			}
+		} else if (currentTty === 'SCD') {
+			// This is already generic - find other generic formulations
+			// Get the ingredient and find other SCDs with same ingredient
+			const ingredientResponse = await fetch(
+				`${RXNORM_BASE_URL}/rxcui/${rxcui}/related.json?tty=IN`
+			);
+			const ingredientData = await ingredientResponse.json();
+
+			if (ingredientData.relatedGroup?.conceptGroup) {
+				// Find the ingredient RXCUI
+				let ingredientRxcui: string | null = null;
+				for (const group of ingredientData.relatedGroup.conceptGroup) {
+					if (group.tty === 'IN' && group.conceptProperties?.[0]) {
+						ingredientRxcui = group.conceptProperties[0].rxcui;
+						break;
+					}
+				}
+
+				if (ingredientRxcui) {
+					// Find all SCDs with this ingredient
+					const alternativesResponse = await fetch(
+						`${RXNORM_BASE_URL}/rxcui/${ingredientRxcui}/related.json?tty=SCD`
+					);
+					const alternativesData = await alternativesResponse.json();
+
+					if (alternativesData.relatedGroup?.conceptGroup) {
+						for (const group of alternativesData.relatedGroup.conceptGroup) {
+							if (group.tty === 'SCD' && group.conceptProperties) {
+								for (const concept of group.conceptProperties) {
+									// Skip the current drug
+									if (concept.rxcui === rxcui) continue;
+
+									// Get detailed properties
+									const altPropsResponse = await fetch(
+										`${RXNORM_BASE_URL}/rxcui/${concept.rxcui}/properties.json`
+									);
+									const altPropsData = await altPropsResponse.json();
+
+									if (altPropsData.properties) {
+										const altProps = altPropsData.properties;
+										genericAlternatives.push({
+											rxcui: concept.rxcui,
+											name: altProps.name,
+											doseForm: altProps.doseFormName || 'Unknown',
+											strength: altProps.strength || 'Unknown',
+											tty: 'SCD',
+											isABRated: true,
+											costSavings: Math.floor(Math.random() * 20) + 10, // Mock: 10-30% savings
+											estimatedCost: Math.floor(Math.random() * 40) + 15 // Mock: $15-55
+										});
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		} else {
+			// For other types, try to find any related SCDs
+			const relatedResponse = await fetch(
+				`${RXNORM_BASE_URL}/rxcui/${rxcui}/related.json?tty=SCD`
+			);
+			const relatedData = await relatedResponse.json();
+
+			if (relatedData.relatedGroup?.conceptGroup) {
+				for (const group of relatedData.relatedGroup.conceptGroup) {
+					if (group.tty === 'SCD' && group.conceptProperties) {
+						for (const concept of group.conceptProperties) {
+							const altPropsResponse = await fetch(
+								`${RXNORM_BASE_URL}/rxcui/${concept.rxcui}/properties.json`
+							);
+							const altPropsData = await altPropsResponse.json();
+
+							if (altPropsData.properties) {
+								const altProps = altPropsData.properties;
+								genericAlternatives.push({
+									rxcui: concept.rxcui,
+									name: altProps.name,
+									doseForm: altProps.doseFormName || 'Unknown',
+									strength: altProps.strength || 'Unknown',
+									tty: 'SCD',
+									isABRated: true,
+									costSavings: Math.floor(Math.random() * 30) + 40,
+									estimatedCost: Math.floor(Math.random() * 35) + 12
+								});
+							}
+						}
+					}
+				}
+			}
+		}
+
+		// Limit to top 5 alternatives and sort by cost savings
+		return genericAlternatives
+			.sort((a, b) => (b.costSavings || 0) - (a.costSavings || 0))
+			.slice(0, 5);
+	} catch (error) {
+		console.error('Error finding generic alternatives:', error);
 		return [];
 	}
 }
