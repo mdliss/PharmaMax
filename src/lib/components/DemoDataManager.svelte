@@ -114,9 +114,9 @@
 			>
 				<p class="text-sm font-medium" style="color: {isInitialized ? 'var(--accent)' : '#f59e0b'};">
 					{#if isInitialized}
-						✓ Demo data is loaded
+						Demo data is loaded
 					{:else}
-						⚠ No demo data loaded
+						No demo data loaded
 					{/if}
 				</p>
 			</div>
@@ -142,7 +142,7 @@
 						class="w-full py-2 px-4 rounded-lg font-medium transition-colors"
 						style="background-color: var(--accent); color: var(--background);"
 					>
-						{loading ? '⏳ Loading...' : '🚀 Load Demo Data'}
+						{loading ? 'Loading...' : 'Load Demo Data'}
 					</button>
 				{:else}
 					<button
@@ -151,7 +151,7 @@
 						class="w-full py-2 px-4 rounded-lg font-medium transition-colors"
 						style="background-color: rgba(245, 158, 11, 0.1); color: #f59e0b; border: 1px solid #f59e0b;"
 					>
-						{loading ? '⏳ Resetting...' : '🔄 Reset Demo Data'}
+						{loading ? 'Resetting...' : 'Reset Demo Data'}
 					</button>
 					<button
 						on:click={handleClear}
@@ -159,7 +159,7 @@
 						class="w-full py-2 px-4 rounded-lg font-medium transition-colors"
 						style="background-color: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid #ef4444;"
 					>
-						{loading ? '⏳ Clearing...' : '🗑️ Clear Demo Data'}
+						{loading ? 'Clearing...' : 'Clear Demo Data'}
 					</button>
 				{/if}
 
